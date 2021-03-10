@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <table>
+    <tr>
+      <td rowspan="3"><img src="{{ url_for('static', filename='img/house.jpg') }}" alt="house" width = "800px" height="600px" /></td>
+      <td colspan=“2”><h1 style="color: red;">€225,000.00</h1></td>
+      <td>around €5921/sq metres</td>
+    </tr>
+    <tr>
+      <td>New Dwelling house/Apartment</td>
+    </tr>
+    <tr>
+      <td>less than 38 sq metres</td>
+    </tr>
+  </table>
+  <h1>Details</h1>
+  <ul>
+    <li><span style="fontsize: big;">Location</span>: 134 longboat quay north, sir john rogersons quay</li>
+    <li><span>VAT Exclusive: Yes</span></li>
+    <li><span>Not Full Market Price: No</span></li>
+  </ul>
+  <h1>Recommendation</h1>
+  <ul>
+    <li>Housing features: good location, low total price, convenient transportation around. This house is wider than the same area of the house, the sense of space is more open, living feeling more comfortable.</li>
+    <li>Community environment: the community is well closed, green rate is high, there is a square for everyone to leisure and entertainment. There are supermarkets, laundries, nail salons and beauty salons around the community. Surrounding shopping malls and hospitals, convenient travel.</li>
+  </ul>
+  <h1>Pictures</h1>
+  <img src="{{ url_for('static', filename='img/house.jpg') }}" alt="house" width = "800px" height="600px" /></td>
+  <h1>Comments</h1>
+  <ul>
+    <li>UserA <br>
+      It's a very nice apartment. When could I go and see it in person?
+    </li>
+    <li>UserB <br>
+      Could you please upload more pictures?
+    </li>
+    <li>UserC <br>
+      How is the sound insulation of this house?
+    </li>
+  </ul>
+  <form action="" method="post" novalidate>
+    {{ form.hidden_tag() }}
+    <p>
+      {{ form.comment.label }}<br>
+      {{ form.comment(rows=8, cols=80) }}
+
+      {% for error in form.comment.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    <p>{{ form.submit() }}</p>
+{% endblock %}

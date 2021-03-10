@@ -1,0 +1,25 @@
+<html>
+  <head>
+    {% if title %}
+    <title>{{ title }} - Housing</title>
+    {% else %}
+    <title>Housing</title>
+    {% endif %}
+  </head>
+  <body style="margin: 50px;">
+    <div>Our House:
+      <a href="{{ url_for('details') }}">Housing details</a>
+    </div>
+    <hr>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+      {% for message in messages %}
+      <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </body>
+</html>
