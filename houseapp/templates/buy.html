@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block content %}
+<table width="100%">
+    <tr>
+        <td>Price:</td>
+        <td><input type="radio" name="price" value="very low">Below 500k</td>
+        <td><input type="radio" name="price" value="low">500k-1m</td>
+        <td><input type="radio" name="price" value="medium">1m-2m</td>
+        <td><input type="radio" name="price" value="high">2m-5m</td>
+        <td><input type="radio" name="price" value="very high">Over 5m</td>
+    </tr>
+    <tr>
+        <td>Average price:</td>
+        <td><input type="radio" name="average_price" value="very low">Below 5k</td>
+        <td><input type="radio" name="average_price" value="low">5k-10k</td>
+        <td><input type="radio" name="average_price" value="medium">10k-20k</td>
+        <td><input type="radio" name="average_price" value="high">20k-50k</td>
+        <td><input type="radio" name="average_price" value="very high">Over 50k</td>
+    </tr>
+    <tr>
+        <td>Square:</td>
+        <td><input type="radio" name="square" value="very small">Below 50m<sup>2</sup></td>
+        <td><input type="radio" name="square" value="small">50m<sup>2</sup>-100m<sup>2</sup></td>
+        <td><input type="radio" name="square" value="middle">100m<sup>2</sup>-200m<sup>2</sup></td>
+        <td><input type="radio" name="square" value="big">200m<sup>2</sup>-500m<sup>2</sup></td>
+        <td><input type="radio" name="square" value="very big">Over 500m<sup>2</sup></td>
+    </tr>
+    <tr>
+        <td>Bedrooms:</td>
+        <td><input type="radio" name="bedrooms" value="one">1</td>
+        <td><input type="radio" name="bedrooms" value="two">2</td>
+        <td><input type="radio" name="bedrooms" value="three">3</td>
+        <td><input type="radio" name="bedrooms" value="four">4</td>
+        <td><input type="radio" name="bedrooms" value="more">Over 4</td>
+    </tr>
+    <tr>
+        <td>Floor:</td>
+        <td><input type="radio" name="floor" value="low level">1st-3rd</td>
+        <td><input type="radio" name="floor" value="middle level">4th-10th</td>
+        <td><input type="radio" name="floor" value="high level">Over 11th</td>
+    </tr>
+    <tr>
+        <td>Type:</td>
+        <td><input type="radio" name="type" value="tower">tower</td>
+        <td><input type="radio" name="type" value="bungalow">bungalow</td>
+        <td><input type="radio" name="type" value="plate and tower">plate and tower</td>
+        <td><input type="radio" name="type" value="plate">plate</td>
+    </tr>
+    <tr>
+        <td>Renovation:</td>
+        <td><input type="radio" name="renovation" value="rough">rough</td>
+        <td><input type="radio" name="renovation" value="simplicity">simplicity</td>
+        <td><input type="radio" name="renovation" value="hardcover">hardcover</td>
+        <td><input type="radio" name="renovation" value="other">other</td>
+    </tr>
+    <tr>
+        <td>Elevator:</td>
+        <td><input type="radio" name="elevator" value="have">have</td>
+        <td><input type="radio" name="elevator" value="not have">not have</td>
+    </tr>
+
+    <td colspan="6" align="right">
+        <button align="right" onclick="check()">Check</button>
+        <button align="right" onclick="deleteAll()">Delete all</button>
+    </td>
+</table>
+<hr>
+<h2>Find x suitable houses for you ^_^</h2>
+<hr>
+<table width="100%">
+    <tr>
+        <td rowspan="3" width="250px">
+            <a href="" id="image"><img src="{{ url_for('static', filename='img/house.jpg') }}" alt="house" width="200px"
+                    height="150px" onclick="details()" /></a>
+        </td>
+        <td><strong>New Dwelling house/Apartment</strong></td>
+        <td align="center"><strong style="color: red;">€225,000.00</strong></td>
+    </tr>
+    <tr>
+        <td>Address:xxxx-xxx-xxxx</td>
+        <td align="center">
+            <p style="color:grey;font-size: 11px;">€5921/sq metres</p>
+        </td>
+    </tr>
+    <tr>
+        <td>Type:xxx/xxxx/xxx</td>
+    </tr>
+</table>
+<script>
+    var input = document.querySelectorAll('input')
+    var img = document.getElementById('image')
+    function deleteAll() {
+        for (var i = 0; i < input.length; i++) {
+            if (input[i].checked == true) {
+                input[i].checked = false;
+            }
+        }
+    }
+    function check() {
+
+    }
+    function details() {
+        img.href = "{{ url_for('details') }}";
+    }
+
+</script>
+{% endblock %}
