@@ -3,31 +3,48 @@
 {% block content %}
   <table>
     <tr>
-      <td rowspan="3"><img src="{{ url_for('static', filename='img/house.jpg') }}" alt="house" width = "800px" height="600px" /></td>
-      <td colspan=“2”><h1 style="color: red;">€225,000.00</h1></td>
-      <td>around €5921/sq metres</td>
+      <td rowspan="3"><img src="{{ url_for('static', filename='img/house.jpg') }}" alt="house" width = "600px" height="400px" /></td>
+      <td colspan=“2”><h1 style="color: red;">¥4,150,000.00</h1></td>
+      <td>¥31680/sq metres</td>
     </tr>
     <tr>
-      <td>New Dwelling house/Apartment</td>
+      <td><hr>Living Room(s): <b>2</b></td>
+      <td><hr>Building Type: <b>Tower</b></td>
+      <td><hr>Square: <b>131 sq metres</b></td>
     </tr>
     <tr>
-      <td>less than 38 sq metres</td>
+      <td><hr>Floor: <b>26</b> / <b>has elevator</b></td>
+      <td><hr>Renovation Type: <b>Simplicity</b></td>
+      <td><hr>Construct Time: <b>2005</b></td>
     </tr>
   </table>
   <h1>Details</h1>
+  <hr>
   <ul>
-    <li><span style="font-size: big;">Location</span>: 134 longboat quay north, sir john rogersons quay</li>
-    <li><span>VAT Exclusive: Yes</span></li>
-    <li><span>Not Full Market Price: No</span></li>
+    <li>Total Price: ¥4,150,000.00</li>
+    <li>Price: ¥31680/sq metres</li>
+    <li>Square: 131 sq metres</li>
+    <li>LivingRoom: 2</li>
+    <li>DrawingRoom: 1</li>
+    <li>Kitchen: 1</li>
+    <li>Bathroom: 1</li>
+    <li>Floor: 26</li>
+    <li>Building Type: Tower</li>
+    <li>Construction Time: 2005</li>
+    <li>Renovation Condition: Simplicity </li>
+    <li>Building Structure: Steel-concrete composite</li>
   </ul>
   <h1>Recommendation</h1>
+  <hr>
   <ul>
     <li>Housing features: good location, low total price, convenient transportation around. This house is wider than the same area of the house, the sense of space is more open, living feeling more comfortable.</li>
     <li>Community environment: the community is well closed, green rate is high, there is a square for everyone to leisure and entertainment. There are supermarkets, laundries, nail salons and beauty salons around the community. Surrounding shopping malls and hospitals, convenient travel.</li>
   </ul>
   <h1>Pictures</h1>
+  <hr>
   <img src="{{ url_for('static', filename='img/house.jpg') }}" alt="house" width = "800px" height="600px" /></td>
   <h1>Comments</h1>
+  <hr>
   <ul>
     <li>UserA <br>
       It's a very nice apartment. When could I go and see it in person?
