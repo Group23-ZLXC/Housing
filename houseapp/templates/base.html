@@ -10,6 +10,8 @@
     <div>Our House:
       <a href="{{ url_for('details') }}">Housing details</a>
       <a href="{{ url_for('buy') }}">Buy</a>
+      <a href="{{ url_for('login') }}">Log in</a>
+      <a href="{{ url_for('signup') }}">Sign up</a>
     </div>
     <hr>
     {% with messages = get_flashed_messages() %}
