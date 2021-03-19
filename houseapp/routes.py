@@ -12,7 +12,7 @@ def homepage():
 @app.route('/details')
 def details():
     form = CommentForm()
-    return render_template('details.html', form=form)
+    return render_template('details.html', title='Details', form=form)
 
 @app.route('/buy')
 def buy():
@@ -20,7 +20,7 @@ def buy():
 
 @app.route('/predict')
 def predict():
-    return render_template('predict.html')
+    return render_template('predict.html', title='Predict')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -37,7 +37,7 @@ def login():
         # should go to the logged-in page
         flash('Incorrect Password')
         return redirect(url_for('login'))
-    return render_template('login.html', title='Sign In', form=form)
+    return render_template('login.html', title='Log In', form=form)
 
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -58,7 +58,7 @@ def signup():
         flash('User registered with username:{}'.format(form.username.data))
         session["USERNAME"] = user.username
         return redirect(url_for('login'))
-    return render_template('signup.html', title='Register a new user', form=form)
+    return render_template('signup.html', title='Register', form=form)
 
 
 @app.route('/checkuser', methods=['POST'])

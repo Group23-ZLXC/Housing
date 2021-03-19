@@ -10,7 +10,7 @@ class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     remember_me = BooleanField('Remember Me')
-    submit = SubmitField('Sign In')
+    submit = SubmitField('Log In')
 
 
 # render_kw: https://www.cnblogs.com/FRESHMANS/p/8529992.html
@@ -25,4 +25,4 @@ class SignupForm(FlaskForm):
                               render_kw={"class": "form-control", "placeholder": "Repeat Password",
                                          "required": 'required'})
 
-    submit = SubmitField('Sign up', render_kw={"class": "btn btn-primary btn-block btn-flat"})
+    submit = SubmitField('Register')

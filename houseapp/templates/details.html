@@ -1,23 +1,55 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <table>
-    <tr>
-      <td rowspan="3"><img src="{{ url_for('static', filename='img/house.jpg') }}" alt="house" width = "600px" height="400px" /></td>
-      <td colspan=“2”><h1 style="color: red;">¥4,150,000.00</h1></td>
-      <td>¥31680/sq metres</td>
-    </tr>
-    <tr>
-      <td><hr>Living Room(s): <b>2</b></td>
-      <td><hr>Building Type: <b>Tower</b></td>
-      <td><hr>Square: <b>131 sq metres</b></td>
-    </tr>
-    <tr>
-      <td><hr>Floor: <b>26</b> / <b>has elevator</b></td>
-      <td><hr>Renovation Type: <b>Simplicity</b></td>
-      <td><hr>Construct Time: <b>2005</b></td>
-    </tr>
-  </table>
+
+<head>    
+  <meta charset="utf-8">    
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">  
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<table style="margin-top: 70px; margin-left: 50px; width: 90%;">
+  <tr>
+    <td rowspan="8" width="50%"><img src="{{ url_for('static', filename='img/house.jpg') }}" alt="house" width="600px"
+        height="400px" class="img-rounded" /></td>
+    <td colspan="2" style="vertical-align: top; padding-left: 20px; height: 30%;">
+      <h2 style="color: red;"><strong>¥4,150,000.00</strong></h2>
+      <p style="color: darkgray; font-size: 15px;">¥31680/sq metres</p>
+      <hr>
+    </td>
+  </tr>
+  <tr>
+    <td style="padding-left: 20px;">Living Room(s):</td>
+    <td width="20%"><b>2</b></td>
+  </tr>
+  <tr>
+    <td style="padding-left: 20px;">Building Type:</td>
+    <td width="20%"><b>Tower</b></td>
+  </tr>
+  <tr>
+    <td style="padding-left: 20px;">Square:</td>
+    <td width="20%"><b>131 sq metres</b></td>
+  </tr>
+  <tr>
+    <td style="padding-left: 20px;">Floor:</td>
+    <td width="20%"><b>26</b></td>
+  </tr>
+  <tr>
+    <td style="padding-left: 20px;">Elevator:</td>
+    <td width="20%"><b>has elevator</b></td>
+  </tr>
+  <tr>
+    <td style="padding-left: 20px;">Renovation Type:</td>
+    <td width="20%"><b>Simplicity</b></td>
+  </tr>
+  <tr>
+    <td style="padding-left: 20px;">Construct Time:</td>
+    <td width="20%"><b>2005</b></td>
+  </tr>
+</table>
+<div style="margin: 30px 50px 30px 50px;">
+
   <h1>Details</h1>
   <hr>
   <ul>
@@ -34,15 +66,16 @@
     <li>Renovation Condition: Simplicity </li>
     <li>Building Structure: Steel-concrete composite</li>
   </ul>
+
   <h1>Recommendation</h1>
   <hr>
   <ul>
-    <li>Housing features: good location, low total price, convenient transportation around. This house is wider than the same area of the house, the sense of space is more open, living feeling more comfortable.</li>
-    <li>Community environment: the community is well closed, green rate is high, there is a square for everyone to leisure and entertainment. There are supermarkets, laundries, nail salons and beauty salons around the community. Surrounding shopping malls and hospitals, convenient travel.</li>
+    <li>Housing features: good location, low total price, convenient transportation around. This house is wider than the
+      same area of the house, the sense of space is more open, living feeling more comfortable.</li>
+    <li>Community environment: the community is well closed, green rate is high, there is a square for everyone to
+      leisure and entertainment. There are supermarkets, laundries, nail salons and beauty salons around the community.
+      Surrounding shopping malls and hospitals, convenient travel.</li>
   </ul>
-  <h1>Pictures</h1>
-  <hr>
-  <img src="{{ url_for('static', filename='img/house.jpg') }}" alt="house" width = "800px" height="600px" /></td>
   <h1>Comments</h1>
   <hr>
   <ul>
@@ -56,15 +89,31 @@
       How is the sound insulation of this house?
     </li>
   </ul>
-  <form action="" method="post" novalidate>
-    {{ form.hidden_tag() }}
-    <p>
-      {{ form.comment.label }}<br>
-      {{ form.comment(rows=8, cols=80) }}
+  <div class="panel-group" id="accordion" style="margin-top: 20px;">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#Comments">
+            <b>Write Comments</b>
+          </a>
+        </h4>
+      </div>
+      <div id="Comments" class="panel-collapse collapse">
+        <div class="panel-body">
+          <form action="" method="post" novalidate>
+            {{ form.hidden_tag() }}
+            <p>
+              {{ form.comment.label }}<br>
+              {{ form.comment(rows=8, cols=80) }}
 
-      {% for error in form.comment.errors %}
-      <span style="color: red;">[{{ error }}]</span>
-      {% endfor %}
-    </p>
-    <p>{{ form.submit() }}</p>
+              {% for error in form.comment.errors %}
+              <span style="color: red;">[{{ error }}]</span>
+              {% endfor %}
+            </p>
+            <p>{{ form.submit() }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
