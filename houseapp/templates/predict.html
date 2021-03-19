@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block content %}
+<table width="100%">
+
+    <tr>
+        <td>Square:</td>
+        <td><input type="radio" name="square" value="very small">Below 50m<sup>2</sup></td>
+        <td><input type="radio" name="square" value="small">50m<sup>2</sup>-100m<sup>2</sup></td>
+        <td><input type="radio" name="square" value="middle">100m<sup>2</sup>-200m<sup>2</sup></td>
+        <td><input type="radio" name="square" value="big">200m<sup>2</sup>-500m<sup>2</sup></td>
+        <td><input type="radio" name="square" value="very big">Over 500m<sup>2</sup></td>
+        <td><input type="text" name="other" placeholder="other" ><input type="submit" value="submit"></td>
+
+    </tr>
+    <tr>
+        <td>Bedrooms:</td>
+        <td><input type="radio" name="bedrooms" value="one">1</td>
+        <td><input type="radio" name="bedrooms" value="two">2</td>
+        <td><input type="radio" name="bedrooms" value="three">3</td>
+        <td><input type="radio" name="bedrooms" value="four">4</td>
+        <td><input type="radio" name="bedrooms" value="more">Over 4</td>
+        <td><input type="text" name="other" placeholder="other" ><input type="submit" value="submit"></td>
+    </tr>
+    <tr>
+        <td>Floor:</td>
+        <td><input type="radio" name="floor" value="low level">1st-3rd</td>
+        <td><input type="radio" name="floor" value="middle level">4th-10th</td>
+        <td><input type="radio" name="floor" value="high level">Over 11th</td>
+        <td><input type="text" name="other" placeholder="other" ><input type="submit" value="submit"></td>
+    </tr>
+    <tr>
+        <td>Type:</td>
+        <td><input type="radio" name="type" value="tower">tower</td>
+        <td><input type="radio" name="type" value="bungalow">bungalow</td>
+        <td><input type="radio" name="type" value="plate and tower">plate and tower</td>
+        <td><input type="radio" name="type" value="plate">plate</td>
+    </tr>
+    <tr>
+        <td>Renovation:</td>
+        <td><input type="radio" name="renovation" value="rough">rough</td>
+        <td><input type="radio" name="renovation" value="simplicity">simplicity</td>
+        <td><input type="radio" name="renovation" value="hardcover">hardcover</td>
+        <td><input type="radio" name="renovation" value="other">other</td>
+    </tr>
+    <tr>
+        <td>Elevator:</td>
+        <td><input type="radio" name="elevator" value="have">have</td>
+        <td><input type="radio" name="elevator" value="not have">not have</td>
+    </tr>
+    <tr>
+        <td>Location:</td>
+        <td><input type="text" name="other" placeholder="Which areas" ><input type="submit" value="submit"></td>
+    </tr>
+
+    <td colspan="6" align="right">
+        <button align="right" onclick="check()">Check</button>
+        <button align="right" onclick="deleteAll()">Delete all</button>
+    </td>
+</table>
+    <hr>
+
+    <h2>The Predicted Price Range Is</h2>
+    <a><h3>xxxxx/sq meters</h3></a><h5>to </h5><a><h3>xxxxx/sq meters</h3></a>
+    <hr>
+
+    <h2>We found the best matched house for you</h2>
+<table width="100%">
+    <tr>
+        <td rowspan="3" width="250px">
+            <a href="" id="image"><img src="{{ url_for('static', filename='img/house.jpg') }}" alt="house" width="200px"
+                    height="150px" onclick="details()" /></a>
+        </td>
+        <td><strong>Tower</strong></td>
+        <td align="center"><strong style="color: red;">¥5,000,000.00</strong></td>
+    </tr>
+    <tr>
+        <td>Address:xxxx-xxx-xxxx</td>
+        <td align="center">
+            <p style="color:grey;font-size: 11px;">¥40,000/sq metres</p>
+        </td>
+    </tr>
+    <tr>
+        <td>Type:xxx/xxxx/xxx</td>
+    </tr>
+</table>
+<script>
+    var input = document.querySelectorAll('input')
+    var img = document.getElementById('image')
+    function deleteAll() {
+        for (var i = 0; i < input.length; i++) {
+            if (input[i].checked == true) {
+                input[i].checked = false;
+            }
+        }
+    }
+    function check() {
+
+    }
+    function details() {
+        img.href = "{{ url_for('details') }}";
+    }
+
+</script>
+{% endblock %}

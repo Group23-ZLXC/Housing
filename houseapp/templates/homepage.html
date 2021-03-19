@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OurHouse</title>
+
+
+
+
+</head>
+<body>
+    <div>
+        <h1>OurHouse</h1>
+    </div>
+    <div align="right">
+        <a style="margin-right: 20px" href="{{ url_for('login') }}">Log in</a>
+        <a href="{{ url_for('signup') }}">Sign up</a>
+    </div>
+    <hr>
+
+    <div>
+        <h1>Start looking for your home</h1>
+        <a href="{{ url_for('details') }}"><h3>Housing Details</h3></a>
+        <a href="{{ url_for('buy') }}"><h3>Buy</h3></a>
+        <a href="{{ url_for('predict') }}"><h3>Predict Price</h3></a>
+    </div>
+    <hr>
+
+    <div style="margin-top: 100px">
+        <h1>About us</h1>
+        <ul>
+            <li><h3>Located in Beijing, We provide mass of new and second-hand housing information</h3></li>
+            <li><h3>Based on reliable big data sets and machine learning algorithms, We provide housing price prediction services<h2></h2></li>
+        </ul>
+    </div>
+</body>
+</html>

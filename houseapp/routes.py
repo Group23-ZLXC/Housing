@@ -5,6 +5,10 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from houseapp.models import User
 
 @app.route('/')
+@app.route('/homepage')
+def homepage():
+    return render_template('homepage.html')
+
 @app.route('/details')
 def details():
     form = CommentForm()
@@ -13,6 +17,10 @@ def details():
 @app.route('/buy')
 def buy():
     return render_template('buy.html')
+
+@app.route('/predict')
+def predict():
+    return render_template('predict.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
