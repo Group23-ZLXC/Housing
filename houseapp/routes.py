@@ -3,20 +3,36 @@ from flask import render_template, flash, redirect, url_for, session, request, j
 from houseapp.forms import CommentForm, LoginForm, SignupForm
 from werkzeug.security import generate_password_hash, check_password_hash
 from houseapp.models import User
+from houseapp.static import data
+
+
 
 @app.route('/')
 @app.route('/homepage')
 def homepage():
     return render_template('homepage.html')
 
+
 @app.route('/details')
 def details():
     form = CommentForm()
     return render_template('details.html', title='Details', form=form)
 
+
 @app.route('/buy')
 def buy():
-    return render_template('buy.html')
+     # read file
+    data = []
+    with open(r"houseapp\static\data\data.csv", encoding='gbk', errors='ignore') as fin:
+        is_first_line =True
+        for f in fin.readlines():
+            if is_first_line:
+                is_first_line = False
+                continue
+            f = f[:-1]
+            a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z = f.split(",")
+            data.append((a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z))
+    return render_template('buy.html', data=data)
 
 @app.route('/predict')
 def predict():

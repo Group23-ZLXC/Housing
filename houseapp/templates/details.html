@@ -9,21 +9,20 @@
   <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
   <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<table style="margin-top: 70px; margin-left: 50px; width: 90%;">
+<table class="table table-condensed" style="margin-top: 70px; margin-left: 50px; width: 90%;">
   <tr>
     <td rowspan="8" width="50%"><img src="{{ url_for('static', filename='img/house.jpg') }}" alt="house" width="600px"
         height="400px" class="img-rounded" /></td>
     <td colspan="2" style="vertical-align: top; padding-left: 20px; height: 30%;">
       <h2 style="color: red;"><strong>¥4,150,000.00</strong></h2>
       <p style="color: darkgray; font-size: 15px;">¥31680/sq metres</p>
-      <hr>
     </td>
   </tr>
   <tr>
     <td style="padding-left: 20px;">Living Room(s):</td>
     <td width="20%"><b>2</b></td>
   </tr>
-  <tr>
+  <tr class="active">
     <td style="padding-left: 20px;">Building Type:</td>
     <td width="20%"><b>Tower</b></td>
   </tr>
@@ -31,7 +30,7 @@
     <td style="padding-left: 20px;">Square:</td>
     <td width="20%"><b>131 sq metres</b></td>
   </tr>
-  <tr>
+  <tr class="active">
     <td style="padding-left: 20px;">Floor:</td>
     <td width="20%"><b>26</b></td>
   </tr>
@@ -39,7 +38,7 @@
     <td style="padding-left: 20px;">Elevator:</td>
     <td width="20%"><b>has elevator</b></td>
   </tr>
-  <tr>
+  <tr class="active">
     <td style="padding-left: 20px;">Renovation Type:</td>
     <td width="20%"><b>Simplicity</b></td>
   </tr>
@@ -104,13 +103,13 @@
             {{ form.hidden_tag() }}
             <p>
               {{ form.comment.label }}<br>
-              {{ form.comment(rows=8, cols=80) }}
+              {{ form.comment(rows=8, cols=80, class="form-control") }}
 
               {% for error in form.comment.errors %}
               <span style="color: red;">[{{ error }}]</span>
               {% endfor %}
             </p>
-            <p>{{ form.submit() }}</p>
+            <p align="right">{{ form.submit(class="btn btn-defult") }}</p>
         </div>
       </div>
     </div>
