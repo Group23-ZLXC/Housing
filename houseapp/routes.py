@@ -13,17 +13,30 @@ def homepage():
     return render_template('homepage.html')
 
 
-@app.route('/details')
+@app.route('/details', methods=['GET','POST'])
 def details():
     form = CommentForm()
+    if not session.get("USERNAME") is None:
+        username = session.get("USERNAME")
+        user_in_db = User.query.filter(User.username == username).first()
+        if form.validate_on_submit():
+            flash("upload")
+        return render_template('details.html', title='Details', form=form, user=user_in_db)
+            # here just wait the database for house
+        #else:
+            #flash("Please login first")
+            #return redirect(url_for('login'))
     return render_template('details.html', title='Details', form=form)
 
 
 @app.route('/buy')
 def buy():
      # read file
+    if not session.get("USERNAME") is None:
+        username = session.get("USERNAME")
+        user_in_db = User.query.filter(User.username == username).first()
     data = []
-    with open(r"houseapp\static\data\data.csv", encoding='gbk', errors='ignore') as fin:
+    with open(r"houseapp/static/data/data.csv", encoding='gbk', errors='ignore') as fin:
         is_first_line =True
         for f in fin.readlines():
             if is_first_line:
@@ -32,11 +45,14 @@ def buy():
             f = f[:-1]
             a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z = f.split(",")
             data.append((a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z))
-    return render_template('buy.html', data=data)
+    return render_template('buy.html', data=data, user=user_in_db)
 
 @app.route('/predict')
 def predict():
-    return render_template('predict.html', title='Predict')
+    if not session.get("USERNAME") is None:
+        username = session.get("USERNAME")
+        user_in_db = User.query.filter(User.username == username).first()
+    return render_template('predict.html', title='Predict', user=user_in_db)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -49,7 +65,8 @@ def login():
         if check_password_hash(user_in_db.password_hash, form.password.data):
             flash('Login success!')
             session["USERNAME"] = user_in_db.username
-            return redirect(url_for('login'))
+            print(session["USERNAME"])
+            return redirect(url_for('homepage'))
         # should go to the logged-in page
         flash('Incorrect Password')
         return redirect(url_for('login'))
@@ -76,6 +93,20 @@ def signup():
         return redirect(url_for('login'))
     return render_template('signup.html', title='Register', form=form)
 
+@app.route('/logout')
+def logout():
+    session.pop("USERNAME", None)
+    return redirect(url_for('login'))
+
+@app.route('/personal')
+def personal():
+    if not session.get("USERNAME") is None:
+        username = session.get("USERNAME")
+        user_in_db = User.query.filter(User.username == username).first()
+        return render_template('personalpage.html', title="Personal Page", user=user_in_db)
+    else:
+        flash("User needs to login first")
+        return redirect(url_for('login'))
 
 @app.route('/checkuser', methods=['POST'])
 def check_username():

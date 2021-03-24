@@ -1,7 +1,7 @@
 <html>
   <head>
     <meta charset="utf-8">   
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">  
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
     {% if title %}
     <title>{{ title }} - Housing</title>
     {% else %}
@@ -18,8 +18,13 @@
           <li><a href="{{ url_for('predict') }}"><span class="glyphicon glyphicon-stats"></span>  Predict</a></li>
         </ul>
         <ul class="nav navbar-nav pull-right" style="font-size: 15px;">
-          <li><a href="{{ url_for('login') }}"><span class="glyphicon glyphicon-user"></span>  Log in</a></li>
-          <li><a href="{{ url_for('signup') }}"><span class="glyphicon glyphicon-user"></span>  Register</a></li>
+          {% if user %}
+            <li><a href="{{ url_for('personal') }}"><span class="glyphicon glyphicon-user"></span>  Personal Page</a></li>
+            <li><a href="{{ url_for('logout') }}"><span class="glyphicon glyphicon-user"></span>  Log Out</a></li>
+          {% else %}
+            <li><a href="{{ url_for('login') }}"><span class="glyphicon glyphicon-user"></span>  Log in</a></li>
+            <li><a href="{{ url_for('signup') }}"><span class="glyphicon glyphicon-user"></span>  Register</a></li>
+          {% endif %}
         </ul>
       </div>
     </div>
