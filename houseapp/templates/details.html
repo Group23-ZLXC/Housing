@@ -170,7 +170,7 @@
           </a>
         </h4>
       </div>
-      <div id="recommendation" class="panel-collapse collapse in">
+      <div id="comments" class="panel-collapse collapse in">
         <div class="panel-body">
           <ul>
             <li>UserA <br>
@@ -183,31 +183,31 @@
               How is the sound insulation of this house?
             </li>
           </ul>
+          <div class="panel-body">
+            {% if user %}
+            <form action="" method="post" novalidate>
+              {{ form.hidden_tag() }}
+              <p>
+                {{ form.comment.label }}<br>
+                {{ form.comment(rows=8, cols=80, class="form-control") }}
+  
+                {% for error in form.comment.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+              </p>
+              <p align="right">{{ form.submit(class="btn btn-defult") }}</p>
+              {% else %}
+              <p><b>You have to log in to comment</b></p><br>
+              <p><span>Already have an account?</span>
+                <a href="{{ url_for('login') }}"><span class="glyphicon glyphicon-user"></span> Log in</a>
+              </p><br>
+              <p><span>Create an account? </span>
+                <a href="{{ url_for('signup') }}"><span class="glyphicon glyphicon-user"></span> Register</a>
+              </p>
+              {% endif %}
+          </div>
         </div>
       </div>
-        <div class="panel-body">
-          {% if user %}
-          <form action="" method="post" novalidate>
-            {{ form.hidden_tag() }}
-            <p>
-              {{ form.comment.label }}<br>
-              {{ form.comment(rows=8, cols=80, class="form-control") }}
-
-              {% for error in form.comment.errors %}
-              <span style="color: red;">[{{ error }}]</span>
-              {% endfor %}
-            </p>
-            <p align="right">{{ form.submit(class="btn btn-defult") }}</p>
-            {% else %}
-            <p><b>You have to log in to comment</b></p><br>
-            <p><span>Already have an account?</span>
-              <a href="{{ url_for('login') }}"><span class="glyphicon glyphicon-user"></span> Log in</a>
-            </p><br>
-            <p><span>Create an account? </span>
-              <a href="{{ url_for('signup') }}"><span class="glyphicon glyphicon-user"></span> Register</a>
-            </p>
-            {% endif %}
-        </div>
     </div>
   </div>
 </div>
