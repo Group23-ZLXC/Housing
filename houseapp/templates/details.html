@@ -9,117 +9,205 @@
   <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
   <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<table class="table table-condensed" style="margin-top: 70px; margin-left: 50px; width: 90%;">
+<table class="table table-condensed" style="margin-top: 70px; margin-left: 50px;margin-right: 50px; width: 90%;">
   <tr>
-    <td rowspan="8" width="50%"><img src="{{ url_for('static', filename='img/house.jpg') }}" alt="house" width="600px"
-        height="400px" class="img-rounded" /></td>
+    <td rowspan="7" width="50%">
+      <div id="myCarousel" class="carousel slide">
+        <!-- 轮播（Carousel）指标 -->
+        <ol class="carousel-indicators">
+          <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+          <li data-target="#myCarousel" data-slide-to="1"></li>
+          <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+        <!-- 轮播（Carousel）项目 -->
+        <div class="carousel-inner">
+          <div class="item active">
+            <img src="{{ url_for('static', filename='img/house1.jpg') }}" alt="house1" width="100%" class="img-rounded">
+          </div>
+          <div class="item">
+            <img src="{{ url_for('static', filename='img/house2.jpg') }}" alt="house2" width="100%" class="img-rounded">
+          </div>
+          <div class="item">
+            <img src="{{ url_for('static', filename='img/house3.jpg') }}" alt="house3" width="100%" class="img-rounded">
+          </div>
+        </div>
+        <!-- 轮播（Carousel）导航 -->
+        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+          <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+          <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+    </td>
     <td colspan="2" style="vertical-align: top; padding-left: 20px; height: 30%;">
       <h2 style="color: red;"><strong>¥4,150,000.00</strong></h2>
       <p style="color: darkgray; font-size: 15px;">¥31680/sq metres</p>
     </td>
   </tr>
+
   <tr>
-    <td style="padding-left: 20px;">Living Room(s):</td>
-    <td width="20%"><b>2</b></td>
+    <td style="padding-left: 20px;vertical-align: middle;">Building Type:</td>
+    <td width="20%" style="vertical-align: middle;"><b>Tower</b></td>
   </tr>
   <tr class="active">
-    <td style="padding-left: 20px;">Building Type:</td>
-    <td width="20%"><b>Tower</b></td>
+    <td style="padding-left: 20px;vertical-align: middle;">Square:</td>
+    <td width="20%" style="vertical-align: middle;"><b>131 sq metres</b></td>
   </tr>
   <tr>
-    <td style="padding-left: 20px;">Square:</td>
-    <td width="20%"><b>131 sq metres</b></td>
+    <td style="padding-left: 20px;vertical-align: middle;">Floor:</td>
+    <td width="20%" style="vertical-align: middle;"><b>26</b></td>
   </tr>
+
   <tr class="active">
-    <td style="padding-left: 20px;">Floor:</td>
-    <td width="20%"><b>26</b></td>
+    <td style="padding-left: 20px;vertical-align: middle;">Renovation Type:</td>
+    <td width="20%" style="vertical-align: middle;"><b>Simplicity</b></td>
   </tr>
   <tr>
-    <td style="padding-left: 20px;">Elevator:</td>
-    <td width="20%"><b>has elevator</b></td>
-  </tr>
-  <tr class="active">
-    <td style="padding-left: 20px;">Renovation Type:</td>
-    <td width="20%"><b>Simplicity</b></td>
-  </tr>
-  <tr>
-    <td style="padding-left: 20px;">Construct Time:</td>
-    <td width="20%"><b>2005</b></td>
+    <td style="padding-left: 20px;vertical-align: middle;">Construct Time:</td>
+    <td width="20%" style="vertical-align: middle;"><b>2005</b></td>
   </tr>
 </table>
-<div style="margin: 30px 50px 30px 50px;">
-
-  <h1>Details</h1>
-  <hr>
-  <ul>
-    <li>Total Price: ¥4,150,000.00</li>
-    <li>Price: ¥31,680/sq metres</li>
-    <li>Square: 131 sq metres</li>
-    <li>LivingRoom: 2</li>
-    <li>DrawingRoom: 1</li>
-    <li>Kitchen: 1</li>
-    <li>Bathroom: 1</li>
-    <li>Floor: 26</li>
-    <li>Building Type: Tower</li>
-    <li>Construction Time: 2005</li>
-    <li>Renovation Condition: Simplicity </li>
-    <li>Building Structure: Steel-concrete composite</li>
-  </ul>
-
-  <h1>Recommendation</h1>
-  <hr>
-  <ul>
-    <li>Housing features: good location, low total price, convenient transportation around. This house is wider than the
-      same area of the house, the sense of space is more open, living feeling more comfortable.</li>
-    <li>Community environment: the community is well closed, green rate is high, there is a square for everyone to
-      leisure and entertainment. There are supermarkets, laundries, nail salons and beauty salons around the community.
-      Surrounding shopping malls and hospitals, convenient travel.</li>
-  </ul>
-  <h1>Comments</h1>
-  <hr>
-  <ul>
-    <li>UserA <br>
-      It's a very nice apartment. When could I go and see it in person?
-    </li>
-    <li>UserB <br>
-      Could you please upload more pictures?
-    </li>
-    <li>UserC <br>
-      How is the sound insulation of this house?
-    </li>
-  </ul>
-  <div class="panel-group" id="accordion" style="margin-top: 20px;">
+<div style="margin: 30px 70px 30px 50px;">
+  <div class="panel-group" id="accordion">
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" href="#Comments">
-            <b>Write Comments</b>
+          <a data-toggle="collapse" data-parent="#accordion" href="#details">
+            <b style="font-size:3rem;">Details</b>
           </a>
         </h4>
       </div>
-      <div id="Comments" class="panel-collapse collapse">
+      <div id="details" class="panel-collapse collapse in">
         <div class="panel-body">
-          {% if user %}
-            <form action="" method="post" novalidate>
-              {{ form.hidden_tag() }}
-              <p>
-                {{ form.comment.label }}<br>
-                {{ form.comment(rows=8, cols=80, class="form-control") }}
-
-                {% for error in form.comment.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-                {% endfor %}
-              </p>
-              <p align="right">{{ form.submit(class="btn btn-defult") }}</p>
-          {% else %}
-            <p><b>You have to log in to comment</b></p><br>
-            <p><span>Already have an account?</span>
-            <a href="{{ url_for('login') }}"><span class="glyphicon glyphicon-user"></span>  Log in</a></p><br>
-            <p><span>Create an account? </span>
-            <a href="{{ url_for('signup') }}"><span class="glyphicon glyphicon-user"></span>  Register</a></p>
-          {% endif %}
+          <table class="table">
+            <tr>
+              <td style="padding-left: 20px;vertical-align: middle;">Total Price:</td>
+              <td width="20%" style="vertical-align: middle;"><b>¥4,150,000.00</b></td>
+              <td rowspan="12" width="50%" align="center" style="border: 0rem;vertical-align: middle;"><img src="{{ url_for('static', filename='img/house_inside.png') }}"
+                  alt="house_inside" width="80%"></td>
+            </tr>
+            <tr class="active">
+              <td style="padding-left: 20px;vertical-align: middle;">Price:</td>
+              <td width="20%" style="vertical-align: middle;"><b>¥31,680/sq metres</b></td>
+            </tr>
+            <tr>
+              <td style="padding-left: 20px;vertical-align: middle;">Square:</td>
+              <td width="20%" style="vertical-align: middle;"><b>131 sq metres</b></td>
+            </tr>
+            <tr class="active">
+              <td style="padding-left: 20px;vertical-align: middle;">Livingroom:</td>
+              <td width="20%" style="vertical-align: middle;"><b>2</b></td>
+            </tr>
+            <tr>
+              <td style="padding-left: 20px;vertical-align: middle;">Drawingroom:</td>
+              <td width="20%" style="vertical-align: middle;"><b>1</b></td>
+            </tr>
+            <tr class="active">
+              <td style="padding-left: 20px;vertical-align: middle;">Kitchen:</td>
+              <td width="20%" style="vertical-align: middle;"><b>1</b></td>
+            </tr>
+            <tr>
+              <td style="padding-left: 20px;vertical-align: middle;">Bathroom:</td>
+              <td width="20%" style="vertical-align: middle;"><b>1</b></td>
+            </tr>
+            <tr class="active">
+              <td style="padding-left: 20px;vertical-align: middle;">Floor:</td>
+              <td width="20%" style="vertical-align: middle;"><b>26</b></td>
+            </tr>
+            <tr>
+              <td style="padding-left: 20px;vertical-align: middle;">Building Type:</td>
+              <td width="20%" style="vertical-align: middle;"><b>Tower</b></td>
+            </tr>
+            <tr class="active">
+              <td style="padding-left: 20px;vertical-align: middle;">Construct Time:</td>
+              <td width="20%" style="vertical-align: middle;"><b>2005</b></td>
+            </tr>
+            <tr>
+              <td style="padding-left: 20px;vertical-align: middle;">Renovation Type:</td>
+              <td width="20%" style="vertical-align: middle;"><b>Simplicity</b></td>
+            </tr>
+            <tr class="active">
+              <td style="padding-left: 20px;vertical-align: middle;">Building Structure:</td>
+              <td width="20%" style="vertical-align: middle;"><b>Steel-concrete composite</b></td>
+            </tr>
+          </table>
         </div>
       </div>
+    </div>
+  </div>
+
+  <div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#recommendation">
+            <b style="font-size:3rem;">Recommendation</b>
+          </a>
+        </h4>
+      </div>
+      <div id="recommendation" class="panel-collapse collapse in">
+        <div class="panel-body">
+          <ul>
+            <li><b>Housing features:</b> good location, low total price, convenient transportation around. This house is wider than the
+              same area of the house, the sense of space is more open, living feeling more comfortable.</li>
+            <li><b>Community environment:</b> the community is well closed, green rate is high, there is a square for everyone to
+              leisure and entertainment. There are supermarkets, laundries, nail salons and beauty salons around the community.
+              Surrounding shopping malls and hospitals, convenient travel.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#comments">
+            <b style="font-size:3rem;">Comments</b>
+          </a>
+        </h4>
+      </div>
+      <div id="recommendation" class="panel-collapse collapse in">
+        <div class="panel-body">
+          <ul>
+            <li>UserA <br>
+              It's a very nice apartment. When could I go and see it in person?
+            </li>
+            <li>UserB <br>
+              Could you please upload more pictures?
+            </li>
+            <li>UserC <br>
+              How is the sound insulation of this house?
+            </li>
+          </ul>
+        </div>
+      </div>
+        <div class="panel-body">
+          {% if user %}
+          <form action="" method="post" novalidate>
+            {{ form.hidden_tag() }}
+            <p>
+              {{ form.comment.label }}<br>
+              {{ form.comment(rows=8, cols=80, class="form-control") }}
+
+              {% for error in form.comment.errors %}
+              <span style="color: red;">[{{ error }}]</span>
+              {% endfor %}
+            </p>
+            <p align="right">{{ form.submit(class="btn btn-defult") }}</p>
+            {% else %}
+            <p><b>You have to log in to comment</b></p><br>
+            <p><span>Already have an account?</span>
+              <a href="{{ url_for('login') }}"><span class="glyphicon glyphicon-user"></span> Log in</a>
+            </p><br>
+            <p><span>Create an account? </span>
+              <a href="{{ url_for('signup') }}"><span class="glyphicon glyphicon-user"></span> Register</a>
+            </p>
+            {% endif %}
+        </div>
     </div>
   </div>
 </div>
