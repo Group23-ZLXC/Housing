@@ -25,18 +25,19 @@
     <div id="Processing" class="panel-collapse collapse">
       <div class="panel-body">
         <table border="2px" width="600" height="100">
-          <tr>
-            <th> House ID</th>
-            <th> Date </th>
-            <th> View </th>
-            <th> Cancel</th>
-          </tr>
-          <tr>
-            <td> 04 </td>
-            <td> 24/03/2021 </td>
-            <td><button type="button" name="button">View</button></td>
-            <td><button type="button" name="button">Cancel</button></td>
-          </tr>
+
+          {% if houses %}
+            {% for house in houses %}
+              {% if house.status == 0 %}
+                <tr>
+                  <td> {{ house.id }}</td>
+                  <td> {{ house.date }}</td>
+                  <td><a href="{{ url_for('details',house_id=house.id) }}"><button type="button" name="button">View</button></a></td>
+                  <td><button type="button" name="button">Cancel</button></td>
+                </tr>
+              {% endif %}
+            {% endfor %}
+          {% endif %}
         </table>
       </div>
     </div>
@@ -61,18 +62,19 @@
             <th> View </th>
             <th> Upload</th>
           </tr>
-          <tr>
-            <td> 03 </td>
-            <td> 24/03/2021 </td>
-            <td><button type="button" name="button">View</button></td>
-            <td><button type="button" name="button">Upload</button></td>
-          </tr>
-          <tr>
-            <td> 02 </td>
-            <td> 24/03/2021 </td>
-            <td><button type="button" name="button">View</button></td>
-            <td><button type="button" name="button">Upload</button></td>
-          </tr>
+
+          {% if houses %}
+            {% for house in houses %}
+              {% if house.status == 1 %}
+                <tr>
+                  <td> {{ house.id }}</td>
+                  <td> {{ house.date }}</td>
+                  <td><button type="button" name="button">View</button></td>
+                  <td><button type="button" name="button">Upload</button></td>
+                </tr>
+              {% endif %}
+            {% endfor %}
+          {% endif %}
         </table>
       </div>
     </div>
@@ -95,14 +97,21 @@
             <th> House ID</th>
             <th> Date </th>
             <th> View </th>
-            <th> Cancel</th>
+            <th> Delete</th>
           </tr>
-          <tr>
-            <td> 01 </td>
-            <td> 24/03/2021 </td>
-            <td><button type="button" name="button">View</button></td>
-            <td><button type="button" name="button">Delete</button></td>
-          </tr>
+
+          {% if houses %}
+            {% for house in houses %}
+              {% if house.status == 2 %}
+                <tr>
+                  <td> {{ house.id }}</td>
+                  <td> {{ house.date }}</td>
+                  <td><button type="button" name="button">View</button></td>
+                  <td><button type="button" name="button">Delete</button></td>
+                </tr>
+              {% endif %}
+            {% endfor %}
+          {% endif %}
         </table>
       </div>
     </div>

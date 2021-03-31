@@ -1,8 +1,8 @@
 from houseapp import app, db
 from flask import render_template, flash, redirect, url_for, session, request, jsonify
-from houseapp.forms import CommentForm, LoginForm, SignupForm
+from houseapp.forms import CommentForm, LoginForm, SignupForm, PredictForm
 from werkzeug.security import generate_password_hash, check_password_hash
-from houseapp.models import User
+from houseapp.models import User, House, Comment, Answer
 from houseapp.static import data
 
 
@@ -15,18 +15,18 @@ def homepage():
 
 @app.route('/details', methods=['GET','POST'])
 def details():
+    house_id = request.args.get('house_id')
+    house = House.query.filter(House.id == house_id).first()
+    owner = User.query.filter(User.id == house.user_id).first()
     form = CommentForm()
     if not session.get("USERNAME") is None:
         username = session.get("USERNAME")
         user_in_db = User.query.filter(User.username == username).first()
         if form.validate_on_submit():
             flash("upload")
-        return render_template('details.html', title='Details', form=form, user=user_in_db)
+        return render_template('details.html', title='Details', form=form, user=user_in_db, house = house, owner=owner)
             # here just wait the database for house
-        #else:
-            #flash("Please login first")
-            #return redirect(url_for('login'))
-    return render_template('details.html', title='Details', form=form)
+    return render_template('details.html', title='Details', form=form, house=house, owner=owner)
 
 
 @app.route('/buy')
@@ -47,12 +47,25 @@ def buy():
             data.append((a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z))
     return render_template('buy.html', data=data, user=user_in_db)
 
-@app.route('/predict')
+@app.route('/predict', methods=['GET','POST'])
 def predict():
+    form = PredictForm()
+
     if not session.get("USERNAME") is None:
         username = session.get("USERNAME")
         user_in_db = User.query.filter(User.username == username).first()
-    return render_template('predict.html', title='Predict', user=user_in_db)
+        if form.validate_on_submit():
+            house = House(user_id = user_in_db.id, lng=form.lng.data, lat = form.lat.data, square = form.square.data,
+                living_room=form.living_room.data, drawing_room=form.drawing_room.data, kitchen=form.kitchen.data,
+                bathroom = form.bathroom.data, floor=form.floor.data, elevator=form.elevator.data, subway=form.subway.data,
+                district = form.district.data, status = 0)
+            db.session.add(house)
+            db.session.commit()
+            return redirect(url_for('personal'))
+        return render_template('predict.html', title='Predict', user=user_in_db, form=form)
+
+
+    return render_template('predict.html', title='Predict', form=form)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -103,7 +116,8 @@ def personal():
     if not session.get("USERNAME") is None:
         username = session.get("USERNAME")
         user_in_db = User.query.filter(User.username == username).first()
-        return render_template('personalpage.html', title="Personal Page", user=user_in_db)
+        houses = House.query.filter(House.user_id == user_in_db.id).all()
+        return render_template('personalpage.html', title="Personal Page", user=user_in_db, houses = houses)
     else:
         flash("User needs to login first")
         return redirect(url_for('login'))

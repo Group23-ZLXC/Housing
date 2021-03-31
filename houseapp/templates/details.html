@@ -43,8 +43,16 @@
       </div>
     </td>
     <td colspan="2" style="vertical-align: top; padding-left: 20px; height: 30%;">
-      <h2 style="color: red;"><strong>¥4,150,000.00</strong></h2>
-      <p style="color: darkgray; font-size: 15px;">¥31680/sq metres</p>
+      {% if house.total_price %}
+        <h2 style="color: red;"><strong>{{ house.total_price }}</strong></h2>
+      {% else %}
+        <h2 style="color: red;"><strong>Pending</strong></h2>
+      {% endif %}
+      {% if house.total_price %}
+        <p style="color: darkgray; font-size: 15px;">{{ house.total_price / house.square }}</p>
+      {% else %}
+        <p style="color: darkgray; font-size: 15px;">Pending</p>
+      {% endif %}
     </td>
   </tr>
 
@@ -54,11 +62,11 @@
   </tr>
   <tr class="active">
     <td style="padding-left: 20px;vertical-align: middle;">Square:</td>
-    <td width="20%" style="vertical-align: middle;"><b>131 sq metres</b></td>
+    <td width="20%" style="vertical-align: middle;"><b>{{ house.square }} sq metres</b></td>
   </tr>
   <tr>
     <td style="padding-left: 20px;vertical-align: middle;">Floor:</td>
-    <td width="20%" style="vertical-align: middle;"><b>26</b></td>
+    <td width="20%" style="vertical-align: middle;"><b>{{ house.floor }}</b></td>
   </tr>
 
   <tr class="active">
@@ -85,37 +93,45 @@
           <table class="table">
             <tr>
               <td style="padding-left: 20px;vertical-align: middle;">Total Price:</td>
-              <td width="20%" style="vertical-align: middle;"><b>¥4,150,000.00</b></td>
+              {% if house.total_price %}
+                <td width="20%" style="vertical-align: middle;"><b>{{ house.total_price }}</b></td>
+              {% else %}
+                <td width="20%" style="vertical-align: middle;"><b>Pending</b></td>
+              {% endif %}
               <td rowspan="12" width="50%" align="center" style="border: 0rem;vertical-align: middle;"><img src="{{ url_for('static', filename='img/house_inside.png') }}"
                   alt="house_inside" width="80%"></td>
             </tr>
             <tr class="active">
               <td style="padding-left: 20px;vertical-align: middle;">Price:</td>
-              <td width="20%" style="vertical-align: middle;"><b>¥31,680/sq metres</b></td>
+              {% if house.total_price %}
+                <td width="20%" style="vertical-align: middle;"><b>{{ house.total_price / house.square }}</b></td>
+              {% else %}
+                <td width="20%" style="vertical-align: middle;"><b>Pending</b></td>
+              {% endif %}
             </tr>
             <tr>
               <td style="padding-left: 20px;vertical-align: middle;">Square:</td>
-              <td width="20%" style="vertical-align: middle;"><b>131 sq metres</b></td>
+              <td width="20%" style="vertical-align: middle;"><b>{{ house.square }}</b></td>
             </tr>
             <tr class="active">
               <td style="padding-left: 20px;vertical-align: middle;">Livingroom:</td>
-              <td width="20%" style="vertical-align: middle;"><b>2</b></td>
+              <td width="20%" style="vertical-align: middle;"><b>{{ house.living_room }}</b></td>
             </tr>
             <tr>
               <td style="padding-left: 20px;vertical-align: middle;">Drawingroom:</td>
-              <td width="20%" style="vertical-align: middle;"><b>1</b></td>
+              <td width="20%" style="vertical-align: middle;"><b>{{ house.drawing_room }}</b></td>
             </tr>
             <tr class="active">
               <td style="padding-left: 20px;vertical-align: middle;">Kitchen:</td>
-              <td width="20%" style="vertical-align: middle;"><b>1</b></td>
+              <td width="20%" style="vertical-align: middle;"><b>{{ house.kitchen }}</b></td>
             </tr>
             <tr>
               <td style="padding-left: 20px;vertical-align: middle;">Bathroom:</td>
-              <td width="20%" style="vertical-align: middle;"><b>1</b></td>
+              <td width="20%" style="vertical-align: middle;"><b>{{ house.bathroom }}</b></td>
             </tr>
             <tr class="active">
               <td style="padding-left: 20px;vertical-align: middle;">Floor:</td>
-              <td width="20%" style="vertical-align: middle;"><b>26</b></td>
+              <td width="20%" style="vertical-align: middle;"><b>{{ house.floor }}</b></td>
             </tr>
             <tr>
               <td style="padding-left: 20px;vertical-align: middle;">Building Type:</td>
@@ -158,7 +174,15 @@
               Surrounding shopping malls and hospitals, convenient travel.</li>
           </ul>
         </div>
+        <hr>
+        <div id="contact">
+          <h1>Contact Me</h1>
+          <ul>
+            <li>Owner: <b>{{ owner.username }}</b></li>
+            <li>Email: <b>{{ owner.email }}</b></li>
+          </ul>
       </div>
+      <hr>
     </div>
   </div>
   <div class="panel-group" id="accordion">
@@ -190,14 +214,14 @@
               <p>
                 {{ form.comment.label }}<br>
                 {{ form.comment(rows=8, cols=80, class="form-control") }}
-  
+
                 {% for error in form.comment.errors %}
                 <span style="color: red;">[{{ error }}]</span>
                 {% endfor %}
               </p>
               <p align="right">{{ form.submit(class="btn btn-defult") }}</p>
               {% else %}
-              <p><b>You have to log in to comment</b></p><br>
+              <p style="color: red; "><b>You have to log in to comment</b></p><br>
               <p><span>Already have an account?</span>
                 <a href="{{ url_for('login') }}"><span class="glyphicon glyphicon-user"></span> Log in</a>
               </p><br>

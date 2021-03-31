@@ -1,65 +1,79 @@
 {% extends "base.html" %}
 
 {% block content %}
-<table width="100%" style="margin: 50px 30px 0 30px;">
-    <tr>
-        <td><b>Square:</b></td>
-        <td><input type="radio" name="square" value="very small">Below 50m<sup>2</sup></td>
-        <td><input type="radio" name="square" value="small">50m<sup>2</sup>-100m<sup>2</sup></td>
-        <td><input type="radio" name="square" value="middle">100m<sup>2</sup>-200m<sup>2</sup></td>
-        <td><input type="radio" name="square" value="big">200m<sup>2</sup>-500m<sup>2</sup></td>
-        <td><input type="radio" name="square" value="very big">Over 500m<sup>2</sup></td>
-        <td><input type="text" name="other" placeholder="other" class="form-control" style="width: 80%;"></td>
 
-    </tr>
-    <tr>
-        <td><b>Bedrooms:</b></td>
-        <td><input type="radio" name="bedrooms" value="one">1</td>
-        <td><input type="radio" name="bedrooms" value="two">2</td>
-        <td><input type="radio" name="bedrooms" value="three">3</td>
-        <td><input type="radio" name="bedrooms" value="four">4</td>
-        <td><input type="radio" name="bedrooms" value="more">Over 4</td>
-        <td><input type="text" name="other" placeholder="other" class="form-control" style="width: 80%;"></td>
-    </tr>
-    <tr>
-        <td><b>Floor:</b></td>
-        <td><input type="radio" name="floor" value="1 level">1st-3rd</td>
-        <td><input type="radio" name="floor" value="2 level">4th-6th</td>
-        <td><input type="radio" name="floor" value="3 level">7th-10th</td>
-        <td><input type="radio" name="floor" value="4 level">11th-13th</td>
-        <td><input type="radio" name="floor" value="5 level">14th-16th</td>
-        <td><input type="radio" name="floor" value="6 level">Over16th</td>
-    </tr>
-    <tr>
-        <td><b>Type:</b></td>
-        <td><input type="radio" name="type" value="tower">tower</td>
-        <td><input type="radio" name="type" value="bungalow">bungalow</td>
-        <td><input type="radio" name="type" value="plate and tower">plate and tower</td>
-        <td><input type="radio" name="type" value="plate">plate</td>
-    </tr>
-    <tr>
-        <td><b>Renovation:</b></td>
-        <td><input type="radio" name="renovation" value="rough">rough</td>
-        <td><input type="radio" name="renovation" value="simplicity">simplicity</td>
-        <td><input type="radio" name="renovation" value="hardcover">hardcover</td>
-        <td><input type="radio" name="renovation" value="other">other</td>
-    </tr>
-    <tr>
-        <td><b>Elevator:</b></td>
-        <td><input type="radio" name="elevator" value="have">have</td>
-        <td><input type="radio" name="elevator" value="not have">not have</td>
-    </tr>
 
-    <tr>
-        <td colspan="5"></td>
-        <td align="right">
-            <button onclick="check()" type="button" class="btn btn-defult">Check</button>
-        </td>
-        <td align="center"> <button onclick="deleteAll()" type="button" class="btn btn-defult">Delete all</button>
-        </td>
-    </tr>
+<div style="margin-top: 80px; margin-left: 40px;" >
+<h1> Predict Your House Price</h1>
+<hr>
+<form action="" method="post" novalidate>
+    {{ form.hidden_tag() }}
+    <p>{{ form.lng.label }} (if available): {{ form.lng() }}</p>
+    <p>{{ form.lat.label }} (if available): {{ form.lat() }}</p>
+    <p>{{ form.square.label }}: {{ form.square }}
+      {% for error in form.square.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    <p>{{ form.living_room.label }}: {{ form.living_room() }}
+      {% for error in form.living_room.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    <p>{{ form.drawing_room.label }}: {{ form.drawing_room() }}
+      {% for error in form.drawing_room.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    <p>{{ form.kitchen.label }}: {{ form.kitchen() }}
+      {% for error in form.kitchen.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    <p>{{ form.bathroom.label }}: {{ form.bathroom() }}
+      {% for error in form.bathroom.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    <p>{{ form.floor.label }}: {{ form.floor() }}
+      {% for error in form.floor.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    <p>{{ form.elevator.label }}: {{ form.elevator() }}
+      {% for error in form.elevator.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    <p>{{ form.subway.label }}: {{ form.subway() }}
+      {% for error in form.subway.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    <p>{{ form.district.label }}: {{ form.district() }}
+      {% for error in form.district.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    {% if user %}
+      <p>{{ form.submit() }}</p>
+    {% else %}
+      <p style="color: red; "><b>You have to log in to predict</b></p><br>
+      <p><span>Already have an account?</span>
+        <a href="{{ url_for('login') }}"><span class="glyphicon glyphicon-user"></span> Log in</a>
+      </p><br>
+      <p><span>Create an account? </span>
+        <a href="{{ url_for('signup') }}"><span class="glyphicon glyphicon-user"></span> Register</a>
+      </p>
+    {% endif %}
+</form>
+</div>
 
-</table>
+
+
+
+
+
 <div style="margin: 0 30px 10px 30px;">
     <hr>
     <table>
