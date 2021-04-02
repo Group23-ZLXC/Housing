@@ -16,6 +16,10 @@ class PredictForm(FlaskForm):
     bathroom = SelectField('*Bathroom', choices = [
         (0,0),(1,1),(2,2),(3,3),(4,4),(5,5),(6,6),(7,7)], validators=[DataRequired()]) #0-7
     floor = IntegerField('*Floor', validators=[DataRequired()])
+    building_type = SelectField('Building Type', choices = [
+        (1,"Tower"), (2, "Bungalow"), (3, "Combination of plate and tower"), (4, "Plate")])
+    renovation_con = SelectField('Renovation Condition', choices = [
+        (1, 'Other'), (2, 'Rough'),(3, 'Simplicity'), (4, 'Hardcover')])
     elevator = BooleanField('*Elevator')
     subway = BooleanField('*Subway')
     district = SelectField('*District', choices = [(1, 'DongCheng'), (2, 'FengTai'),

@@ -8,9 +8,14 @@ from houseapp.static import data
 
 
 @app.route('/')
-@app.route('/homepage')
+@app.route('/homepage', methods=['GET'])
 def homepage():
-    return render_template('homepage.html')
+    owner = User.query
+    if not session.get("USERNAME") is None:
+        username = session.get("USERNAME")
+        user_in_db = User.query.filter(User.username == username).first()
+        return render_template('homepage.html', title='Home', user=user_in_db, owner=owner)
+    return render_template('homepage.html', owner=owner)
 
 
 @app.route('/details', methods=['GET','POST'])
@@ -57,7 +62,8 @@ def predict():
         if form.validate_on_submit():
             house = House(user_id = user_in_db.id, lng=form.lng.data, lat = form.lat.data, square = form.square.data,
                 living_room=form.living_room.data, drawing_room=form.drawing_room.data, kitchen=form.kitchen.data,
-                bathroom = form.bathroom.data, floor=form.floor.data, elevator=form.elevator.data, subway=form.subway.data,
+                bathroom = form.bathroom.data, floor=form.floor.data, building_type = form.building_type.data,
+                renovation_con = form.renovation_con.data, elevator=form.elevator.data, subway=form.subway.data,
                 district = form.district.data, status = 0)
             db.session.add(house)
             db.session.commit()
@@ -76,7 +82,6 @@ def login():
             flash('No user found with username: {}'.format(form.username.data))
             return redirect(url_for('login'))
         if check_password_hash(user_in_db.password_hash, form.password.data):
-            flash('Login success!')
             session["USERNAME"] = user_in_db.username
             print(session["USERNAME"])
             return redirect(url_for('homepage'))
@@ -108,8 +113,9 @@ def signup():
 
 @app.route('/logout')
 def logout():
-    session.pop("USERNAME", None)
-    return redirect(url_for('login'))
+    # session.pop("USERNAME", None)
+    # return redirect(url_for('login'))
+    return render_template('logout.html', title='Log Out')
 
 @app.route('/personal')
 def personal():

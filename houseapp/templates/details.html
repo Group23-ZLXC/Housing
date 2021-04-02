@@ -58,44 +58,89 @@
       </td>
     </tr>
 
-    <tr>
-      <td style="padding-left: 20px;vertical-align: middle;">Building Type:</td>
+  <tr>
+    <td style="padding-left: 20px;vertical-align: middle;">Building Type:</td>
+    {% if house.building_type == 1 %}
       <td width="20%" style="vertical-align: middle;"><b>Tower</b></td>
-    </tr>
-    <tr class="active">
-      <td style="padding-left: 20px;vertical-align: middle;">Square:</td>
-      <td width="20%" style="vertical-align: middle;"><b>{{ house.square }} sq metres</b></td>
-    </tr>
-    <tr>
-      <td style="padding-left: 20px;vertical-align: middle;">Floor:</td>
-      <td width="20%" style="vertical-align: middle;"><b>{{ house.floor }}</b></td>
-    </tr>
+    {% elif house.building_type == 2 %}
+      <td width="20%" style="vertical-align: middle;"><b>Bungalow</b></td>
+    {% elif house.building_type == 3 %}
+      <td width="20%" style="vertical-align: middle;"><b>Combination of plate and tower</b></td>
+    {% elif house.building_type == 4 %}
+      <td width="20%" style="vertical-align: middle;"><b>Plate</b></td>
+    {% endif %}
+  </tr>
 
-    <tr class="active">
-      <td style="padding-left: 20px;vertical-align: middle;">Renovation Type:</td>
+  <tr class="active">
+    <td style="padding-left: 20px;vertical-align: middle;">Square:</td>
+    <td width="20%" style="vertical-align: middle;"><b>{{ house.square }} sq metres</b></td>
+  </tr>
+  <tr>
+    <td style="padding-left: 20px;vertical-align: middle;">Floor:</td>
+    <td width="20%" style="vertical-align: middle;"><b>{{ house.floor }}</b></td>
+  </tr>
+
+  <tr class="active">
+    <td style="padding-left: 20px;vertical-align: middle;">Renovation Type:</td>
+    {% if house.renovation_con == 1 %}
+      <td width="20%" style="vertical-align: middle;"><b>Other</b></td>
+    {% elif house.renovation_con == 2 %}
+      <td width="20%" style="vertical-align: middle;"><b>Rough</b></td>
+    {% elif house.renovation_con == 3 %}
       <td width="20%" style="vertical-align: middle;"><b>Simplicity</b></td>
-    </tr>
-    <tr>
-      <td style="padding-left: 20px;vertical-align: middle;">Construct Time:</td>
-      <td width="20%" style="vertical-align: middle;"><b>2005</b></td>
-    </tr>
-  </table>
-  <div style="margin: 30px 70px 0px 50px;">
-    <div class="panel-group" id="accordion">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h4 class="panel-title">
-            <a data-toggle="collapse" data-parent="#accordion" href="#details">
-              <b style="font-size:3rem;">Details</b>
-            </a>
-          </h4>
-        </div>
-        <div id="details" class="panel-collapse collapse in">
-          <div class="panel-body">
-            <table class="table">
-              <tr>
-                <td style="padding-left: 20px;vertical-align: middle;">Total Price:</td>
-                {% if house.total_price %}
+    {% elif house.renovation_con == 4 %}
+      <td width="20%" style="vertical-align: middle;"><b>Hardcover</b></td>
+    {% endif %}
+  </tr>
+
+  <tr class="active">
+    <td style="padding-left: 20px;vertical-align: middle;">District:</td>
+    {% if house.district == 1 %}
+      <td width="20%" style="vertical-align: middle;"><b>DongCheng</b></td>
+    {% elif house.district == 2 %}
+      <td width="20%" style="vertical-align: middle;"><b>FengTai</b></td>
+    {% elif house.district == 3 %}
+      <td width="20%" style="vertical-align: middle;"><b>TongZhou</b></td>
+    {% elif house.district == 4 %}
+      <td width="20%" style="vertical-align: middle;"><b>DaXing</b></td>
+    {% elif house.district == 5 %}
+      <td width="20%" style="vertical-align: middle;"><b>FangShan</b></td>
+    {% elif house.district == 6 %}
+      <td width="20%" style="vertical-align: middle;"><b>ChangPing</b></td>
+    {% elif house.district == 7 %}
+      <td width="20%" style="vertical-align: middle;"><b>ChaoYang</b></td>
+    {% elif house.district == 8 %}
+      <td width="20%" style="vertical-align: middle;"><b>HaiDian</b></td>
+    {% elif house.district == 9 %}
+      <td width="20%" style="vertical-align: middle;"><b>XiCheng</b></td>
+    {% elif house.district == 10 %}
+      <td width="20%" style="vertical-align: middle;"><b>ShiJingShan</b></td>
+    {% elif house.district == 11 %}
+      <td width="20%" style="vertical-align: middle;"><b>PingGu</b></td>
+    {% elif house.district == 12 %}
+      <td width="20%" style="vertical-align: middle;"><b>MenTouGou</b></td>
+    {% elif house.district == 13 %}
+      <td width="20%" style="vertical-align: middle;"><b>ShunYi</b></td>
+    {% endif %}
+  </tr>
+
+</table>
+<div style="margin: 30px 70px 30px 50px;">
+  <div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#details">
+            <b style="font-size:3rem;">Details</b>
+          </a>
+        </h4>
+      </div>
+      <div id="details" class="panel-collapse collapse in">
+        <div class="panel-body">
+          <table class="table">
+            <tr>
+              <td style="padding-left: 20px;vertical-align: middle;">Total Price:</td>
+              {% if house.total_price %}
                 <td width="20%" style="vertical-align: middle;"><b>{{ house.total_price }}</b></td>
                 {% else %}
                 <td width="20%" style="vertical-align: middle;"><b>Pending</b></td>
@@ -109,52 +154,79 @@
                 <td width="20%" style="vertical-align: middle;"><b>{{ house.total_price / house.square }}</b></td>
                 {% else %}
                 <td width="20%" style="vertical-align: middle;"><b>Pending</b></td>
-                {% endif %}
-              </tr>
-              <tr>
-                <td style="padding-left: 20px;vertical-align: middle;">Square:</td>
-                <td width="20%" style="vertical-align: middle;"><b>{{ house.square }}</b></td>
-              </tr>
-              <tr class="active">
-                <td style="padding-left: 20px;vertical-align: middle;">Livingroom:</td>
-                <td width="20%" style="vertical-align: middle;"><b>{{ house.living_room }}</b></td>
-              </tr>
-              <tr>
-                <td style="padding-left: 20px;vertical-align: middle;">Drawingroom:</td>
-                <td width="20%" style="vertical-align: middle;"><b>{{ house.drawing_room }}</b></td>
-              </tr>
-              <tr class="active">
-                <td style="padding-left: 20px;vertical-align: middle;">Kitchen:</td>
-                <td width="20%" style="vertical-align: middle;"><b>{{ house.kitchen }}</b></td>
-              </tr>
-              <tr>
-                <td style="padding-left: 20px;vertical-align: middle;">Bathroom:</td>
-                <td width="20%" style="vertical-align: middle;"><b>{{ house.bathroom }}</b></td>
-              </tr>
-              <tr class="active">
-                <td style="padding-left: 20px;vertical-align: middle;">Floor:</td>
-                <td width="20%" style="vertical-align: middle;"><b>{{ house.floor }}</b></td>
-              </tr>
-              <tr>
-                <td style="padding-left: 20px;vertical-align: middle;">Building Type:</td>
+              {% endif %}
+            </tr>
+            <tr>
+              <td style="padding-left: 20px;vertical-align: middle;">Square:</td>
+              <td width="20%" style="vertical-align: middle;"><b>{{ house.square }}</b></td>
+            </tr>
+            <tr class="active">
+              <td style="padding-left: 20px;vertical-align: middle;">Livingroom:</td>
+              <td width="20%" style="vertical-align: middle;"><b>{{ house.living_room }}</b></td>
+            </tr>
+            <tr>
+              <td style="padding-left: 20px;vertical-align: middle;">Drawingroom:</td>
+              <td width="20%" style="vertical-align: middle;"><b>{{ house.drawing_room }}</b></td>
+            </tr>
+            <tr class="active">
+              <td style="padding-left: 20px;vertical-align: middle;">Kitchen:</td>
+              <td width="20%" style="vertical-align: middle;"><b>{{ house.kitchen }}</b></td>
+            </tr>
+            <tr>
+              <td style="padding-left: 20px;vertical-align: middle;">Bathroom:</td>
+              <td width="20%" style="vertical-align: middle;"><b>{{ house.bathroom }}</b></td>
+            </tr>
+            <tr class="active">
+              <td style="padding-left: 20px;vertical-align: middle;">Floor:</td>
+              <td width="20%" style="vertical-align: middle;"><b>{{ house.floor }}</b></td>
+            </tr>
+            <tr>
+              <td style="padding-left: 20px;vertical-align: middle;">Elevator: </td>
+              {% if house.elevator == 1 %}
+                <td width="20%" style="vertical-align: middle;"><b>Available</b></td>
+              {% elif house.elevator == 2 %}
+                <td width="20%" style="vertical-align: middle;"><b>Not Available</b></td>
+              {% endif %}
+            </tr>
+            <tr>
+              <td style="padding-left: 20px;vertical-align: middle;">Subway: </td>
+              {% if house.elevator == 1 %}
+                <td width="20%" style="vertical-align: middle;"><b>Available</b></td>
+              {% elif house.elevator == 2 %}
+                <td width="20%" style="vertical-align: middle;"><b>Not Available</b></td>
+              {% endif %}
+            </tr>
+
+            <tr>
+              <td style="padding-left: 20px;vertical-align: middle;">Building Type:</td>
+              {% if house.building_type == 1 %}
                 <td width="20%" style="vertical-align: middle;"><b>Tower</b></td>
-              </tr>
-              <tr class="active">
-                <td style="padding-left: 20px;vertical-align: middle;">Construct Time:</td>
-                <td width="20%" style="vertical-align: middle;"><b>2005</b></td>
-              </tr>
-              <tr>
-                <td style="padding-left: 20px;vertical-align: middle;">Renovation Type:</td>
+              {% elif house.building_type == 2 %}
+                <td width="20%" style="vertical-align: middle;"><b>Bungalow</b></td>
+              {% elif house.building_type == 3 %}
+                <td width="20%" style="vertical-align: middle;"><b>Combination of plate and tower</b></td>
+              {% elif house.building_type == 4 %}
+                <td width="20%" style="vertical-align: middle;"><b>Plate</b></td>
+              {% endif %}
+            </tr>
+
+            <tr>
+              <td style="padding-left: 20px;vertical-align: middle;">Renovation Type:</td>
+              {% if house.renovation_con == 1 %}
+                <td width="20%" style="vertical-align: middle;"><b>Other</b></td>
+              {% elif house.renovation_con == 2 %}
+                <td width="20%" style="vertical-align: middle;"><b>Rough</b></td>
+              {% elif house.renovation_con == 3 %}
                 <td width="20%" style="vertical-align: middle;"><b>Simplicity</b></td>
-              </tr>
-              <tr class="active">
-                <td style="padding-left: 20px;vertical-align: middle;">Building Structure:</td>
-                <td width="20%" style="vertical-align: middle;"><b>Steel-concrete composite</b></td>
-              </tr>
-            </table>
-          </div>
+              {% elif house.renovation_con == 4 %}
+                <td width="20%" style="vertical-align: middle;"><b>Hardcover</b></td>
+              {% endif %}
+            </tr>
+
+          </table>
         </div>
       </div>
+    </div>
     </div>
 
     <div class="panel-group" id="accordion">
@@ -187,8 +259,7 @@
               <tr>
                 <td width="20%" style="color:steelblue;"><span
                     class="glyphicon glyphicon-user"></span><b>&nbsp;&nbsp;&nbsp;{{ owner.username }}</b></td>
-                <td style="color:steelblue"><span class="glyphicon glyphicon-envelope"></span><b>&nbsp;&nbsp;&nbsp;{{
-                    owner.email }}</b></td>
+                <td style="color:steelblue"><span class="glyphicon glyphicon-envelope"></span><b>&nbsp;&nbsp;&nbsp;{{ owner.email }}</b></td>
               </tr>
             </table>
           </div>
@@ -229,26 +300,29 @@
                   {{ form.comment.label }}<br>
                   {{ form.comment(rows=8, cols=80, class="form-control") }}
 
-                  {% for error in form.comment.errors %}
-                  <span style="color: red;">[{{ error }}]</span>
-                  {% endfor %}
-                </p>
-                <p align="right">{{ form.submit(class="btn btn-defult") }}</p>
-                {% else %}
-                <p style="color: red; "><b>You have to log in to comment</b></p><br>
-                <p><span>Already have an account?</span>
-                  <a href="{{ url_for('login') }}"><span class="glyphicon glyphicon-user"></span> Log in</a>
-                </p><br>
-                <p><span>Create an account? </span>
-                  <a href="{{ url_for('signup') }}"><span class="glyphicon glyphicon-user"></span> Register</a>
-                </p>
-                {% endif %}
-            </div>
+                {% for error in form.comment.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+              </p>
+              <p align="right">{{ form.submit(class="btn btn-defult") }}</p>
+            {% else %}
+              <p style="color: red; "><b>You have to log in to comment</b></p><br>
+              <p><span>Already have an account?</span>
+                <a href="{{ url_for('login') }}"><span class="glyphicon glyphicon-user"></span> Log in</a>
+              </p><br>
+              <p><span>Create an account? </span>
+                <a href="{{ url_for('signup') }}"><span class="glyphicon glyphicon-user"></span> Register</a>
+              </p>
+            {% endif %}
           </div>
         </div>
       </div>
     </div>
+    </div>
+    </div>
 </body>
+
+
 <style>
   .comment {
     background-color: rgb(235, 235, 235);
