@@ -9,230 +9,265 @@
   <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
   <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<table class="table table-condensed" style="margin-top: 70px; margin-left: 50px;margin-right: 50px; width: 90%;">
-  <tr>
-    <td rowspan="7" width="50%">
-      <div id="myCarousel" class="carousel slide">
-        <!-- 轮播（Carousel）指标 -->
-        <ol class="carousel-indicators">
-          <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-          <li data-target="#myCarousel" data-slide-to="1"></li>
-          <li data-target="#myCarousel" data-slide-to="2"></li>
-        </ol>
-        <!-- 轮播（Carousel）项目 -->
-        <div class="carousel-inner">
-          <div class="item active">
-            <img src="{{ url_for('static', filename='img/house1.jpg') }}" alt="house1" width="100%" class="img-rounded">
+
+<body>
+  <table class="table table-condensed" style="margin-top: 70px; margin-left: 50px;margin-right: 50px; width: 90%;">
+    <tr>
+      <td rowspan="7" width="50%">
+        <div id="myCarousel" class="carousel slide">
+          <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+          </ol>
+          <div class="carousel-inner">
+            <div class="item active">
+              <img src="{{ url_for('static', filename='img/house1.jpg') }}" alt="house1" width="100%"
+                class="img-rounded">
+            </div>
+            <div class="item">
+              <img src="{{ url_for('static', filename='img/house2.jpg') }}" alt="house2" width="100%"
+                class="img-rounded">
+            </div>
+            <div class="item">
+              <img src="{{ url_for('static', filename='img/house3.jpg') }}" alt="house3" width="100%"
+                class="img-rounded">
+            </div>
           </div>
-          <div class="item">
-            <img src="{{ url_for('static', filename='img/house2.jpg') }}" alt="house2" width="100%" class="img-rounded">
-          </div>
-          <div class="item">
-            <img src="{{ url_for('static', filename='img/house3.jpg') }}" alt="house3" width="100%" class="img-rounded">
-          </div>
+          <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
         </div>
-        <!-- 轮播（Carousel）导航 -->
-        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-          <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-          <span class="sr-only">Previous</span>
-        </a>
-        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-          <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-          <span class="sr-only">Next</span>
-        </a>
-      </div>
-    </td>
-    <td colspan="2" style="vertical-align: top; padding-left: 20px; height: 30%;">
-      {% if house.total_price %}
+      </td>
+      <td colspan="2" style="vertical-align: top; padding-left: 20px; height: 30%;">
+        {% if house.total_price %}
         <h2 style="color: red;"><strong>{{ house.total_price }}</strong></h2>
-      {% else %}
+        {% else %}
         <h2 style="color: red;"><strong>Pending</strong></h2>
-      {% endif %}
-      {% if house.total_price %}
+        {% endif %}
+        {% if house.total_price %}
         <p style="color: darkgray; font-size: 15px;">{{ house.total_price / house.square }}</p>
-      {% else %}
+        {% else %}
         <p style="color: darkgray; font-size: 15px;">Pending</p>
-      {% endif %}
-    </td>
-  </tr>
+        {% endif %}
+      </td>
+    </tr>
 
-  <tr>
-    <td style="padding-left: 20px;vertical-align: middle;">Building Type:</td>
-    <td width="20%" style="vertical-align: middle;"><b>Tower</b></td>
-  </tr>
-  <tr class="active">
-    <td style="padding-left: 20px;vertical-align: middle;">Square:</td>
-    <td width="20%" style="vertical-align: middle;"><b>{{ house.square }} sq metres</b></td>
-  </tr>
-  <tr>
-    <td style="padding-left: 20px;vertical-align: middle;">Floor:</td>
-    <td width="20%" style="vertical-align: middle;"><b>{{ house.floor }}</b></td>
-  </tr>
+    <tr>
+      <td style="padding-left: 20px;vertical-align: middle;">Building Type:</td>
+      <td width="20%" style="vertical-align: middle;"><b>Tower</b></td>
+    </tr>
+    <tr class="active">
+      <td style="padding-left: 20px;vertical-align: middle;">Square:</td>
+      <td width="20%" style="vertical-align: middle;"><b>{{ house.square }} sq metres</b></td>
+    </tr>
+    <tr>
+      <td style="padding-left: 20px;vertical-align: middle;">Floor:</td>
+      <td width="20%" style="vertical-align: middle;"><b>{{ house.floor }}</b></td>
+    </tr>
 
-  <tr class="active">
-    <td style="padding-left: 20px;vertical-align: middle;">Renovation Type:</td>
-    <td width="20%" style="vertical-align: middle;"><b>Simplicity</b></td>
-  </tr>
-  <tr>
-    <td style="padding-left: 20px;vertical-align: middle;">Construct Time:</td>
-    <td width="20%" style="vertical-align: middle;"><b>2005</b></td>
-  </tr>
-</table>
-<div style="margin: 30px 70px 30px 50px;">
-  <div class="panel-group" id="accordion">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" href="#details">
-            <b style="font-size:3rem;">Details</b>
-          </a>
-        </h4>
-      </div>
-      <div id="details" class="panel-collapse collapse in">
-        <div class="panel-body">
-          <table class="table">
-            <tr>
-              <td style="padding-left: 20px;vertical-align: middle;">Total Price:</td>
-              {% if house.total_price %}
-                <td width="20%" style="vertical-align: middle;"><b>{{ house.total_price }}</b></td>
-              {% else %}
-                <td width="20%" style="vertical-align: middle;"><b>Pending</b></td>
-              {% endif %}
-              <td rowspan="12" width="50%" align="center" style="border: 0rem;vertical-align: middle;"><img src="{{ url_for('static', filename='img/house_inside.png') }}"
-                  alt="house_inside" width="80%"></td>
-            </tr>
-            <tr class="active">
-              <td style="padding-left: 20px;vertical-align: middle;">Price:</td>
-              {% if house.total_price %}
-                <td width="20%" style="vertical-align: middle;"><b>{{ house.total_price / house.square }}</b></td>
-              {% else %}
-                <td width="20%" style="vertical-align: middle;"><b>Pending</b></td>
-              {% endif %}
-            </tr>
-            <tr>
-              <td style="padding-left: 20px;vertical-align: middle;">Square:</td>
-              <td width="20%" style="vertical-align: middle;"><b>{{ house.square }}</b></td>
-            </tr>
-            <tr class="active">
-              <td style="padding-left: 20px;vertical-align: middle;">Livingroom:</td>
-              <td width="20%" style="vertical-align: middle;"><b>{{ house.living_room }}</b></td>
-            </tr>
-            <tr>
-              <td style="padding-left: 20px;vertical-align: middle;">Drawingroom:</td>
-              <td width="20%" style="vertical-align: middle;"><b>{{ house.drawing_room }}</b></td>
-            </tr>
-            <tr class="active">
-              <td style="padding-left: 20px;vertical-align: middle;">Kitchen:</td>
-              <td width="20%" style="vertical-align: middle;"><b>{{ house.kitchen }}</b></td>
-            </tr>
-            <tr>
-              <td style="padding-left: 20px;vertical-align: middle;">Bathroom:</td>
-              <td width="20%" style="vertical-align: middle;"><b>{{ house.bathroom }}</b></td>
-            </tr>
-            <tr class="active">
-              <td style="padding-left: 20px;vertical-align: middle;">Floor:</td>
-              <td width="20%" style="vertical-align: middle;"><b>{{ house.floor }}</b></td>
-            </tr>
-            <tr>
-              <td style="padding-left: 20px;vertical-align: middle;">Building Type:</td>
-              <td width="20%" style="vertical-align: middle;"><b>Tower</b></td>
-            </tr>
-            <tr class="active">
-              <td style="padding-left: 20px;vertical-align: middle;">Construct Time:</td>
-              <td width="20%" style="vertical-align: middle;"><b>2005</b></td>
-            </tr>
-            <tr>
-              <td style="padding-left: 20px;vertical-align: middle;">Renovation Type:</td>
-              <td width="20%" style="vertical-align: middle;"><b>Simplicity</b></td>
-            </tr>
-            <tr class="active">
-              <td style="padding-left: 20px;vertical-align: middle;">Building Structure:</td>
-              <td width="20%" style="vertical-align: middle;"><b>Steel-concrete composite</b></td>
-            </tr>
-          </table>
+    <tr class="active">
+      <td style="padding-left: 20px;vertical-align: middle;">Renovation Type:</td>
+      <td width="20%" style="vertical-align: middle;"><b>Simplicity</b></td>
+    </tr>
+    <tr>
+      <td style="padding-left: 20px;vertical-align: middle;">Construct Time:</td>
+      <td width="20%" style="vertical-align: middle;"><b>2005</b></td>
+    </tr>
+  </table>
+  <div style="margin: 30px 70px 0px 50px;">
+    <div class="panel-group" id="accordion">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#details">
+              <b style="font-size:3rem;">Details</b>
+            </a>
+          </h4>
         </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="panel-group" id="accordion">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" href="#recommendation">
-            <b style="font-size:3rem;">Recommendation</b>
-          </a>
-        </h4>
-      </div>
-      <div id="recommendation" class="panel-collapse collapse in">
-        <div class="panel-body">
-          <ul>
-            <li><b>Housing features:</b> good location, low total price, convenient transportation around. This house is wider than the
-              same area of the house, the sense of space is more open, living feeling more comfortable.</li>
-            <li><b>Community environment:</b> the community is well closed, green rate is high, there is a square for everyone to
-              leisure and entertainment. There are supermarkets, laundries, nail salons and beauty salons around the community.
-              Surrounding shopping malls and hospitals, convenient travel.</li>
-          </ul>
-        </div>
-        <hr>
-        <div id="contact">
-          <h1>Contact Me</h1>
-          <ul>
-            <li>Owner: <b>{{ owner.username }}</b></li>
-            <li>Email: <b>{{ owner.email }}</b></li>
-          </ul>
-      </div>
-      <hr>
-    </div>
-  </div>
-  <div class="panel-group" id="accordion">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" href="#comments">
-            <b style="font-size:3rem;">Comments</b>
-          </a>
-        </h4>
-      </div>
-      <div id="comments" class="panel-collapse collapse in">
-        <div class="panel-body">
-          <ul>
-            <li>UserA <br>
-              It's a very nice apartment. When could I go and see it in person?
-            </li>
-            <li>UserB <br>
-              Could you please upload more pictures?
-            </li>
-            <li>UserC <br>
-              How is the sound insulation of this house?
-            </li>
-          </ul>
+        <div id="details" class="panel-collapse collapse in">
           <div class="panel-body">
-            {% if user %}
-            <form action="" method="post" novalidate>
-              {{ form.hidden_tag() }}
-              <p>
-                {{ form.comment.label }}<br>
-                {{ form.comment(rows=8, cols=80, class="form-control") }}
-
-                {% for error in form.comment.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-                {% endfor %}
-              </p>
-              <p align="right">{{ form.submit(class="btn btn-defult") }}</p>
-              {% else %}
-              <p style="color: red; "><b>You have to log in to comment</b></p><br>
-              <p><span>Already have an account?</span>
-                <a href="{{ url_for('login') }}"><span class="glyphicon glyphicon-user"></span> Log in</a>
-              </p><br>
-              <p><span>Create an account? </span>
-                <a href="{{ url_for('signup') }}"><span class="glyphicon glyphicon-user"></span> Register</a>
-              </p>
-              {% endif %}
+            <table class="table">
+              <tr>
+                <td style="padding-left: 20px;vertical-align: middle;">Total Price:</td>
+                {% if house.total_price %}
+                <td width="20%" style="vertical-align: middle;"><b>{{ house.total_price }}</b></td>
+                {% else %}
+                <td width="20%" style="vertical-align: middle;"><b>Pending</b></td>
+                {% endif %}
+                <td rowspan="12" width="50%" align="center" style="border: 0rem;vertical-align: middle;"><img
+                    src="{{ url_for('static', filename='img/house_inside.png') }}" alt="house_inside" width="80%"></td>
+              </tr>
+              <tr class="active">
+                <td style="padding-left: 20px;vertical-align: middle;">Price:</td>
+                {% if house.total_price %}
+                <td width="20%" style="vertical-align: middle;"><b>{{ house.total_price / house.square }}</b></td>
+                {% else %}
+                <td width="20%" style="vertical-align: middle;"><b>Pending</b></td>
+                {% endif %}
+              </tr>
+              <tr>
+                <td style="padding-left: 20px;vertical-align: middle;">Square:</td>
+                <td width="20%" style="vertical-align: middle;"><b>{{ house.square }}</b></td>
+              </tr>
+              <tr class="active">
+                <td style="padding-left: 20px;vertical-align: middle;">Livingroom:</td>
+                <td width="20%" style="vertical-align: middle;"><b>{{ house.living_room }}</b></td>
+              </tr>
+              <tr>
+                <td style="padding-left: 20px;vertical-align: middle;">Drawingroom:</td>
+                <td width="20%" style="vertical-align: middle;"><b>{{ house.drawing_room }}</b></td>
+              </tr>
+              <tr class="active">
+                <td style="padding-left: 20px;vertical-align: middle;">Kitchen:</td>
+                <td width="20%" style="vertical-align: middle;"><b>{{ house.kitchen }}</b></td>
+              </tr>
+              <tr>
+                <td style="padding-left: 20px;vertical-align: middle;">Bathroom:</td>
+                <td width="20%" style="vertical-align: middle;"><b>{{ house.bathroom }}</b></td>
+              </tr>
+              <tr class="active">
+                <td style="padding-left: 20px;vertical-align: middle;">Floor:</td>
+                <td width="20%" style="vertical-align: middle;"><b>{{ house.floor }}</b></td>
+              </tr>
+              <tr>
+                <td style="padding-left: 20px;vertical-align: middle;">Building Type:</td>
+                <td width="20%" style="vertical-align: middle;"><b>Tower</b></td>
+              </tr>
+              <tr class="active">
+                <td style="padding-left: 20px;vertical-align: middle;">Construct Time:</td>
+                <td width="20%" style="vertical-align: middle;"><b>2005</b></td>
+              </tr>
+              <tr>
+                <td style="padding-left: 20px;vertical-align: middle;">Renovation Type:</td>
+                <td width="20%" style="vertical-align: middle;"><b>Simplicity</b></td>
+              </tr>
+              <tr class="active">
+                <td style="padding-left: 20px;vertical-align: middle;">Building Structure:</td>
+                <td width="20%" style="vertical-align: middle;"><b>Steel-concrete composite</b></td>
+              </tr>
+            </table>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
+
+    <div class="panel-group" id="accordion">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#recommendation">
+              <b style="font-size:3rem;">Recommendation</b>
+            </a>
+          </h4>
+        </div>
+        <div id="recommendation" class="panel-collapse collapse in">
+          <div class="panel-body">
+            <ul>
+              <li><b>Housing features:</b> good location, low total price, convenient transportation around. This house
+                is
+                wider than the
+                same area of the house, the sense of space is more open, living feeling more comfortable.</li>
+              <li><b>Community environment:</b> the community is well closed, green rate is high, there is a square for
+                everyone to
+                leisure and entertainment. There are supermarkets, laundries, nail salons and beauty salons around the
+                community.
+                Surrounding shopping malls and hospitals, convenient travel.</li>
+            </ul>
+          </div>
+          <div id="contact" style="margin-left: 30px;margin-right: 30px;">
+            <p style="font-size: large;"><b>Contact Agent</b></p>
+            <hr>
+            <table width="60%" style="margin-bottom: 30px;">
+              <tr>
+                <td width="20%" style="color:steelblue;"><span
+                    class="glyphicon glyphicon-user"></span><b>&nbsp;&nbsp;&nbsp;{{ owner.username }}</b></td>
+                <td style="color:steelblue"><span class="glyphicon glyphicon-envelope"></span><b>&nbsp;&nbsp;&nbsp;{{
+                    owner.email }}</b></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel-group" id="accordion" style="margin-top: 20px;margin-bottom: 50px;">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#comments">
+              <b style="font-size:3rem;">Comments</b>
+            </a>
+          </h4>
+        </div>
+        <div id="comments" class="panel-collapse collapse in">
+          <div class="panel-body">
+            <table style="margin-left: 20px; margin-right: 20px;">
+              <tr>
+                <td width="15%"><span class="glyphicon glyphicon-user"></span><b>&nbsp;&nbsp;UserA</b></td>
+                <td class="comment">It's a very nice apartment. When could I go and see it in person?</td>
+              </tr>
+              <tr>
+                <td width="15%"><span class="glyphicon glyphicon-user"></span><b>&nbsp;&nbsp;UserB</b></td>
+                <td class="comment">Could you please upload more pictures?</td>
+              </tr>
+              <tr>
+                <td width="15%"><span class="glyphicon glyphicon-user"></span><b>&nbsp;&nbsp;UserC</b></td>
+                <td class="comment">How is the sound insulation of this house?</td>
+              </tr>
+            </table>
+            <hr style="margin-right: 20px;margin-left: 20px;">
+            <div class="panel-body">
+              {% if user %}
+              <form action="" method="post" novalidate>
+                {{ form.hidden_tag() }}
+                <p>
+                  {{ form.comment.label }}<br>
+                  {{ form.comment(rows=8, cols=80, class="form-control") }}
+
+                  {% for error in form.comment.errors %}
+                  <span style="color: red;">[{{ error }}]</span>
+                  {% endfor %}
+                </p>
+                <p align="right">{{ form.submit(class="btn btn-defult") }}</p>
+                {% else %}
+                <p style="color: red; "><b>You have to log in to comment</b></p><br>
+                <p><span>Already have an account?</span>
+                  <a href="{{ url_for('login') }}"><span class="glyphicon glyphicon-user"></span> Log in</a>
+                </p><br>
+                <p><span>Create an account? </span>
+                  <a href="{{ url_for('signup') }}"><span class="glyphicon glyphicon-user"></span> Register</a>
+                </p>
+                {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
+<style>
+  .comment {
+    background-color: rgb(235, 235, 235);
+    padding: 5px 8px;
+    display: inline-block;
+    border-radius: 4px;
+    margin: 10px 0 10px 10px;
+    position: relative;
+
+  }
+
+  .comment::after {
+    content: '';
+    border: 8px solid #ffffff00;
+    border-right: 8px solid rgb(235, 235, 235);
+    position: absolute;
+    top: 6px;
+    left: -16px;
+  }
+</style>
+{% include 'footer.html' %}
 {% endblock %}

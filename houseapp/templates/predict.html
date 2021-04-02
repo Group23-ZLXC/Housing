@@ -2,162 +2,148 @@
 
 {% block content %}
 
+<body>
+    <div style="margin-top: 50px;" align="center">
+        <h2 style="text-shadow: 5px 5px 5px rgb(172,172,172);"><span
+                class="glyphicon glyphicon-backward"></span>&nbsp;&nbsp;<b>Predict Your House
+                Price</b>&nbsp;&nbsp;<span class="glyphicon glyphicon-forward"></span></h2>
 
-<div style="margin-top: 80px; margin-left: 40px;" >
-<h1> Predict Your House Price</h1>
-<hr>
-<form action="" method="post" novalidate>
-    {{ form.hidden_tag() }}
-    <p>{{ form.lng.label }} (if available): {{ form.lng() }}</p>
-    <p>{{ form.lat.label }} (if available): {{ form.lat() }}</p>
-    <p>{{ form.square.label }}: {{ form.square }}
-      {% for error in form.square.errors %}
-      <span style="color: red;">[{{ error }}]</span>
-      {% endfor %}
-    </p>
-    <p>{{ form.living_room.label }}: {{ form.living_room() }}
-      {% for error in form.living_room.errors %}
-      <span style="color: red;">[{{ error }}]</span>
-      {% endfor %}
-    </p>
-    <p>{{ form.drawing_room.label }}: {{ form.drawing_room() }}
-      {% for error in form.drawing_room.errors %}
-      <span style="color: red;">[{{ error }}]</span>
-      {% endfor %}
-    </p>
-    <p>{{ form.kitchen.label }}: {{ form.kitchen() }}
-      {% for error in form.kitchen.errors %}
-      <span style="color: red;">[{{ error }}]</span>
-      {% endfor %}
-    </p>
-    <p>{{ form.bathroom.label }}: {{ form.bathroom() }}
-      {% for error in form.bathroom.errors %}
-      <span style="color: red;">[{{ error }}]</span>
-      {% endfor %}
-    </p>
-    <p>{{ form.floor.label }}: {{ form.floor() }}
-      {% for error in form.floor.errors %}
-      <span style="color: red;">[{{ error }}]</span>
-      {% endfor %}
-    </p>
-    <p>{{ form.elevator.label }}: {{ form.elevator() }}
-      {% for error in form.elevator.errors %}
-      <span style="color: red;">[{{ error }}]</span>
-      {% endfor %}
-    </p>
-    <p>{{ form.subway.label }}: {{ form.subway() }}
-      {% for error in form.subway.errors %}
-      <span style="color: red;">[{{ error }}]</span>
-      {% endfor %}
-    </p>
-    <p>{{ form.district.label }}: {{ form.district() }}
-      {% for error in form.district.errors %}
-      <span style="color: red;">[{{ error }}]</span>
-      {% endfor %}
-    </p>
-    {% if user %}
-      <p>{{ form.submit() }}</p>
-    {% else %}
-      <p style="color: red; "><b>You have to log in to predict</b></p><br>
-      <p><span>Already have an account?</span>
-        <a href="{{ url_for('login') }}"><span class="glyphicon glyphicon-user"></span> Log in</a>
-      </p><br>
-      <p><span>Create an account? </span>
-        <a href="{{ url_for('signup') }}"><span class="glyphicon glyphicon-user"></span> Register</a>
-      </p>
-    {% endif %}
-</form>
-</div>
+        <form class="form-horizontal" role="form" action="" method="post" novalidate>
+            {{ form.hidden_tag() }}
+            <div class="input-group" style="width: 60%; margin-top: 20px;box-shadow: 5px 5px 5px rgb(172,172,172);">
+                <span class="input-group-addon"><b>Lng</b></span>
+                {{ form.lng(class_="form-control", placeholder="lng") }}
+            </div>
+            <div class="input-group" style="width: 60%; margin-top: 20px;box-shadow: 5px 5px 5px rgb(172,172,172);">
+                <span class="input-group-addon"><b>Lat</b></span>
+                {{ form.lat(class_="form-control", placeholder="lat") }}
+            </div>
+            <p>
+            <div class="input-group" style="width: 60%; margin-top: 20px;box-shadow: 5px 5px 5px rgb(172,172,172);">
+                <span class="input-group-addon"><b>*Square</b></span>
+                {{ form.lat(class_="form-control", placeholder="square") }}
+            </div>
+            {% for error in form.square.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+            </p>
+            <p>
+            <div class="input-group" style="width: 60%; margin-top: 20px;box-shadow: 5px 5px 5px rgb(172,172,172);">
+                <span class="input-group-addon"><b>*Living Room</b></span>
+                {{ form.living_room(class_="form-control") }}
+            </div>
+            {% for error in form.living_room.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+            </p>
+            <p>
+            <p>
+            <div class="input-group" style="width: 60%; margin-top: 20px;box-shadow: 5px 5px 5px rgb(172,172,172);">
+                <span class="input-group-addon"><b>*Drawng Room</b></span>
+                {{ form.drawing_room(class_="form-control") }}
+            </div>
+            {% for error in form.drawing_room.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+            </p>
+            <p>
+            <p>
+            <div class="input-group" style="width: 60%; margin-top: 20px;box-shadow: 5px 5px 5px rgb(172,172,172);">
+                <span class="input-group-addon"><b>*Kitchen</b></span>
+                {{ form.kitchen(class_="form-control") }}
+            </div>
+            {% for error in form.kitchen.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+            </p>
+            <p>
+            <div class="input-group" style="width: 60%; margin-top: 20px;box-shadow: 5px 5px 5px rgb(172,172,172);">
+                <span class="input-group-addon"><b>*Bathroom</b></span>
+                {{ form.bathroom(class_="form-control") }}
+            </div>
+            {% for error in form.bathroom.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+            </p>
+            <div class="input-group" style="width: 60%; margin-top: 20px;box-shadow: 5px 5px 5px rgb(172,172,172);">
+                <span class="input-group-addon"><b>*Floor</b></span>
+                {{ form.floor(class_="form-control") }}
+            </div>
+            {% for error in form.floor.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+            </p>
+
+            <p>
+            <div class="input-group" style="width: 60%; margin-top: 20px;box-shadow: 5px 5px 5px rgb(172,172,172);">
+                <span class="input-group-addon"><b>*District</b></span>
+                {{ form.district(class_="form-control") }}
+            </div>
+            {% for error in form.district.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+            </p>
+            <table width="60%" style="margin-top: 20px;">
+                <tr>
+                    <td width="50%" align="center" style="text-shadow: 5px 5px 5px rgb(172,172,172);"><label
+                            class="checkbox-inline">
+                            <p>
+                                {{ form.elevator(class="checkbox-inline") }} <b>*Elevator</b>
+
+                                {% for error in form.elevator.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </p>
+                        </label></td>
+                    <td width="50%" align="center" style="text-shadow: 5px 5px 5px rgb(172,172,172);">
+                        <label class="checkbox-inline">
+                            <p>
+
+                                {{ form.subway(class="checkbox-inline") }}<b>*Subway</b>
+
+                                {% for error in form.subway.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </p>
+                        </label>
+                    </td>
+                </tr>
+            </table>
 
 
-
-
-
-
-<div style="margin: 0 30px 10px 30px;">
-    <hr>
-    <table>
-        <tr>
-            <td>
-                <h3><b>The forecast range of price is about</b></h3>
-            </td>
-            <td>
-                <h3 style="color: red; padding-left: 20px;"><b>￥xxx,xxx,xxxx</b></h3>
-            </td>
-
-            <td>
-                <h3 style="padding-left: 20px; padding-right: 20px;"><b>to</b></h3>
-            </td>
-            <td>
-                <h3 style="color: red;"><b>￥xxx,xxx,xxxx</b></h3>
-            </td>
-
-        </tr>
-    </table>
-
-
-    <h3><b>The following houses are similar to yours:</b></h3>
-    <hr>
-    <table width="100%">
-        <tr>
-            <td rowspan="3" width="250px">
-                <a href="" id="image"><img src="{{ url_for('static', filename='img/house.jpg') }}" alt="house"
-                        width="200px" height="150px" onclick="details()" class="img-rounded" /></a>
-            </td>
-            <td style="font-size: 35px; vertical-align: top;"><strong>Tower</strong></td>
-            <td rowspan="3" align="center" style="font-size: 25px;"><strong style="color: red;">
-                    ¥4,150,000.00</strong><br><br>
-                <p style="color:grey;font-size: 13px; vertical-align: top;">¥31,680/sq metres</p>
-            </td>
-        </tr>
-        <tr>
-            <td style="font-size: 20px;">Address:xxxx-xxx-xxxx</td>
-        </tr>
-        <tr>
-            <td>Type:xxx/xxxx/xxx</td>
-        </tr>
-    </table>
-    <hr>
-    <table width="100%">
-        <tr>
-            <td rowspan="3" width="250px">
-                <a href="" id="image"><img src="{{ url_for('static', filename='img/house.jpg') }}" alt="house"
-                        width="200px" height="150px" onclick="details()" class="img-rounded" /></a>
-            </td>
-            <td style="font-size: 35px; vertical-align: top;"><strong>Tower</strong></td>
-            <td rowspan="3" align="center" style="font-size: 25px;"><strong style="color: red;">
-                    ¥4,150,000.00</strong><br><br>
-                <p style="color:grey;font-size: 13px; vertical-align: top;">¥31,680/sq metres</p>
-            </td>
-        </tr>
-        <tr>
-            <td style="font-size: 20px;">Address:xxxx-xxx-xxxx</td>
-        </tr>
-        <tr>
-            <td>Type:xxx/xxxx/xxx</td>
-        </tr>
-    </table>
-    <hr>
-    <table width="100%">
-        <tr>
-            <td rowspan="3" width="250px">
-                <a href="" id="image"><img src="{{ url_for('static', filename='img/house.jpg') }}" alt="house"
-                        width="200px" height="150px" onclick="details()" class="img-rounded" /></a>
-            </td>
-            <td style="font-size: 35px; vertical-align: top;"><strong>Tower</strong></td>
-            <td rowspan="3" align="center" style="font-size: 25px;"><strong style="color: red;">
-                    ¥4,150,000.00</strong><br><br>
-                <p style="color:grey;font-size: 13px; vertical-align: top;">¥31,680/sq metres</p>
-            </td>
-        </tr>
-        <tr>
-            <td style="font-size: 20px;">Address:xxxx-xxx-xxxx</td>
-        </tr>
-        <tr>
-            <td>Type:xxx/xxxx/xxx</td>
-        </tr>
-    </table>
-</div>
+            {% if user %}
+            <div style="width: 60%; margin-top: 10px;margin-bottom:40px;box-shadow: 5px 5px 5px rgb(172,172,172);">
+                <p>{{ form.submit(class="btn btn-defult btn-block", width="100%") }}</p>
+            </div>
+            {% else %}
+            <br>
+            <p style="color: red;font-size: 1.5rem; "><b>You have to log in to predict</b></p><br>
+            <table width="60%">
+                <tr>
+                    <td align="left">
+                        <p><span>Already have an account?</span>
+                            <a href="{{ url_for('login') }}"><span class="glyphicon glyphicon-user"></span> Log in</a>
+                        </p>
+                    </td>
+                    <td align="right">
+                        <p><span>Create an account? </span>
+                            <a href="{{ url_for('signup') }}"><span class="glyphicon glyphicon-user"></span>
+                                Register</a>
+                        </p>
+                    </td>
+                </tr>
+            </table>
+            {% endif %}
+        </form>
+    </div>
+</body>
+<style>
+    body {
+        background-repeat: no-repeat;
+        background-image: url("../static/img/predict.png");
+        background-size: 100% 100%;
+    }
+</style>
 <script>
     var input = document.querySelectorAll('input')
     var img = document.getElementById('image')
@@ -176,4 +162,5 @@
     }
 
 </script>
+{% include 'footer.html' %}
 {% endblock %}

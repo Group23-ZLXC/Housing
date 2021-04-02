@@ -1,37 +1,218 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
     <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>OurHouse</title>
-
-
-
-
 </head>
+
 <body>
-    <div>
-        <h1>OurHouse</h1>
-    </div>
-    <div align="right">
-        <a style="margin-right: 20px" href="{{ url_for('login') }}">Log in</a>
-        <a href="{{ url_for('signup') }}">Sign up</a>
-    </div>
-    <hr>
+    <table style="color:rgb(241, 241, 241); margin-left: 30px; margin-top: 40px;width: 95%;">
+        <tr>
+            <td style="width: 22.5%;">
+                <p style="font-size: 4rem;"><span class="glyphicon glyphicon-home"></span>&nbsp;OurHouse</p>
+            </td>
+            <td style="width: 7.5%;">
+                <p
+                    style="font-size: 1.5rem;border: 2px solid rgb(241, 241, 241);border-radius: 30px;padding: 5px;margin-top: 10px;">
+                    <span class="glyphicon glyphicon-map-marker"></span>&nbsp;&nbsp;Beijing
+                </p>
+            </td>
+            {% if user %}
+            <td style="width: 70%;" align="right"><a class="link" style="margin-right: 20px"
+                    href="{{ url_for('personal') }}"><span class="glyphicon glyphicon-user"></span>&nbsp;{{
+                    user.username }},Hi&nbsp;!</a><a class="link" href="{{ url_for('logout') }}"><span
+                        class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Log Out</a></td>
+            {% else %}
+            <td style="width: 70%;" align="right"><a class="link" style="margin-right: 20px"
+                    href="{{ url_for('login') }}"><span class="glyphicon glyphicon-user"></span>&nbsp;Log in</a><a
+                    class="link" href="{{ url_for('signup') }}"><span class="glyphicon glyphicon-user"></span>&nbsp;Sign
+                    up</a></td>
+            {% endif %}
+        </tr>
+    </table>
 
-    <div>
-        <h1>Start looking for your home</h1>
-        <a href="{{ url_for('details') }}"><h3>Housing Details</h3></a>
-        <a href="{{ url_for('buy') }}"><h3>Buy</h3></a>
-        <a href="{{ url_for('predict') }}"><h3>Predict Price</h3></a>
-    </div>
-    <hr>
+    <table style="margin-top: 110px;margin-left: 30px;width: 95%;">
+        <tr>
+            <td colspan="3" style="font-size: 8rem;" align="center"><b
+                    style="color: rgb(241, 241, 241);text-shadow: 10px 10px 10px rgb(105, 105, 105);">Start looking for
+                    your home</b></td>
+        </tr>
+        <tr>
+            <td style="padding-top: 70px;" align="center"><button class="button"
+                    style="vertical-align:middle;box-shadow: 10px 10px 10px rgb(105, 105, 105);"
+                    onclick="buy()"><span>Buy </span></button></td>
+            <td style="padding-top: 70px;" align="center"><button class="button"
+                    style="vertical-align:middle;box-shadow: 10px 10px 10px rgb(105, 105, 105);"
+                    onclick="predict()"><span>Predict </span></button></td>
+            <td style="padding-top: 70px;" align="center"><button class="button"
+                    style="vertical-align:middle;box-shadow: 10px 10px 10px rgb(105, 105, 105);"
+                    onclick="personal()"><span>Personal</span></button></td>
+        </tr>
 
-    <div style="margin-top: 100px">
-        <h1>About us</h1>
-        <ul>
-            <li><h3>Located in Beijing, We provide mass of new and second-hand housing information</h3></li>
-            <li><h3>Based on reliable big data sets and machine learning algorithms, We provide housing price prediction services<h2></h2></li>
-        </ul>
+
+    </table>
+
+    <div style="margin-top: 300px;margin-left: 30px;">
+        <table style="width: 95%;">
+            <tr>
+                <td>
+                    <p style="font-size: 3rem;padding-left: 20px;"><b><span
+                                class="glyphicon glyphicon-thumbs-up"></span>&nbsp;&nbsp;New House
+                            Rencently</b></p>
+                </td>
+                <td align="right" style="padding-right: 25px;"><a href="{{ url_for('buy') }}" id="image">More</a></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <table style="width: 100%;margin-top: 20px;">
+                        <tr>
+                            <td colspan="2" width="250px" align="center">
+                                <a href="" id="image"><img src="{{ url_for('static', filename='img/house.jpg') }}"
+                                        alt="house" width="250px" height="150px" class="img-rounded" /></a>
+                            </td>
+                            <td colspan="2" width="250px" align="center">
+                                <a href="" id="image"><img src="{{ url_for('static', filename='img/house1.jpg') }}"
+                                        alt="house" width="250px" height="150px" class="img-rounded" /></a>
+                            </td>
+                            <td colspan="2" width="250px" align="center">
+                                <a href="" id="image"><img src="{{ url_for('static', filename='img/house3.jpg') }}"
+                                        alt="house" width="250px" height="150px" class="img-rounded" /></a>
+                            </td>
+                            <td colspan="2" width="250px" align="center">
+                                <a href="" id="image"><img src="{{ url_for('static', filename='img/house3.jpg') }}"
+                                        alt="house" width="250px" height="150px" class="img-rounded" /></a>
+                            </td>
+                        </tr>
+                        <tr style="font-size: 1.7rem;">
+                            <td colspan="2" style="padding-left: 20px;padding-top: 5px;"><b>Name1</b></td>
+                            <td colspan="2" style="padding-left: 20px;padding-top: 5px;"><b>Name2</b></td>
+                            <td colspan="2" style="padding-left: 20px;padding-top: 5px;"><b>Name3</b></td>
+                            <td colspan="2" style="padding-left: 20px;padding-top: 5px;"><b>Name4</b></td>
+                        </tr>
+                        <tr style="font-size: 1.4rem;margin-left: 5px;padding-right: 5px;">
+                            <td style="padding-left: 20px;">Square:xxxm<sup>2</sup></td>
+                            <td align="center" style="padding-right: 5px;color: red;">Price:$xxx,xxx,xxx</td>
+                            <td style="padding-left: 20px;">Square:xxxm<sup>2</sup></td>
+                            <td align="center" style="padding-right: 5px;color: red;">Price:$xxx,xxx,xxx</td>
+                            <td style="padding-left: 20px;">Square:xxxm<sup>2</sup></td>
+                            <td align="center" style="padding-right: 5px;color: red;">Price:$xxx,xxx,xxx</td>
+                            <td style="padding-left: 20px;">Square:xxxm<sup>2</sup></td>
+                            <td align="center" style="padding-right: 5px;color: red;">Price:$xxx,xxx,xxx</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
     </div>
+    <hr style="margin-top:50px;">
+
+    <div style="margin-top: 50px;margin-left: 30px;margin-right: 30px;margin-bottom: 150px;">
+        <h1 align="center"><b><span class="glyphicon glyphicon-align-right"></span>&nbsp;&nbsp;Why Choose
+                Us&nbsp;&nbsp;<span class="glyphicon glyphicon-align-left"></span></b></h1>
+
+        <table style="margin-top: 70px;margin-left: 20px;margin-right: 30px;">
+            <tr align="center">
+                <td style="width: 25%;"><img src="../static/img/1.png" alt="features" /></td>
+                <td style="width: 25%;"><img src="../static/img/2.png" alt="features" /></td>
+                <td style="width: 25%;"><img src="../static/img/3.png" alt="features" /></td>
+                <td style="width: 25%;"><img src="../static/img/4.png" alt="features" /></td>
+            </tr>
+            <tr align="center" style="font-size: 2.5rem;color: rgb(71, 102, 197);">
+                <td style="padding-top: 20px;"><b>Location</b></td>
+                <td style="padding-top: 20px;"><b>Attribute Filter</b></td>
+                <td style="padding-top: 20px;"><b>More Data</b></td>
+                <td style="padding-top: 20px;"><b>Predict Prices</b></td>
+            </tr>
+            <tr align="center" style="color: gray;">
+                <td style="padding-top: 20px;padding-left: 5px;padding-right: 5px;">Our information of houses are all in
+                    <b>Beijing</b>, providing all kinds of houses for Beijing
+                    users.</td>
+                <td style="padding-top: 20px;padding-left: 5px;padding-right: 5px;">We provide users with attribute
+                    filters to facilitate you to find houses
+                    according to their needs.</td>
+                <td style="padding-top: 20px;padding-left: 5px;padding-right: 5px;">Our database includes the house data
+                    of Beijing in the past <b>8</b> years,
+                    covering up to <b>13</b> districts in Beijing.</td>
+                <td style="padding-top: 20px;padding-left: 5px;padding-right: 5px;">We provide the service of predicting
+                    house price
+                    by inputting the information you know.</td>
+            </tr>
+        </table>
+    </div>
+
+    {% include 'footer.html' %}
 </body>
+<style>
+    body {
+        background-repeat: no-repeat;
+        background-image: url("../static/img/backg.png");
+        background-size: 100% 45%;
+    }
+
+    .link:link {
+        color: rgb(241, 241, 241);
+    }
+
+    .link:hover {
+        color: rgb(241, 241, 241);
+    }
+
+    .link:visited {
+        color: rgb(241, 241, 241);
+    }
+
+    .button {
+        display: inline-block;
+        border-radius: 4px;
+        background-color: #000000;
+        border: none;
+        color: rgb(241, 241, 241);
+        text-align: center;
+        font-size: 28px;
+        padding: 20px;
+        width: 200px;
+        transition: all 0.5s;
+        cursor: pointer;
+        margin: 5px;
+    }
+
+    .button span {
+        cursor: pointer;
+        display: inline-block;
+        position: relative;
+        transition: 0.5s;
+    }
+
+    .button span:after {
+        content: '»';
+        position: absolute;
+        opacity: 0;
+        top: 0;
+        right: -20px;
+        transition: 0.5s;
+    }
+
+    .button:hover span {
+        padding-right: 25px;
+    }
+
+    .button:hover span:after {
+        opacity: 1;
+        right: 0;
+    }
+</style>
+<script>
+    function buy() {
+        window.location.href = "{{ url_for('buy') }}";
+    }
+    function predict() {
+        window.location.href = "{{ url_for('predict') }}";
+    }
+    function personal() {
+        window.location.href = "{{ url_for('personal') }}";
+    }
+</script>
+
 </html>

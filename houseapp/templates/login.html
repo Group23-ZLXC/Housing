@@ -1,20 +1,36 @@
-{% extends "base.html" %}
-
-{% block content %}
-
 <head>    
     <meta charset="utf-8">    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
-    <div style="margin-top: 150px;" align="center">
-        <h1><b>Log in</b></h1>
+    <table style="color:rgb(241, 241, 241); margin-left: 30px; margin-top: 15px;width: 95%;">
+        <tr>
+            <td style="width: 22.5%;">
+                <p style="font-size: 4rem;"><span class="glyphicon glyphicon-home"></span>&nbsp;<a class="link"
+                        href="{{ url_for('homepage') }}">OurHouse</a></p>
+            </td>
+            <td style="width: 7.5%;">
+                <p
+                    style="font-size: 1.5rem;border: 2px solid rgb(241, 241, 241);border-radius: 30px;padding: 5px;margin-top: 10px;">
+                    <span class="glyphicon glyphicon-map-marker"></span>&nbsp;&nbsp;Beijing
+                </p>
+            </td>
+            <td style="width: 70%;" align="right"><a class="link" style="margin-right: 20px"
+                    href="{{ url_for('login') }}"><span class="glyphicon glyphicon-user"></span>&nbsp;Log in</a><a
+                    class="link" href="{{ url_for('signup') }}"><span class="glyphicon glyphicon-user"></span>&nbsp;Sign
+                    up</a></td>
+        </tr>
+    </table>
+    <div style="margin-top: 90px;margin-left:350px;margin-right:350px;border:2px solid rgb(241, 241, 241);border-radius: 30px;background-color: rgb(255, 255, 255);opacity: 0.85;"
+        align="center">
+
+        <h1><b style="text-shadow: 5px 5px 5px rgb(172, 172, 172);">Log in</b></h1>
 
         <form action="" method="post" novalidate>
             {{ form.hidden_tag() }}
             <p>
-            <div class="input-group" style="width: 30%; margin-top: 30px;">
+            <div class="input-group" style="width: 70%; margin-top: 30px;box-shadow: 5px 5px 5px rgb(172, 172, 172);">
                 <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
                 {{ form.username(size=32, class_="form-control", placeholder="user name") }}
             </div>
@@ -25,7 +41,7 @@
 
             </p>
             <p>
-            <div class="input-group" style="width: 30%; margin-top: 20px;">
+            <div class="input-group" style="width: 70%; margin-top: 20px;box-shadow: 5px 5px 5px rgb(172, 172, 172);">
                 <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
                 {{ form.password(size=32, class_="form-control", placeholder="password") }}
             </div>
@@ -36,18 +52,64 @@
 
             </p>
 
-            <table width=30% style="margin-top: 20px;">
+            <table width=70% style="margin-top: 20px;text-shadow: 5px 5px 5px rgb(172, 172, 172);">
                 <tr>
-                    <td align="left"><p>{{ form.remember_me() }} {{ form.remember_me.label }}</p></td>
-                    <td align="right"><p>{{ form.submit(class="btn btn-defult") }}</p></td>
+                    <td align="left">
+                        <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+                    </td>
+                    <td align="right" style="width: 5%;">
+                        <p style="box-shadow: 5px 5px 5px rgb(172,172,172);">{{ form.submit(class="btn btn-defult") }}
+                        </p>
+                    </td>
                 </tr>
                 <tr>
-                    <td align="left"><p ><i><a href="{{ url_for('signup') }}">No account? Register</a></i></p></td>
+                    <td align="left">
+                        <p><i><a href="{{ url_for('signup') }}">No account? Register</a></i></p>
+                    </td>
                 </tr>
             </table>
         </form>
 
     </div>
+    <footer>
+        <div>
+            <table width="100%">
+                <tr>
+                    <td style="color: rgb(241,241,241);font-size: 13px;"><span
+                            class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;<b>Our
+                            House</b>&nbsp;&nbsp;|&nbsp;&nbsp;<b>&copy;</b>&nbsp;ZLXC Group 23</span>&nbsp;&nbsp;</td>
+                    <td style="color: rgb(241,241,241);font-size: 13px;" align="right">&nbsp;&nbsp;<b>Contact
+                            Us</b>&nbsp;&nbsp;<span
+                            class="glyphicon glyphicon-phone-alt"></span>&nbsp;&nbsp;1234-123-123</td>
+                </tr>
+            </table>
+    </footer>
 </body>
+<style>
+    body {
+        background-repeat: no-repeat;
+        background-image: url("../static/img/backg.png");
+        background-size: 100% 100%;
+    }
 
-{% endblock %}
+    footer {
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+        width: 100%;
+        line-height: 90px;
+        position: absolute;
+    }
+
+    .link:link {
+        color: rgb(241, 241, 241);
+    }
+
+    .link:hover {
+        color: rgb(241, 241, 241);
+    }
+
+    .link:visited {
+        color: rgb(241, 241, 241);
+    }
+</style>

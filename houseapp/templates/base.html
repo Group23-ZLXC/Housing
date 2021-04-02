@@ -1,41 +1,49 @@
 <html>
-  <head>
-    <meta charset="utf-8">   
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-    {% if title %}
-    <title>{{ title }} - Housing</title>
-    {% else %}
-    <title>Housing</title>
-    {% endif %}
-  </head>
-  <body style="margin: 0 20px 0 20px;">
-    <div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
-      <div class="collapse navbar-collapse">
-        <ul class="nav navbar-nav" style="font-size: 15px;">
-          <li><a href="{{ url_for('homepage') }}"><span class="glyphicon glyphicon-home"></span>  Our House</a></li>
-          <li><a href="{{ url_for('buy') }}"><span class="glyphicon glyphicon-usd"></span>  Buy</a></li>
-          <li><a href="{{ url_for('predict') }}"><span class="glyphicon glyphicon-stats"></span>  Predict</a></li>
-        </ul>
-        <ul class="nav navbar-nav pull-right" style="font-size: 15px;">
-          {% if user %}
-            <li><a href="{{ url_for('personal') }}"><span class="glyphicon glyphicon-user"></span>  Personal Page</a></li>
-            <li><a href="{{ url_for('logout') }}"><span class="glyphicon glyphicon-user"></span>  Log Out</a></li>
-          {% else %}
-            <li><a href="{{ url_for('login') }}"><span class="glyphicon glyphicon-user"></span>  Log in</a></li>
-            <li><a href="{{ url_for('signup') }}"><span class="glyphicon glyphicon-user"></span>  Register</a></li>
-          {% endif %}
-        </ul>
-      </div>
+
+<head>
+  <meta charset="utf-8">   
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+  {% if title %}
+  <title>{{ title }} - Housing</title>
+  {% else %}
+  <title>Housing</title>
+  {% endif %}
+</head>
+
+<body>
+  <div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav" style="font-size: 15px;">
+        <li><a href="{{ url_for('homepage') }}"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;Our House</a>
+        </li>
+        <li><a href="{{ url_for('buy') }}"><span class="glyphicon glyphicon-usd"></span>&nbsp;&nbsp;Buy</a></li>
+        <li><a href="{{ url_for('predict') }}"><span class="glyphicon glyphicon-stats"></span>&nbsp;&nbsp;Predict</a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav pull-right" style="font-size: 15px;">
+        {% if user %}
+        <li><a href="{{ url_for('personal') }}"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Personal
+            Page</a></li>
+        <li><a href="{{ url_for('logout') }}"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Log Out</a></li>
+        {% else %}
+        <li><a href="{{ url_for('login') }}"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Log in</a></li>
+        <li><a href="{{ url_for('signup') }}"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Register</a>
+        </li>
+        {% endif %}
+      </ul>
     </div>
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    <ul>
-      {% for message in messages %}
-      <li>{{ message }}</li>
-      {% endfor %}
-    </ul>
-    {% endif %}
-    {% endwith %}
-    {% block content %}{% endblock %}
-  </body>
+  </div>
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+  <ul>
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+
+</body>
+
 </html>

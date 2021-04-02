@@ -9,115 +9,109 @@
   <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
   <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<br><br>
-<h1> My Predictions </h1>
-<p> Add a new prediction? <a href="{{ url_for('predict') }}"><span class="glyphicon glyphicon-stats"></span>  Predict</a></p>
-
-<div class="panel-group" id="accordion" style="margin-top: 20px;">
-  <div class="panel panel-default">
+<div style="margin-top: 60px;margin-left: 50px;margin-right: 50px;margin-bottom: 30px;">
+  <table width="100%">
+    <tr>
+      <td>
+        <p style="font-size: 3.5rem;"><span class="	glyphicon glyphicon-hand-right"></span>&nbsp;&nbsp;<b>My
+            Predictions</b>&nbsp;&nbsp;<span class="glyphicon glyphicon-hand-left"></span></p>
+      </td>
+      <td align="right" style="vertical-align: bottom;">
+        <p style="font-size: 1.5rem;"> Add a new prediction? <a href="{{ url_for('predict') }}"><span
+              class="glyphicon glyphicon-stats"></span>&nbsp;Predict</a></p>
+      </td>
+    </tr>
+  </table>
+  <div class="panel panel-warning" style="margin-top:10px">
     <div class="panel-heading">
-      <h4 class="panel-title">
-        <a data-toggle="collapse" data-parent="#accordion" href="#Processing">
-          <b>In the Processing</b>
-        </a>
-      </h4>
+      <h3 class="panel-title"><b>In the Processing</b></h3>
     </div>
-    <div id="Processing" class="panel-collapse collapse">
-      <div class="panel-body">
-        <table border="2px" width="600" height="100">
+    <div class="panel-body">
+      <table width="100%" class="table table-hover">
+        <tr>
+          <th style="padding-left: 5px;width:25%">House ID</th>
+          <th style="padding-left: 5px;width:25%">Date</th>
+          <th style="padding-left: 5px;width:25%">View</th>
+          <th style="padding-left: 5px;width:25%">Cancel</th>
+        </tr>
+        {% if houses %}
+        {% for house in houses %}
+        {% if house.status == 0 %}
+        <tr>
+          <td style="padding-left: 5px;"> {{ house.id }}</td>
+          <td style="padding-left: 5px;"> {{ house.date }}</td>
+          <td style="padding-left: 5px;"><a href="{{ url_for('details',house_id=house.id) }}"><button type="button"
+                name="button" class="btn btn-warning btn-xs">View</button></a></td>
+          <td style="padding-left: 5px;"><button class="btn btn-danger btn-xs" type="button"
+              name="button">Cancel</button></td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+      </table>
+    </div>
+  </div>
+  <div class="panel panel-success">
+    <div class="panel-heading">
+      <h3 class="panel-title"><b>Completed</b></h3>
+    </div>
+    <div class="panel-body">
+      <table width="100%" class="table table-hover">
+        <tr>
+          <th style="padding-left: 5px;width:25%"> House ID</th>
+          <th style="padding-left: 5px;width:25%"> Date </th>
+          <th style="padding-left: 5px;width:25%"> View </th>
+          <th style="padding-left: 5px;width:25%"> Upload</th>
+        </tr>
 
-          {% if houses %}
-            {% for house in houses %}
-              {% if house.status == 0 %}
-                <tr>
-                  <td> {{ house.id }}</td>
-                  <td> {{ house.date }}</td>
-                  <td><a href="{{ url_for('details',house_id=house.id) }}"><button type="button" name="button">View</button></a></td>
-                  <td><button type="button" name="button">Cancel</button></td>
-                </tr>
-              {% endif %}
-            {% endfor %}
-          {% endif %}
-        </table>
-      </div>
+        {% if houses %}
+        {% for house in houses %}
+        {% if house.status == 1 %}
+        <tr>
+          <td style="padding-left: 5px;"> {{ house.id }}</td>
+          <td style="padding-left: 5px;"> {{ house.date }}</td>
+          <td style="padding-left: 5px;"><button class="btn btn-success btn-xs" type="button"
+              name="button">View</button></td>
+          <td style="padding-left: 5px;"><button class="btn btn-danger btn-xs" type="button"
+              name="button">Upload</button></td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+      </table>
+    </div>
+  </div>
+  <div class="panel panel-info">
+    <div class="panel-heading">
+      <h3 class="panel-title"><b>Uploaded</b></h3>
+    </div>
+    <div class="panel-body">
+      <table width="100%" class="table table-hover">
+        <tr>
+          <th style="padding-left: 5px;width:25%"> House ID</th>
+          <th style="padding-left: 5px;width:25%"> Date </th>
+          <th style="padding-left: 5px;width:25%"> View </th>
+          <th style="padding-left: 5px;width:25%"> Delete</th>
+        </tr>
+
+        {% if houses %}
+        {% for house in houses %}
+        {% if house.status == 2 %}
+        <tr>
+          <td style="padding-left: 5px;"> {{ house.id }}</td>
+          <td style="padding-left: 5px;"> {{ house.date }}</td>
+          <td style="padding-left: 5px;"><button class="btn btn-info btn-xs" type="button" name="button">View</button>
+          </td>
+          <td style="padding-left: 5px;"><button class="btn btn-danger btn-xs" type="button"
+              name="button">Delete</button></td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+      </table>
     </div>
   </div>
 </div>
 
-<div class="panel-group" id="accordion" style="margin-top: 20px;">
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h4 class="panel-title">
-        <a data-toggle="collapse" data-parent="#accordion" href="#Completed">
-          <b>Completed</b>
-        </a>
-      </h4>
-    </div>
-    <div id="Completed" class="panel-collapse collapse">
-      <div class="panel-body">
-        <table border="2px" width="600" height="100">
-          <tr>
-            <th> House ID</th>
-            <th> Date </th>
-            <th> View </th>
-            <th> Upload</th>
-          </tr>
-
-          {% if houses %}
-            {% for house in houses %}
-              {% if house.status == 1 %}
-                <tr>
-                  <td> {{ house.id }}</td>
-                  <td> {{ house.date }}</td>
-                  <td><button type="button" name="button">View</button></td>
-                  <td><button type="button" name="button">Upload</button></td>
-                </tr>
-              {% endif %}
-            {% endfor %}
-          {% endif %}
-        </table>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="panel-group" id="accordion" style="margin-top: 20px;">
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h4 class="panel-title">
-        <a data-toggle="collapse" data-parent="#accordion" href="#Uploaded">
-          <b>Uploaded</b>
-        </a>
-      </h4>
-    </div>
-    <div id="Uploaded" class="panel-collapse collapse">
-      <div class="panel-body">
-        <table border="2px" width="600" height="100">
-          <tr>
-            <th> House ID</th>
-            <th> Date </th>
-            <th> View </th>
-            <th> Delete</th>
-          </tr>
-
-          {% if houses %}
-            {% for house in houses %}
-              {% if house.status == 2 %}
-                <tr>
-                  <td> {{ house.id }}</td>
-                  <td> {{ house.date }}</td>
-                  <td><button type="button" name="button">View</button></td>
-                  <td><button type="button" name="button">Delete</button></td>
-                </tr>
-              {% endif %}
-            {% endfor %}
-          {% endif %}
-        </table>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
+{% include 'footer.html' %}
 {% endblock %}
