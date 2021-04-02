@@ -40,16 +40,10 @@
       <span style="color: red;">[{{ error }}]</span>
       {% endfor %}
     </p>
-    <p>{{ form.elevator.label }}: {{ form.elevator() }}
-      {% for error in form.elevator.errors %}
-      <span style="color: red;">[{{ error }}]</span>
-      {% endfor %}
-    </p>
-    <p>{{ form.subway.label }}: {{ form.subway() }}
-      {% for error in form.subway.errors %}
-      <span style="color: red;">[{{ error }}]</span>
-      {% endfor %}
-    </p>
+    <p>{{ form.building_type.label }}: {{ form.building_type() }}</p>
+    <p>{{ form.renovation_con.label }}: {{ form.renovation_con() }}</p>
+    <p>{{ form.elevator.label }}: {{ form.elevator() }}</p>
+    <p>{{ form.subway.label }}: {{ form.subway() }}</p>
     <p>{{ form.district.label }}: {{ form.district() }}
       {% for error in form.district.errors %}
       <span style="color: red;">[{{ error }}]</span>

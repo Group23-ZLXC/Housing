@@ -57,7 +57,8 @@ def predict():
         if form.validate_on_submit():
             house = House(user_id = user_in_db.id, lng=form.lng.data, lat = form.lat.data, square = form.square.data,
                 living_room=form.living_room.data, drawing_room=form.drawing_room.data, kitchen=form.kitchen.data,
-                bathroom = form.bathroom.data, floor=form.floor.data, elevator=form.elevator.data, subway=form.subway.data,
+                bathroom = form.bathroom.data, floor=form.floor.data, building_type = form.building_type.data,
+                renovation_con = form.renovation_con.data, elevator=form.elevator.data, subway=form.subway.data,
                 district = form.district.data, status = 0)
             db.session.add(house)
             db.session.commit()

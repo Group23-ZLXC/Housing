@@ -58,8 +58,17 @@
 
   <tr>
     <td style="padding-left: 20px;vertical-align: middle;">Building Type:</td>
-    <td width="20%" style="vertical-align: middle;"><b>Tower</b></td>
+    {% if house.building_type == 1 %}
+      <td width="20%" style="vertical-align: middle;"><b>Tower</b></td>
+    {% elif house.building_type == 2 %}
+      <td width="20%" style="vertical-align: middle;"><b>Bungalow</b></td>
+    {% elif house.building_type == 3 %}
+      <td width="20%" style="vertical-align: middle;"><b>Combination of plate and tower</b></td>
+    {% elif house.building_type == 4 %}
+      <td width="20%" style="vertical-align: middle;"><b>Plate</b></td>
+    {% endif %}
   </tr>
+
   <tr class="active">
     <td style="padding-left: 20px;vertical-align: middle;">Square:</td>
     <td width="20%" style="vertical-align: middle;"><b>{{ house.square }} sq metres</b></td>
@@ -71,12 +80,48 @@
 
   <tr class="active">
     <td style="padding-left: 20px;vertical-align: middle;">Renovation Type:</td>
-    <td width="20%" style="vertical-align: middle;"><b>Simplicity</b></td>
+    {% if house.renovation_con == 1 %}
+      <td width="20%" style="vertical-align: middle;"><b>Other</b></td>
+    {% elif house.renovation_con == 2 %}
+      <td width="20%" style="vertical-align: middle;"><b>Rough</b></td>
+    {% elif house.renovation_con == 3 %}
+      <td width="20%" style="vertical-align: middle;"><b>Simplicity</b></td>
+    {% elif house.renovation_con == 4 %}
+      <td width="20%" style="vertical-align: middle;"><b>Hardcover</b></td>
+    {% endif %}
   </tr>
-  <tr>
-    <td style="padding-left: 20px;vertical-align: middle;">Construct Time:</td>
-    <td width="20%" style="vertical-align: middle;"><b>2005</b></td>
+
+  <tr class="active">
+    <td style="padding-left: 20px;vertical-align: middle;">District:</td>
+    {% if house.district == 1 %}
+      <td width="20%" style="vertical-align: middle;"><b>DongCheng</b></td>
+    {% elif house.district == 2 %}
+      <td width="20%" style="vertical-align: middle;"><b>FengTai</b></td>
+    {% elif house.district == 3 %}
+      <td width="20%" style="vertical-align: middle;"><b>TongZhou</b></td>
+    {% elif house.district == 4 %}
+      <td width="20%" style="vertical-align: middle;"><b>DaXing</b></td>
+    {% elif house.district == 5 %}
+      <td width="20%" style="vertical-align: middle;"><b>FangShan</b></td>
+    {% elif house.district == 6 %}
+      <td width="20%" style="vertical-align: middle;"><b>ChangPing</b></td>
+    {% elif house.district == 7 %}
+      <td width="20%" style="vertical-align: middle;"><b>ChaoYang</b></td>
+    {% elif house.district == 8 %}
+      <td width="20%" style="vertical-align: middle;"><b>HaiDian</b></td>
+    {% elif house.district == 9 %}
+      <td width="20%" style="vertical-align: middle;"><b>XiCheng</b></td>
+    {% elif house.district == 10 %}
+      <td width="20%" style="vertical-align: middle;"><b>ShiJingShan</b></td>
+    {% elif house.district == 11 %}
+      <td width="20%" style="vertical-align: middle;"><b>PingGu</b></td>
+    {% elif house.district == 12 %}
+      <td width="20%" style="vertical-align: middle;"><b>MenTouGou</b></td>
+    {% elif house.district == 13 %}
+      <td width="20%" style="vertical-align: middle;"><b>ShunYi</b></td>
+    {% endif %}
   </tr>
+
 </table>
 <div style="margin: 30px 70px 30px 50px;">
   <div class="panel-group" id="accordion">
@@ -134,21 +179,48 @@
               <td width="20%" style="vertical-align: middle;"><b>{{ house.floor }}</b></td>
             </tr>
             <tr>
-              <td style="padding-left: 20px;vertical-align: middle;">Building Type:</td>
-              <td width="20%" style="vertical-align: middle;"><b>Tower</b></td>
-            </tr>
-            <tr class="active">
-              <td style="padding-left: 20px;vertical-align: middle;">Construct Time:</td>
-              <td width="20%" style="vertical-align: middle;"><b>2005</b></td>
+              <td style="padding-left: 20px;vertical-align: middle;">Elevator: </td>
+              {% if house.elevator == 1 %}
+                <td width="20%" style="vertical-align: middle;"><b>Available</b></td>
+              {% elif house.elevator == 2 %}
+                <td width="20%" style="vertical-align: middle;"><b>Not Available</b></td>
+              {% endif %}
             </tr>
             <tr>
+              <td style="padding-left: 20px;vertical-align: middle;">Subway: </td>
+              {% if house.elevator == 1 %}
+                <td width="20%" style="vertical-align: middle;"><b>Available</b></td>
+              {% elif house.elevator == 2 %}
+                <td width="20%" style="vertical-align: middle;"><b>Not Available</b></td>
+              {% endif %}
+            </tr>
+
+            <tr>
+              <td style="padding-left: 20px;vertical-align: middle;">Building Type:</td>
+              {% if house.building_type == 1 %}
+                <td width="20%" style="vertical-align: middle;"><b>Tower</b></td>
+              {% elif house.building_type == 2 %}
+                <td width="20%" style="vertical-align: middle;"><b>Bungalow</b></td>
+              {% elif house.building_type == 3 %}
+                <td width="20%" style="vertical-align: middle;"><b>Combination of plate and tower</b></td>
+              {% elif house.building_type == 4 %}
+                <td width="20%" style="vertical-align: middle;"><b>Plate</b></td>
+              {% endif %}
+            </tr>
+
+            <tr>
               <td style="padding-left: 20px;vertical-align: middle;">Renovation Type:</td>
-              <td width="20%" style="vertical-align: middle;"><b>Simplicity</b></td>
+              {% if house.renovation_con == 1 %}
+                <td width="20%" style="vertical-align: middle;"><b>Other</b></td>
+              {% elif house.renovation_con == 2 %}
+                <td width="20%" style="vertical-align: middle;"><b>Rough</b></td>
+              {% elif house.renovation_con == 3 %}
+                <td width="20%" style="vertical-align: middle;"><b>Simplicity</b></td>
+              {% elif house.renovation_con == 4 %}
+                <td width="20%" style="vertical-align: middle;"><b>Hardcover</b></td>
+              {% endif %}
             </tr>
-            <tr class="active">
-              <td style="padding-left: 20px;vertical-align: middle;">Building Structure:</td>
-              <td width="20%" style="vertical-align: middle;"><b>Steel-concrete composite</b></td>
-            </tr>
+
           </table>
         </div>
       </div>
@@ -220,7 +292,7 @@
                 {% endfor %}
               </p>
               <p align="right">{{ form.submit(class="btn btn-defult") }}</p>
-              {% else %}
+            {% else %}
               <p style="color: red; "><b>You have to log in to comment</b></p><br>
               <p><span>Already have an account?</span>
                 <a href="{{ url_for('login') }}"><span class="glyphicon glyphicon-user"></span> Log in</a>
@@ -228,7 +300,7 @@
               <p><span>Create an account? </span>
                 <a href="{{ url_for('signup') }}"><span class="glyphicon glyphicon-user"></span> Register</a>
               </p>
-              {% endif %}
+            {% endif %}
           </div>
         </div>
       </div>

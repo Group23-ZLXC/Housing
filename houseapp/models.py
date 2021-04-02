@@ -25,6 +25,8 @@ class House(db.Model):
     kitchen = db.Column(db.Integer)
     bathroom = db.Column(db.Integer)
     floor = db.Column(db.Integer)
+    building_type = db.Column(db.Integer)
+    renovation_con = db.Column(db.Integer)
     elevator = db.Column(db.Boolean)
     subway = db.Column(db.Boolean)
     district = db.Column(db.Integer)
