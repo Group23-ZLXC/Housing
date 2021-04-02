@@ -55,7 +55,6 @@ def buy():
 @app.route('/predict', methods=['GET','POST'])
 def predict():
     form = PredictForm()
-
     if not session.get("USERNAME") is None:
         username = session.get("USERNAME")
         user_in_db = User.query.filter(User.username == username).first()

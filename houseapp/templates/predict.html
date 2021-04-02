@@ -2,165 +2,66 @@
 
 {% block content %}
 
-<body>
-    <div style="margin-top: 50px;" align="center">
-        <h2 style="text-shadow: 5px 5px 5px rgb(172,172,172);"><span
-                class="glyphicon glyphicon-backward"></span>&nbsp;&nbsp;<b>Predict Your House
-                Price</b>&nbsp;&nbsp;<span class="glyphicon glyphicon-forward"></span></h2>
 
-        <form class="form-horizontal" role="form" action="" method="post" novalidate>
-            {{ form.hidden_tag() }}
-            <div class="input-group" style="width: 60%; margin-top: 20px;box-shadow: 5px 5px 5px rgb(172,172,172);">
-                <span class="input-group-addon"><b>Lng</b></span>
-                {{ form.lng(class_="form-control", placeholder="lng") }}
-            </div>
-            <div class="input-group" style="width: 60%; margin-top: 20px;box-shadow: 5px 5px 5px rgb(172,172,172);">
-                <span class="input-group-addon"><b>Lat</b></span>
-                {{ form.lat(class_="form-control", placeholder="lat") }}
-            </div>
-            <p>
-            <div class="input-group" style="width: 60%; margin-top: 20px;box-shadow: 5px 5px 5px rgb(172,172,172);">
-                <span class="input-group-addon"><b>*Square</b></span>
-                {{ form.lat(class_="form-control", placeholder="square") }}
-            </div>
-            {% for error in form.square.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-            </p>
-            <p>
-            <div class="input-group" style="width: 60%; margin-top: 20px;box-shadow: 5px 5px 5px rgb(172,172,172);">
-                <span class="input-group-addon"><b>*Living Room</b></span>
-                {{ form.living_room(class_="form-control") }}
-            </div>
-            {% for error in form.living_room.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-            </p>
-            <p>
-            <p>
-            <div class="input-group" style="width: 60%; margin-top: 20px;box-shadow: 5px 5px 5px rgb(172,172,172);">
-                <span class="input-group-addon"><b>*Drawng Room</b></span>
-                {{ form.drawing_room(class_="form-control") }}
-            </div>
-            {% for error in form.drawing_room.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-            </p>
-            <p>
-            <p>
-            <div class="input-group" style="width: 60%; margin-top: 20px;box-shadow: 5px 5px 5px rgb(172,172,172);">
-                <span class="input-group-addon"><b>*Kitchen</b></span>
-                {{ form.kitchen(class_="form-control") }}
-            </div>
-            {% for error in form.kitchen.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-            </p>
-            <p>
-            <div class="input-group" style="width: 60%; margin-top: 20px;box-shadow: 5px 5px 5px rgb(172,172,172);">
-                <span class="input-group-addon"><b>*Bathroom</b></span>
-                {{ form.bathroom(class_="form-control") }}
-            </div>
-            {% for error in form.bathroom.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-            </p>
-            <div class="input-group" style="width: 60%; margin-top: 20px;box-shadow: 5px 5px 5px rgb(172,172,172);">
-                <span class="input-group-addon"><b>*Floor</b></span>
-                {{ form.floor(class_="form-control") }}
-            </div>
-            {% for error in form.floor.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-            </p>
+<div style="margin-top: 80px; margin-left: 40px;" >
+<h1> Predict Your House Price</h1>
+<hr>
+<form action="" method="post" novalidate>
+    {{ form.hidden_tag() }}
+    <p>{{ form.lng.label }} (if available): {{ form.lng() }}</p>
+    <p>{{ form.lat.label }} (if available): {{ form.lat() }}</p>
+    <p>{{ form.square.label }}: {{ form.square }}
+      {% for error in form.square.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    <p>{{ form.living_room.label }}: {{ form.living_room() }}
+      {% for error in form.living_room.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    <p>{{ form.drawing_room.label }}: {{ form.drawing_room() }}
+      {% for error in form.drawing_room.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    <p>{{ form.kitchen.label }}: {{ form.kitchen() }}
+      {% for error in form.kitchen.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    <p>{{ form.bathroom.label }}: {{ form.bathroom() }}
+      {% for error in form.bathroom.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    <p>{{ form.floor.label }}: {{ form.floor() }}
+      {% for error in form.floor.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    <p>{{ form.building_type.label }}: {{ form.building_type() }}</p>
+    <p>{{ form.renovation_con.label }}: {{ form.renovation_con() }}</p>
+    <p>{{ form.elevator.label }}: {{ form.elevator() }}</p>
+    <p>{{ form.subway.label }}: {{ form.subway() }}</p>
+    <p>{{ form.district.label }}: {{ form.district() }}
+      {% for error in form.district.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    {% if user %}
+      <p>{{ form.submit() }}</p>
+    {% else %}
+      <p style="color: red; "><b>You have to log in to predict</b></p><br>
+      <p><span>Already have an account?</span>
+        <a href="{{ url_for('login') }}"><span class="glyphicon glyphicon-user"></span> Log in</a>
+      </p><br>
+      <p><span>Create an account? </span>
+        <a href="{{ url_for('signup') }}"><span class="glyphicon glyphicon-user"></span> Register</a>
+      </p>
+    {% endif %}
+</form>
+</div>
 
-            <p>
-            <div class="input-group" style="width: 60%; margin-top: 20px;box-shadow: 5px 5px 5px rgb(172,172,172);">
-                <span class="input-group-addon"><b>*District</b></span>
-                {{ form.district(class_="form-control") }}
-            </div>
-            {% for error in form.district.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-            </p>
-            <table width="60%" style="margin-top: 20px;">
-                <tr>
-                    <td width="50%" align="center" style="text-shadow: 5px 5px 5px rgb(172,172,172);"><label
-                            class="checkbox-inline">
-                            <p>
-                                {{ form.elevator(class="checkbox-inline") }} <b>*Elevator</b>
-
-                                {% for error in form.elevator.errors %}
-                                <span style="color: red;">[{{ error }}]</span>
-                                {% endfor %}
-                            </p>
-                        </label></td>
-                    <td width="50%" align="center" style="text-shadow: 5px 5px 5px rgb(172,172,172);">
-                        <label class="checkbox-inline">
-                            <p>
-
-                                {{ form.subway(class="checkbox-inline") }}<b>*Subway</b>
-
-                                {% for error in form.subway.errors %}
-                                <span style="color: red;">[{{ error }}]</span>
-                                {% endfor %}
-                            </p>
-                        </label>
-                    </td>
-                </tr>
-            </table>
-
-
-            {% if user %}
-            <div style="width: 60%; margin-top: 10px;margin-bottom:40px;box-shadow: 5px 5px 5px rgb(172,172,172);">
-                <p>{{ form.submit(class="btn btn-defult btn-block", width="100%") }}</p>
-            </div>
-            {% else %}
-            <br>
-            <p style="color: red;font-size: 1.5rem; "><b>You have to log in to predict</b></p><br>
-            <table width="60%">
-                <tr>
-                    <td align="left">
-                        <p><span>Already have an account?</span>
-                            <a href="{{ url_for('login') }}"><span class="glyphicon glyphicon-user"></span> Log in</a>
-                        </p>
-                    </td>
-                    <td align="right">
-                        <p><span>Create an account? </span>
-                            <a href="{{ url_for('signup') }}"><span class="glyphicon glyphicon-user"></span>
-                                Register</a>
-                        </p>
-                    </td>
-                </tr>
-            </table>
-            {% endif %}
-        </form>
-    </div>
-</body>
-<style>
-    body {
-        background-repeat: no-repeat;
-        background-image: url("../static/img/predict.png");
-        background-size: 100% 100%;
-    }
-</style>
-<script>
-    var input = document.querySelectorAll('input')
-    var img = document.getElementById('image')
-    function deleteAll() {
-        for (var i = 0; i < input.length; i++) {
-            if (input[i].checked == true) {
-                input[i].checked = false;
-            }
-        }
-    }
-    function check() {
-
-    }
-    function details() {
-        img.href = "{{ url_for('details') }}";
-    }
-
-</script>
-{% include 'footer.html' %}
+   
 {% endblock %}
