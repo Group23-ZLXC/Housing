@@ -80,6 +80,17 @@
     <hr>
 
 </div>
+
+
+<div>
+  {% for house in houses %}
+    <ul>
+      <li><a href="{{ url_for('details',house_id=house.id) }}">{{ house.id }}</a></li>
+    </ul>
+  {% endfor %}
+</div>
+
+
 {% for row in data %}
 
 <div style="margin-left: 30px; margin-right: 30px;">

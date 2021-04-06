@@ -32,6 +32,7 @@ class House(db.Model):
     district = db.Column(db.Integer)
     status = db.Column(db.Integer) #0:pending; 1: finshed; 2: uploaded
     date = db.Column(db.Date, index=True, default = datetime.now)
+    comment = db.relationship('Comment', backref='house', lazy='dynamic')
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -39,6 +40,7 @@ class Comment(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=datetime.now)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     answers = db.relationship('Answer', backref='question', lazy='dynamic')
+    house_id = db.Column(db.Integer, db.ForeignKey('house.id'))
 
     def __repr__(self):
         return '<Question asked at {} by {}: {} >'.format(str(self.timestamp)[0:10],self.author.username,self.body)

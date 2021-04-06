@@ -23,15 +23,26 @@ def details():
     house_id = request.args.get('house_id')
     house = House.query.filter(House.id == house_id).first()
     owner = User.query.filter(User.id == house.user_id).first()
+    comments = Comment.query.filter(Comment.house_id == house.id).all()
     form = CommentForm()
     if not session.get("USERNAME") is None:
         username = session.get("USERNAME")
         user_in_db = User.query.filter(User.username == username).first()
         if form.validate_on_submit():
-            flash("upload")
-        return render_template('details.html', title='Details', form=form, user=user_in_db, house = house, owner=owner)
-            # here just wait the database for house
-    return render_template('details.html', title='Details', form=form, house=house, owner=owner)
+            comment = Comment(body=form.comment.data, user_id = user_in_db.id, house_id = house.id)
+            db.session.add(comment)
+            db.session.commit()
+            return redirect(url_for('details', house_id=house.id))
+        return render_template('details.html', title='Details', form=form, user=user_in_db, house = house, owner=owner, comments=comments)
+    return render_template('details.html', title='Details', form=form, house=house, owner=owner, commennts=comments)
+
+@app.route('/upload_house')
+def upload_house():
+    house_id = request.args.get('house_id1')
+    house_in_db = House.query.filter(House.id == house_id).first()
+    house_in_db.status = 2
+    db.session.commit()
+    return redirect(url_for('buy'))
 
 
 @app.route('/buy')
@@ -40,6 +51,8 @@ def buy():
     if not session.get("USERNAME") is None:
         username = session.get("USERNAME")
         user_in_db = User.query.filter(User.username == username).first()
+
+    houses = House.query.filter(House.status == 2).all()
     data = []
     with open(r"houseapp/static/data/data.csv", encoding='gbk', errors='ignore') as fin:
         is_first_line =True
@@ -50,7 +63,7 @@ def buy():
             f = f[:-1]
             a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z = f.split(",")
             data.append((a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z))
-    return render_template('buy.html', data=data, user=user_in_db)
+    return render_template('buy.html', data=data, user=user_in_db, houses=houses)
 
 @app.route('/predict', methods=['GET','POST'])
 def predict():
@@ -68,9 +81,15 @@ def predict():
             db.session.commit()
             return redirect(url_for('personal'))
         return render_template('predict.html', title='Predict', user=user_in_db, form=form)
-
-
     return render_template('predict.html', title='Predict', form=form)
+
+@app.route('/delete_house')
+def delete_house():
+    house_id = request.args.get('house_id')
+    house_in_db = House.query.filter(House.id == house_id).first()
+    db.session.delete(house_in_db)
+    db.session.commit()
+    return redirect(url_for('personal'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

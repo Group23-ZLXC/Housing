@@ -42,8 +42,8 @@
           <td style="padding-left: 5px;"> {{ house.date }}</td>
           <td style="padding-left: 5px;"><a href="{{ url_for('details',house_id=house.id) }}"><button type="button"
                 name="button" class="btn btn-warning btn-xs">View</button></a></td>
-          <td style="padding-left: 5px;"><button class="btn btn-danger btn-xs" type="button"
-              name="button">Cancel</button></td>
+          <td style="padding-left: 5px;"><a href="{{ url_for('delete_house',house_id=house.id) }}"><button class="btn btn-danger btn-xs" type="button"
+              name="button">Cancel</button></a></td>
         </tr>
         {% endif %}
         {% endfor %}
@@ -70,10 +70,10 @@
         <tr>
           <td style="padding-left: 5px;"> {{ house.id }}</td>
           <td style="padding-left: 5px;"> {{ house.date }}</td>
-          <td style="padding-left: 5px;"><button class="btn btn-success btn-xs" type="button"
-              name="button">View</button></td>
-          <td style="padding-left: 5px;"><button class="btn btn-danger btn-xs" type="button"
-              name="button">Upload</button></td>
+          <td style="padding-left: 5px;"><a href="{{ url_for('details',house_id=house.id) }}"><button type="button"
+                name="button" class="btn btn-warning btn-xs">View</button></a></td>
+          <td style="padding-left: 5px;"><a href="{{ url_for('upload_house',house_id1=house.id) }}"><button class="btn btn-danger btn-xs" type="button"
+              name="button">Upload</button></a></td>
         </tr>
         {% endif %}
         {% endfor %}
@@ -100,10 +100,10 @@
         <tr>
           <td style="padding-left: 5px;"> {{ house.id }}</td>
           <td style="padding-left: 5px;"> {{ house.date }}</td>
-          <td style="padding-left: 5px;"><button class="btn btn-info btn-xs" type="button" name="button">View</button>
+          <td style="padding-left: 5px;"><a href="{{ url_for('details',house_id=house.id) }}"><button class="btn btn-info btn-xs" type="button" name="button">View</a></button>
           </td>
-          <td style="padding-left: 5px;"><button class="btn btn-danger btn-xs" type="button"
-              name="button">Delete</button></td>
+          <td style="padding-left: 5px;"><a href="{{ url_for('delete_house',house_id=house.id) }}"><button class="btn btn-danger btn-xs" type="button"
+              name="button">Delete</a></button></td>
         </tr>
         {% endif %}
         {% endfor %}

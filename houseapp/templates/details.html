@@ -46,7 +46,11 @@
       </td>
       <td colspan="2" style="vertical-align: top; padding-left: 20px; height: 30%;">
         {% if house.total_price %}
-        <h2 style="color: red;"><strong>{{ house.total_price }}</strong></h2>
+          {% if house.status == 1 %}
+            <span><h2 style="color: red;"><strong>{{ house.total_price }}</strong></h2><a href="{{ url_for('upload_house',house_id1=house.id) }}"><button type="button" name="button">Upload</button></a></span>
+          {% else %}
+            <h2 style="color: red;"><strong>{{ house.total_price }}</strong></h2>
+          {% endif %}
         {% else %}
         <h2 style="color: red;"><strong>Pending</strong></h2>
         {% endif %}
@@ -266,6 +270,7 @@
         </div>
       </div>
     </div>
+    {% if house.status == 2 %}
     <div class="panel-group" id="accordion" style="margin-top: 20px;margin-bottom: 50px;">
       <div class="panel panel-default">
         <div class="panel-heading">
@@ -278,19 +283,16 @@
         <div id="comments" class="panel-collapse collapse in">
           <div class="panel-body">
             <table style="margin-left: 20px; margin-right: 20px;">
-              <tr>
-                <td width="15%"><span class="glyphicon glyphicon-user"></span><b>&nbsp;&nbsp;UserA</b></td>
-                <td class="comment">It's a very nice apartment. When could I go and see it in person?</td>
-              </tr>
-              <tr>
-                <td width="15%"><span class="glyphicon glyphicon-user"></span><b>&nbsp;&nbsp;UserB</b></td>
-                <td class="comment">Could you please upload more pictures?</td>
-              </tr>
-              <tr>
-                <td width="15%"><span class="glyphicon glyphicon-user"></span><b>&nbsp;&nbsp;UserC</b></td>
-                <td class="comment">How is the sound insulation of this house?</td>
-              </tr>
+              {% if comments %}
+                {% for c in comments %}
+                <tr>
+                  <td width="15%"><span class="glyphicon glyphicon-user"></span><b>&nbsp;&nbsp;{{ c.user_id }}</b></td>
+                  <td class="comment">{{ c.body }}</td>
+                </tr>
+                {% endfor %}
+              {% endif %}
             </table>
+
             <hr style="margin-right: 20px;margin-left: 20px;">
             <div class="panel-body">
               {% if user %}
@@ -317,6 +319,7 @@
           </div>
         </div>
       </div>
+      {% endif %}
     </div>
     </div>
     </div>
