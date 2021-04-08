@@ -13,6 +13,22 @@ class User(db.Model):
     def __repr__(self):
         return '<User {}>'.format(self.username)
 
+class Check(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    total_price = db.Column(db.Integer)
+    average_price = db.Column(db.Integer)
+    square = db.Column(db.Integer)
+    living_room = db.Column(db.Integer)
+    drawing_room = db.Column(db.Integer)
+    kitchen = db.Column(db.Integer)
+    bathroom = db.Column(db.Integer)
+    floor = db.Column(db.Integer)
+    building_type = db.Column(db.Integer)
+    renovation_con = db.Column(db.Integer)
+    elevator = db.Column(db.Integer)
+    subway = db.Column(db.Integer)
+
 class House(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))

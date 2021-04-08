@@ -1,8 +1,8 @@
 from houseapp import app, db
 from flask import render_template, flash, redirect, url_for, session, request, jsonify
-from houseapp.forms import CommentForm, LoginForm, SignupForm, PredictForm
+from houseapp.forms import CommentForm, LoginForm, SignupForm, PredictForm, BuyForm
 from werkzeug.security import generate_password_hash, check_password_hash
-from houseapp.models import User, House, Comment, Answer
+from houseapp.models import User, House, Comment, Answer, Check
 from houseapp.static import data
 
 
@@ -45,14 +45,9 @@ def upload_house():
     return redirect(url_for('buy'))
 
 
-@app.route('/buy')
+@app.route('/buy', methods=['GET','POST'])
 def buy():
-     # read file
-    if not session.get("USERNAME") is None:
-        username = session.get("USERNAME")
-        user_in_db = User.query.filter(User.username == username).first()
-
-    houses = House.query.filter(House.status == 2).all()
+    form = BuyForm()
     data = []
     with open(r"houseapp/static/data/data.csv", encoding='gbk', errors='ignore') as fin:
         is_first_line =True
@@ -63,7 +58,216 @@ def buy():
             f = f[:-1]
             a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z = f.split(",")
             data.append((a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z))
-    return render_template('buy.html', data=data, user=user_in_db, houses=houses)
+     # read file
+    houses = House.query.filter(House.status == 2).all()
+    checked_data = []
+    checked_data_1 = []
+    if not session.get("USERNAME") is None:
+        username = session.get("USERNAME")
+        user_in_db = User.query.filter(User.username == username).first()
+        if form.validate_on_submit():
+            check = Check(user_id = user_in_db.id, total_price = form.price.data, average_price = form.average_price.data, square = form.square.data, 
+                living_room=form.living_room.data, drawing_room=form.drawing_room.data, kitchen=form.kitchen.data,
+                bathroom = form.bathroom.data, floor=form.floor.data, building_type = form.building_type.data,
+                renovation_con = form.renovation_con.data, elevator=form.elevator.data, subway=form.subway.data)
+            db.session.add(check)
+            db.session.commit()
+            for house in houses:
+                checked_data_1.append((house.user_id, house.total_price, house.total_price/house.square, house.square, house.living_room, house.drawing_room, house.kitchen, house.bathroom, house.floor, house.building_type, house.renovation_con, house.elevator, house.subway))
+            if check.living_room != 0:
+                for d in data:
+                    if int(check.living_room) == int(d[11])+1:
+                        checked_data.append(d)
+                for i in range(len(checked_data_1)-1,-1,-1):
+                    if int(check.living_room) != int(checked_data_1[i][4])+1:
+                        checked_data_1.remove(checked_data_1[i])
+            if check.living_room == 0:
+                for d in data:
+                    checked_data.append(d)
+            if check.drawing_room != 0:
+                for i in range(len(checked_data)-1,-1,-1):
+                    if int(check.drawing_room) != int(checked_data[i][12])+1:
+                        checked_data.remove(checked_data[i])
+                for i in range(len(checked_data_1)-1,-1,-1):
+                    if int(check.drawing_room) != int(checked_data_1[i][5])+1:
+                        checked_data_1.remove(checked_data_1[i])
+            if check.kitchen != 0:
+                for i in range(len(checked_data)-1,-1,-1):
+                    if int(check.kitchen) != int(checked_data[i][13])+1:
+                        checked_data.remove(checked_data[i])
+                for i in range(len(checked_data_1)-1,-1,-1):
+                    if int(check.kitchen) != int(checked_data_1[i][6])+1:
+                        checked_data_1.remove(checked_data_1[i])
+            if check.bathroom != 0:
+                for i in range(len(checked_data)-1,-1,-1):
+                    if int(check.bathroom) != int(checked_data[i][14])+1:
+                        checked_data.remove(checked_data[i])
+                for i in range(len(checked_data_1)-1,-1,-1):
+                    if int(check.bathroom) != int(checked_data_1[i][7])+1:
+                        checked_data_1.remove(checked_data_1[i])
+            if check.building_type != 0:
+                for i in range(len(checked_data)-1,-1,-1):
+                    if int(check.building_type) != int(checked_data[i][16]):
+                        checked_data.remove(checked_data[i])
+                for i in range(len(checked_data_1)-1,-1,-1):
+                    if int(check.building_type) != int(checked_data_1[i][9]):
+                        checked_data_1.remove(checked_data_1[i])
+            if check.renovation_con != 0:
+                for i in range(len(checked_data)-1,-1,-1):
+                    if int(check.renovation_con) != int(checked_data[i][18]):
+                        checked_data.remove(checked_data[i])
+                for i in range(len(checked_data_1)-1,-1,-1):
+                    if int(check.renovation_con) != int(checked_data_1[i][10]):
+                        checked_data_1.remove(checked_data_1[i])
+            if check.elevator != 0:
+                for i in range(len(checked_data)-1,-1,-1):
+                    if int(check.elevator) != int(checked_data[i][21])+1:
+                        checked_data.remove(checked_data[i])
+                for i in range(len(checked_data_1)-1,-1,-1):
+                    if int(check.elevator) != int(checked_data_1[i][11])+1:
+                        checked_data_1.remove(checked_data_1[i])
+            if check.subway != 0:
+                for i in range(len(checked_data)-1,-1,-1):
+                    if int(check.subway) != int(checked_data[i][23])+1:
+                        checked_data.remove(checked_data[i])
+                for i in range(len(checked_data_1)-1,-1,-1):
+                    if int(check.subway) != int(checked_data_1[i][12])+1:
+                        checked_data_1.remove(checked_data_1[i])
+            if check.total_price == 1:
+                for i in range(len(checked_data)-1,-1,-1):
+                    if float(checked_data[i][8]) >= 100:
+                        checked_data.remove(checked_data[i])
+                for i in range(len(checked_data_1)-1,-1,-1):
+                    if float(checked_data_1[i][1]) >= 1000000:
+                        checked_data_1.remove(checked_data_1[i])
+            if check.total_price == 2:
+                for i in range(len(checked_data)-1,-1,-1):
+                    if (float(checked_data[i][8]) < 100) | (float(checked_data[i][8]) >= 300):
+                        checked_data.remove(checked_data[i])
+                for i in range(len(checked_data_1)-1,-1,-1):
+                    if (float(checked_data_1[i][1]) < 1000000) | (float(checked_data_1[i][1]) >= 3000000):
+                        checked_data_1.remove(checked_data_1[i])
+            if check.total_price == 3:
+                for i in range(len(checked_data)-1,-1,-1):
+                    if (float(checked_data[i][8]) < 300) | (float(checked_data[i][8]) >= 500):
+                        checked_data.remove(checked_data[i])
+                for i in range(len(checked_data_1)-1,-1,-1):
+                    if (float(checked_data_1[i][1]) < 3000000) | (float(checked_data_1[i][1]) >= 5000000):
+                        checked_data_1.remove(checked_data_1[i])
+            if check.total_price == 4:
+                for i in range(len(checked_data)-1,-1,-1):
+                    if (float(checked_data[i][8]) < 500) | (float(checked_data[i][8]) >= 1000):
+                        checked_data.remove(checked_data[i])
+                for i in range(len(checked_data_1)-1,-1,-1):
+                    if (float(checked_data_1[i][1]) < 5000000) | (float(checked_data_1[i][1]) >= 10000000):
+                        checked_data_1.remove(checked_data_1[i])
+            if check.total_price == 5:
+                for i in range(len(checked_data)-1,-1,-1):
+                    if (float(checked_data[i][8]) < 1000):
+                        checked_data.remove(checked_data[i])
+                for i in range(len(checked_data_1)-1,-1,-1):
+                    if (float(checked_data_1[i][1]) < 10000000):
+                        checked_data_1.remove(checked_data_1[i])
+            if check.average_price == 1:
+                for i in range(len(checked_data)-1,-1,-1):
+                    if float(checked_data[i][9]) >= 10000:
+                        checked_data.remove(checked_data[i])
+                for i in range(len(checked_data_1)-1,-1,-1):
+                    if (float(checked_data_1[i][2]) >= 10000):
+                        checked_data_1.remove(checked_data_1[i])
+            if check.average_price == 2:
+                for i in range(len(checked_data)-1,-1,-1):
+                    if (float(checked_data[i][9]) < 10000) | (float(checked_data[i][9]) >= 30000):
+                        checked_data.remove(checked_data[i])
+                for i in range(len(checked_data_1)-1,-1,-1):
+                    if (float(checked_data_1[i][2]) < 10000) | (float(checked_data_1[i][2]) >= 30000):
+                        checked_data_1.remove(checked_data_1[i])
+            if check.average_price == 3:
+                for i in range(len(checked_data)-1,-1,-1):
+                    if (float(checked_data[i][9]) < 30000) | (float(checked_data[i][9]) >= 50000):
+                        checked_data.remove(checked_data[i])
+                for i in range(len(checked_data_1)-1,-1,-1):
+                    if (float(checked_data_1[i][2]) < 30000) | (float(checked_data_1[i][2]) >= 50000):
+                        checked_data_1.remove(checked_data_1[i])
+            if check.average_price == 4:
+                for i in range(len(checked_data)-1,-1,-1):
+                    if (float(checked_data[i][9]) < 50000) | (float(checked_data[i][9]) >= 100000):
+                        checked_data.remove(checked_data[i])
+                for i in range(len(checked_data_1)-1,-1,-1):
+                    if (float(checked_data_1[i][2]) < 50000) | (float(checked_data_1[i][2]) >= 100000):
+                        checked_data_1.remove(checked_data_1[i])
+            if check.average_price == 5:
+                for i in range(len(checked_data)-1,-1,-1):
+                    if (float(checked_data[i][9]) < 100000):
+                        checked_data.remove(checked_data[i])
+                for i in range(len(checked_data_1)-1,-1,-1):
+                    if (float(checked_data_1[i][2]) < 100000):
+                        checked_data_1.remove(checked_data_1[i])
+            if check.square == 1:
+                for i in range(len(checked_data)-1,-1,-1):
+                    if (float(checked_data[i][10]) >= 50):
+                        checked_data.remove(checked_data[i])
+                for i in range(len(checked_data_1)-1,-1,-1):
+                    if (float(checked_data_1[i][3]) >= 50):
+                        checked_data_1.remove(checked_data_1[i])
+            if check.square == 2:
+                for i in range(len(checked_data)-1,-1,-1):
+                    if (float(checked_data[i][10]) < 50) | (float(checked_data[i][10]) >= 100):
+                        checked_data.remove(checked_data[i])
+                for i in range(len(checked_data_1)-1,-1,-1):
+                    if (float(checked_data_1[i][3]) < 50) | (float(checked_data_1[i][3]) >= 100):
+                        checked_data_1.remove(checked_data_1[i])
+            if check.square == 3:
+                for i in range(len(checked_data)-1,-1,-1):
+                    if (float(checked_data[i][10]) < 100) | (float(checked_data[i][10]) >= 150):
+                        checked_data.remove(checked_data[i])
+                for i in range(len(checked_data_1)-1,-1,-1):
+                    if (float(checked_data_1[i][3]) < 100) | (float(checked_data_1[i][3]) >= 150):
+                        checked_data_1.remove(checked_data_1[i])
+            if check.square == 4:
+                for i in range(len(checked_data)-1,-1,-1):
+                    if (float(checked_data[i][10]) < 150) | (float(checked_data[i][10]) >= 200):
+                        checked_data.remove(checked_data[i])
+                for i in range(len(checked_data_1)-1,-1,-1):
+                    if (float(checked_data_1[i][3]) < 150) | (float(checked_data_1[i][3]) >= 200):
+                        checked_data_1.remove(checked_data_1[i])
+            if check.square == 5:
+                for i in range(len(checked_data)-1,-1,-1):
+                    if (float(checked_data[i][10]) < 200):
+                        checked_data.remove(checked_data[i])
+                for i in range(len(checked_data_1)-1,-1,-1):
+                    if (float(checked_data_1[i][3]) < 200):
+                        checked_data_1.remove(checked_data_1[i])
+            if check.floor == 1:
+                for i in range(len(checked_data)-1,-1,-1):
+                    if (int(checked_data[i][15]) > 3):
+                        checked_data.remove(checked_data[i])
+                for i in range(len(checked_data_1)-1,-1,-1):
+                    if (int(checked_data_1[i][8]) > 3):
+                        checked_data_1.remove(checked_data_1[i])
+            if check.floor == 2:
+                for i in range(len(checked_data)-1,-1,-1):
+                    if (int(checked_data[i][15]) > 10) | (int(checked_data[i][15]) < 4):
+                        checked_data.remove(checked_data[i])
+                for i in range(len(checked_data_1)-1,-1,-1):
+                    if (int(checked_data_1[i][8]) > 10) | (int(checked_data_1[i][8]) < 4):
+                        checked_data_1.remove(checked_data_1[i])
+            if check.floor == 3:
+                for i in range(len(checked_data)-1,-1,-1):
+                    if (int(checked_data[i][15]) > 20) | (int(checked_data[i][15]) < 11):
+                        checked_data.remove(checked_data[i])
+                for i in range(len(checked_data_1)-1,-1,-1):
+                    if (int(checked_data_1[i][8]) > 20) | (int(checked_data_1[i][8]) < 11):
+                        checked_data_1.remove(checked_data_1[i])
+            if check.floor == 4:
+                for i in range(len(checked_data)-1,-1,-1):
+                    if (int(checked_data[i][15]) < 21):
+                        checked_data.remove(checked_data[i])
+                for i in range(len(checked_data_1)-1,-1,-1):
+                    if (int(checked_data_1[i][8]) < 21):
+                        checked_data_1.remove(checked_data_1[i])
+        
+    return render_template('buy.html',title='Buy', data=data, user=user_in_db, houses=houses, form=form, checked=checked_data, checked_1=checked_data_1)
 
 @app.route('/predict', methods=['GET','POST'])
 def predict():

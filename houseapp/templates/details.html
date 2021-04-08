@@ -47,9 +47,9 @@
       <td colspan="2" style="vertical-align: top; padding-left: 20px; height: 30%;">
         {% if house.total_price %}
           {% if house.status == 1 %}
-            <span><h2 style="color: red;"><strong>{{ house.total_price }}</strong></h2><a href="{{ url_for('upload_house',house_id1=house.id) }}"><button type="button" name="button">Upload</button></a></span>
+            <span><h2 style="color: red;"><strong>$ {{ house.total_price }}</strong></h2><a href="{{ url_for('upload_house',house_id1=house.id) }}"><button type="button" name="button">Upload</button></a></span>
           {% else %}
-            <h2 style="color: red;"><strong>{{ house.total_price }}</strong></h2>
+            <h2 style="color: red;"><strong>$ {{ house.total_price }}</strong></h2>
           {% endif %}
         {% else %}
         <h2 style="color: red;"><strong>Pending</strong></h2>
@@ -69,7 +69,7 @@
     {% elif house.building_type == 2 %}
       <td width="20%" style="vertical-align: middle;"><b>Bungalow</b></td>
     {% elif house.building_type == 3 %}
-      <td width="20%" style="vertical-align: middle;"><b>Combination of plate and tower</b></td>
+      <td width="20%" style="vertical-align: middle;"><b>Plate & Tower</b></td>
     {% elif house.building_type == 4 %}
       <td width="20%" style="vertical-align: middle;"><b>Plate</b></td>
     {% endif %}
@@ -97,7 +97,7 @@
     {% endif %}
   </tr>
 
-  <tr class="active">
+  <tr>
     <td style="padding-left: 20px;vertical-align: middle;">District:</td>
     {% if house.district == 1 %}
       <td width="20%" style="vertical-align: middle;"><b>DongCheng</b></td>
@@ -145,7 +145,7 @@
             <tr>
               <td style="padding-left: 20px;vertical-align: middle;">Total Price:</td>
               {% if house.total_price %}
-                <td width="20%" style="vertical-align: middle;"><b>{{ house.total_price }}</b></td>
+                <td width="20%" style="vertical-align: middle;"><b>$ {{ house.total_price }}</b></td>
                 {% else %}
                 <td width="20%" style="vertical-align: middle;"><b>Pending</b></td>
                 {% endif %}
@@ -192,7 +192,7 @@
                 <td width="20%" style="vertical-align: middle;"><b>Not Available</b></td>
               {% endif %}
             </tr>
-            <tr>
+            <tr class="active">
               <td style="padding-left: 20px;vertical-align: middle;">Subway: </td>
               {% if house.elevator == 1 %}
                 <td width="20%" style="vertical-align: middle;"><b>Available</b></td>
@@ -208,13 +208,13 @@
               {% elif house.building_type == 2 %}
                 <td width="20%" style="vertical-align: middle;"><b>Bungalow</b></td>
               {% elif house.building_type == 3 %}
-                <td width="20%" style="vertical-align: middle;"><b>Combination of plate and tower</b></td>
+                <td width="20%" style="vertical-align: middle;"><b>Plate & Tower</b></td>
               {% elif house.building_type == 4 %}
                 <td width="20%" style="vertical-align: middle;"><b>Plate</b></td>
               {% endif %}
             </tr>
 
-            <tr>
+            <tr class="active">
               <td style="padding-left: 20px;vertical-align: middle;">Renovation Type:</td>
               {% if house.renovation_con == 1 %}
                 <td width="20%" style="vertical-align: middle;"><b>Other</b></td>

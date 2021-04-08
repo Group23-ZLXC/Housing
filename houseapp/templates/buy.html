@@ -6,132 +6,334 @@
     <meta charset="utf-8">    
     <title>Bootstrap</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script> -->
 </head>
-
-<table width="97%" style="margin-top: 60px;margin-left: 30px;margin-right: 30px;">
-    <tr>
-        <td><b>Price:</b></td>
-        <td><input type="radio" name="price" value="very_low">Below 500k</td>
-        <td><input type="radio" name="price" value="low">500k-1m</td>
-        <td><input type="radio" name="price" value="medium">1m-2m</td>
-        <td><input type="radio" name="price" value="high">2m-5m</td>
-        <td><input type="radio" name="price" value="very_high">Over 5m</td>
-    </tr>
-    <tr>
-        <td><b>Average price:</b></td>
-        <td><input type="radio" name="average_price" value="very low">Below 5k</td>
-        <td><input type="radio" name="average_price" value="low">5k-10k</td>
-        <td><input type="radio" name="average_price" value="medium">10k-20k</td>
-        <td><input type="radio" name="average_price" value="high">20k-50k</td>
-        <td><input type="radio" name="average_price" value="very high">Over 50k</td>
-    </tr>
-    <tr>
-        <td><b>Square:</b></td>
-        <td><input type="radio" name="square" value="very small">Below 50m<sup>2</sup></td>
-        <td><input type="radio" name="square" value="small">50m<sup>2</sup>-100m<sup>2</sup></td>
-        <td><input type="radio" name="square" value="middle">100m<sup>2</sup>-200m<sup>2</sup></td>
-        <td><input type="radio" name="square" value="big">200m<sup>2</sup>-500m<sup>2</sup></td>
-        <td><input type="radio" name="square" value="very big">Over 500m<sup>2</sup></td>
-    </tr>
-    <tr>
-        <td><b>Bedrooms:</b></td>
-        <td><input type="radio" name="bedrooms" value="one">1</td>
-        <td><input type="radio" name="bedrooms" value="two">2</td>
-        <td><input type="radio" name="bedrooms" value="three">3</td>
-        <td><input type="radio" name="bedrooms" value="four">4</td>
-        <td><input type="radio" name="bedrooms" value="more">Over 4</td>
-    </tr>
-    <tr>
-        <td><b>Floor:</b></td>
-        <td><input type="radio" name="floor" value="low level">1st-3rd</td>
-        <td><input type="radio" name="floor" value="middle level">4th-10th</td>
-        <td><input type="radio" name="floor" value="high level">Over 11th</td>
-    </tr>
-    <tr>
-        <td><b>Type:</b></td>
-        <td><input type="radio" name="type" value="tower">tower</td>
-        <td><input type="radio" name="type" value="bungalow">bungalow</td>
-        <td><input type="radio" name="type" value="plate and tower">plate and tower</td>
-        <td><input type="radio" name="type" value="plate">plate</td>
-    </tr>
-    <tr>
-        <td><b>Renovation:</b></td>
-        <td><input type="radio" name="renovation" value="rough">rough</td>
-        <td><input type="radio" name="renovation" value="simplicity">simplicity</td>
-        <td><input type="radio" name="renovation" value="hardcover">hardcover</td>
-        <td><input type="radio" name="renovation" value="other">other</td>
-    </tr>
-    <tr>
-        <td><b>Elevator:</b></td>
-        <td><input type="radio" name="elevator" value="have">have</td>
-        <td><input type="radio" name="elevator" value="not have">not have</td>
-    </tr>
-    <tr>
-        <td colspan="5" align="right">
-            <button onclick="check()" type="button" class="btn btn-defult">Check</button>
-        </td>
-        <td align="center"> <button onclick="deleteAll()" type="button" class="btn btn-defult">Delete all</button>
-        </td>
-    </tr>
-</table>
-<div style="margin: 0 30px 10px 30px;">
-    <hr>
-    <h2><b>Find x suitable houses for you ^_^</b></h2>
-    <hr>
-
-</div>
-
-
-<div>
-  {% for house in houses %}
-    <ul>
-      <li><a href="{{ url_for('details',house_id=house.id) }}">{{ house.id }}</a></li>
-    </ul>
-  {% endfor %}
-</div>
-
-
-{% for row in data %}
-
-<div style="margin-left: 30px; margin-right: 30px;">
-    <table width="100%">
+<form action="" method="post" novalidate style="margin-top: 40px; margin-left: 30px; margin-right: 30px;">
+    {{ form.hidden_tag() }}
+    <table style="width:100%;">
         <tr>
-            <td rowspan="3" width="250px">
-                <a href="" id="image"><img src="{{ url_for('static', filename='img/house.jpg') }}" alt="house"
-                        width="200px" height="150px" onclick="details()" class="img-rounded" /></a>
+            <td style="width: 31%;">
+                <div class="input-group" style="margin-top: 20px;padding-left: 10px;padding-right: 10px;">
+                    <span class="input-group-addon">Price</span>
+                    {{ form.price(class="form-control") }}
+                </div>
             </td>
-            {% if row[16]=='1' %}
-            <td style="font-size: 35px; vertical-align: top;"><strong>Tower</strong></td>
-            {% elif row[16]=='2' %}
-            <td style="font-size: 35px; vertical-align: top;"><strong>Bungalow</strong></td>
-            {% elif row[16]=='3' %}
-            <td style="font-size: 35px; vertical-align: top;"><strong>Plate & Tower</strong></td>
-            {% elif row[16]=='4' %}
-            <td style="font-size: 35px; vertical-align: top;"><strong>Plate</strong></td>
-            {% elif row[16]=='nan' %}
-            <td style="font-size: 35px; vertical-align: top;"><strong>Unknown</strong></td>
-            {% endif %}
-            <td rowspan="3" align="center" style="font-size: 25px;"><strong style="color: red;">
-                    ¥{{ row[8] }}0000</strong><br><br>
-                <p style="color:grey;font-size: 13px; vertical-align: top;">¥{{ row[9] }}/sq metres</p>
+            <td style="width: 31%;">
+                <div class="input-group" style="margin-top: 20px;padding-left: 10px;padding-right: 10px;">
+                    <span class="input-group-addon">Average Price</span>
+                    {{ form.average_price(class="form-control") }}
+                </div>
+            </td>
+            <td style="width: 31%;">
+                <div class="input-group" style="margin-top: 20px;padding-left: 10px;padding-right: 20px;">
+                    <span class="input-group-addon">Square</span>
+                    {{ form.square(class="form-control") }}
+                </div>
+            </td>
+            <td rowspan="2" align="center">
+                <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Our House" width="100px" height="110px" style="margin-top: 20px;"/>
             </td>
         </tr>
         <tr>
-            <td style="font-size: 20px;">Address:{{ row[2] }} ---- {{ row[3] }}</td>
+            <td>
+                <div class="input-group" style="margin-top: 10px;padding-left: 10px;padding-right: 10px;">
+                    <span class="input-group-addon">Living Room</span>
+                    {{ form.living_room(class="form-control") }}
+                </div>
+            </td>
+            <td>
+                <div class="input-group" style="margin-top: 10px;padding-left: 10px;padding-right: 10px;">
+                    <span class="input-group-addon">Drawing Room</span>
+                    {{ form.drawing_room(class="form-control") }}
+                </div>
+            </td>
+            <td>
+                <div class="input-group" style="margin-top: 10px;padding-left: 10px;padding-right: 20px;">
+                    <span class="input-group-addon">Bathroom</span>
+                    {{ form.bathroom(class="form-control") }}
+                </div>
+            </td>
         </tr>
         <tr>
-            <td>Square:{{ row[10] }}m<sup>2</sup></td>
+            <td>
+                <div class="input-group" style="margin-top: 10px;padding-left: 10px;padding-right: 10px;">
+                    <span class="input-group-addon">Kitchen</span>
+                    {{ form.kitchen(class="form-control") }}
+                </div>
+            </td>
+            <td>
+                <div class="input-group" style="margin-top: 10px;padding-left: 10px;padding-right: 10px;">
+                    <span class="input-group-addon">Floor</span>
+                    {{ form.floor(class="form-control") }}
+                </div>
+            </td>
+            <td>
+                <div class="input-group" style="margin-top: 10px;padding-left: 10px;padding-right: 20px;">
+                    <span class="input-group-addon">Type</span>
+                    {{ form.building_type(class="form-control") }}
+                </div>
+            </td>
+            <td rowspan="2" align="center">{% if user %}
+                <div>
+                    <p>{{ form.check(class="button", style="height:80px;width:90%;margin-top:20px") }}</p>
+                </div>
+                {% else %}
+                <p style="color: red;margin-top: 20px; "><b>You have to log in to predict</b></p>
+                <table width="60%">
+                    <tr>
+                        <td align="left">
+                            <p><span>Already have an account?</span>
+                                <a href="{{ url_for('login') }}"><span class="glyphicon glyphicon-user"></span> Log
+                                    in</a>
+                            </p>
+                        </td>
+                        <td align="right">
+                            <p><span>Create an account? </span>
+                                <a href="{{ url_for('signup') }}"><span class="glyphicon glyphicon-user"></span>
+                                    Register</a>
+                            </p>
+                        </td>
+                    </tr>
+
+                </table>
+                {% endif %}</td>
+        </tr>
+        <tr>
+            <td>
+                <div class="input-group" style="margin-top: 10px;padding-left: 10px;padding-right: 10px;">
+                    <span class="input-group-addon">Renovation</span>
+                    {{ form.renovation_con(class="form-control") }}
+                </div>
+            </td>
+            <td>
+                <div class="input-group" style="margin-top: 10px;padding-left: 10px;padding-right: 10px;">
+                    <span class="input-group-addon">Elevator</span>
+                    {{ form.elevator(class="form-control") }}
+                </div>
+            </td>
+            <td>
+                <div class="input-group" style="margin-top:10px;padding-left: 10px;padding-right: 20px;">
+                    <span class="input-group-addon">Subway</span>
+                    {{ form.subway(class="form-control") }}
+                </div>
+            </td>
         </tr>
     </table>
+    <!-- <table width="60%" style="margin-top: 20px;">
+        <tr>
+            <td align="center""><label class="checkbox-inline">
+                {{ form.elevator() }} Elevator
+                </label>
+            </td>
+            <td align="center"><label class="checkbox-inline">
+                {{ form.subway() }} Subway
+                </label></td>
+        </tr>
+
+    </table> -->
+</form>
+
+<div style="margin: 0 30px 10px 30px;">
     <hr>
+    <h2><b>Find {{ checked|length + checked_1|length }} suitable houses for you ^_^</b></h2>
+
 </div>
-{% endfor %}
+{% for house in checked_1 %}
+
+    <div style="margin-left: 30px; margin-right: 30px;margin-top: 25px;">
+        <table width="100%" class="table table-condensed">
+            <tr>
+                <td rowspan="3" width="22%">
+                    <a href="" id="image"><img src="{{ url_for('static', filename='img/house.jpg') }}" alt="house"
+                            width="100%" height="17%" onclick="details()" class="img-rounded" /></a>
+                </td>
+                {% if house[9] == 1 %}
+                <td colspan="2" class="active" style="vertical-align: middle;padding-left: 25px;width: 26%;font-size: 20px;"><strong>Type: Tower</strong></td>
+                {% elif house[9] == 2 %}
+                <td colspan="2" class="active" style="vertical-align: middle;padding-left: 25px;width: 26%;font-size: 20px;"><strong>Type: Bungalow</strong></td>
+                {% elif house[9] == 3 %}
+                <td colspan="2" class="active" style="vertical-align: middle;padding-left: 25px;width: 26%;font-size: 20px;"><strong>Type: Plate & Tower</strong></td>
+                {% elif house[9] == 4 %}
+                <td colspan="2" class="active" style="vertical-align: middle;padding-left: 25px;width: 26%;font-size: 20px;"><strong>Type: Plate</strong></td>
+                {% endif %}
+                {% if house[10] == 1 %}
+                <td colspan="2" class="active" style="vertical-align: middle; padding-left: 25px;width: 26%;font-size: 20px;"><b>Renovation: Other</b></td>
+                {% elif house[10] == 2 %}
+                <td colspan="2" class="active" style="vertical-align: middle; padding-left: 25px;width: 26%;font-size: 20px;"><b>Renovation: Rough</b></td>
+                {% elif house[10] == 3 %}
+                <td colspan="2" class="active" style="vertical-align: middle; padding-left: 25px;width: 26%;font-size: 20px;"><b>Renovation: Simplicity</b></td>
+                {% elif house[10] == 4 %}
+                <td colspan="2" class="active" style="vertical-align: middle; padding-left: 25px;width: 26%;font-size: 20px;"><b>Renovation: Hardcover</b></td>
+                {% endif %}
+                <td rowspan="3" align="center" style="font-size: 25px;width: 26%;">
+                <div style="background-color: rgb(240, 240, 240);border: 1px solid rgb(240, 240, 240);
+                border-radius: 10px;vertical-align: middle;box-shadow: 5px 5px 5px rgb(172, 172, 172);margin: 45px 50px 0 50px; height:100%;padding-top: 10px;padding-bottom: 10px;"><b> <strong style="color: red;">
+                    ¥{{ house[1] }}</strong></b>
+            <br>
+            <p style="color:grey;font-size: 13px;">¥{{ house[2] }}/m<sup>2</sup></p></div>
+                    
+                        
+                </td>
+            </tr>
+            <tr>
+                <td style="padding-left: 25px;width: 13%;vertical-align: middle;" >
+                    <b><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;{{ house[4] }} Beds</b>
+                </td>
+                <td style="padding-left: 25px;width: 13%;vertical-align: middle;">                   
+                        <b><img src="{{ url_for('static', filename='img/drawingroom.png') }}" alt="drawing_room" width="18%" style="padding-bottom: 3px;"/>&nbsp;{{ house[5] }} Parlour</b>
+                </td>
+                <td style="padding-left: 25px;width: 13%;vertical-align: middle;">
+                        <b><span class="glyphicon glyphicon-cutlery"></span>&nbsp;&nbsp;{{ house[6] }} Kitchen</b>
+                </td>
+                <td style="padding-left: 25px;width: 13%;vertical-align: middle;">
+                        <b><img src="{{ url_for('static', filename='img/bathroom.png') }}" alt="house2" width="18%" style="padding-bottom: 3px;"/>&nbsp;{{ house[7] }} Baths</b>
+                </td>
+            </tr>
+            <tr>
+                {% if house[11] == 1 %}
+                <td style="vertical-align: middle;padding:7px 0 7px 25px"><span class="glyphicon glyphicon-ok-sign" style="color: rgb(24, 177, 24);"></span>&nbsp;<b>Elevator</b></td>
+                {% elif house[11] == 0 %}
+                <td style="vertical-align: middle;padding:5px 0 5px 25px"><span class="glyphicon glyphicon-remove-sign" style="color: rgb(221, 0, 0);"></span>&nbsp;<b>Elevator</b></td>
+                {% endif %}
+                {% if house[12] == 1 %}
+                <td style="vertical-align: middle;padding:5px 0 5px 25px"><span class="glyphicon glyphicon-ok-sign" style="color: rgb(24, 177, 24);"></span>&nbsp;<b>Subway</b></td>
+                {% elif house[12] == 0 %}
+                <td style="vertical-align: middle;padding:5px 0 5px 25px"><span class="glyphicon glyphicon-remove-sign" style="color: rgb(221, 0, 0);"></span>&nbsp;<b>Subway</b></td>
+                {% endif %}
+                <td colspan="2" style="vertical-align: middle;padding:5px 0 5px 25px"><b><span class="glyphicon glyphicon-fullscreen"></span>&nbsp;{{ house[3] }}m<sup>2</sup></b></td>
+            </tr>
+        </table>
+    </div>
+    {% endfor %}
+
+    {% for house in checked %}
+
+    <div style="margin-left: 30px; margin-right: 30px;margin-top: 25px;">
+        <table width="100%" class="table table-condensed">
+            <tr>
+                <td rowspan="3" width="22%">
+                    <a href="" id="image"><img src="{{ url_for('static', filename='img/house.jpg') }}" alt="house"
+                            width="100%" height="17%" onclick="details()" class="img-rounded" /></a>
+                </td>
+                {% if house[16] == '1' %}
+                <td colspan="2" class="active" style="vertical-align: middle;padding-left: 25px;width: 26%;font-size: 20px;"><strong>Type: Tower</strong></td>
+                {% elif house[16] == '2' %}
+                <td colspan="2" class="active" style="vertical-align: middle;padding-left: 25px;width: 26%;font-size: 20px;"><strong>Type: Bungalow</strong></td>
+                {% elif house[16] == '3' %}
+                <td colspan="2" class="active" style="vertical-align: middle;padding-left: 25px;width: 26%;font-size: 20px;"><strong>Type: Plate & Tower</strong></td>
+                {% elif house[16] == '4' %}
+                <td colspan="2" class="active" style="vertical-align: middle;padding-left: 25px;width: 26%;font-size: 20px;"><strong>Type: Plate</strong></td>
+                {% endif %}
+                {% if house[18] == '1' %}
+                <td colspan="2" class="active" style="vertical-align: middle; padding-left: 25px;width: 26%;font-size: 20px;"><b>Renovation: Other</b></td>
+                {% elif house[18] == '2' %}
+                <td colspan="2" class="active" style="vertical-align: middle; padding-left: 25px;width: 26%;font-size: 20px;"><b>Renovation: Rough</b></td>
+                {% elif house[18] == '3' %}
+                <td colspan="2" class="active" style="vertical-align: middle; padding-left: 25px;width: 26%;font-size: 20px;"><b>Renovation: Simplicity</b></td>
+                {% elif house[18] == '4' %}
+                <td colspan="2" class="active" style="vertical-align: middle; padding-left: 25px;width: 26%;font-size: 20px;"><b>Renovation: Hardcover</b></td>
+                {% endif %}
+                <td rowspan="3" align="center" style="font-size: 25px;width: 26%;">
+                <div style="background-color: rgb(240, 240, 240);border: 1px solid rgb(240, 240, 240);
+                border-radius: 10px;vertical-align: middle;box-shadow: 5px 5px 5px rgb(172, 172, 172);margin: 45px 50px 0 50px; height:100%;padding-top: 10px;padding-bottom: 10px;"><b> <strong style="color: red;">
+                    ¥{{ house[8] }}0000</strong></b>
+            <br>
+            <p style="color:grey;font-size: 13px;">¥{{ house[9] }}/m<sup>2</sup></p></div>
+                    
+                        
+                </td>
+            </tr>
+            <tr>
+                <td style="padding-left: 25px;width: 13%;vertical-align: middle;" >
+                    <b><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;{{ house[11] }} Beds</b>
+                </td>
+                <td style="padding-left: 25px;width: 13%;vertical-align: middle;">                   
+                        <b><img src="{{ url_for('static', filename='img/drawingroom.png') }}" alt="drawing_room" width="18%" style="padding-bottom: 3px;"/>&nbsp;{{ house[12] }} Parlour</b>
+                </td>
+                <td style="padding-left: 25px;width: 13%;vertical-align: middle;">
+                        <b><span class="glyphicon glyphicon-cutlery"></span>&nbsp;&nbsp;{{ house[13] }} Kitchen</b>
+                </td>
+                <td style="padding-left: 25px;width: 13%;vertical-align: middle;">
+                        <b><img src="{{ url_for('static', filename='img/bathroom.png') }}" alt="house2" width="18%" style="padding-bottom: 3px;"/>&nbsp;{{ house[14] }} Baths</b>
+                </td>
+            </tr>
+            <tr>
+                {% if house[21] == '1' %}
+                <td style="vertical-align: middle;padding:7px 0 7px 25px"><span class="glyphicon glyphicon-ok-sign" style="color: rgb(24, 177, 24);"></span>&nbsp;<b>Elevator</b></td>
+                {% elif house[21] == '0' %}
+                <td style="vertical-align: middle;padding:5px 0 5px 25px"><span class="glyphicon glyphicon-remove-sign" style="color: rgb(221, 0, 0);"></span>&nbsp;<b>Elevator</b></td>
+                {% endif %}
+                {% if house[23] == '1' %}
+                <td style="vertical-align: middle;padding:5px 0 5px 25px"><span class="glyphicon glyphicon-ok-sign" style="color: rgb(24, 177, 24);"></span>&nbsp;<b>Subway</b></td>
+                {% elif house[23] == '0' %}
+                <td style="vertical-align: middle;padding:5px 0 5px 25px"><span class="glyphicon glyphicon-remove-sign" style="color: rgb(221, 0, 0);"></span>&nbsp;<b>Subway</b></td>
+                {% endif %}
+                <td colspan="2" style="vertical-align: middle;padding:5px 0 5px 25px"><b><span class="glyphicon glyphicon-fullscreen"></span>&nbsp;{{ house[10] }}m<sup>2</sup></b></td>
+            </tr>
+        </table>
+    </div>
+    {% endfor %}
+
+    <hr style="margin-top: 20px; margin-left: 30px; margin-right: 30px;">
+    <div style="margin-top: 20px;margin-left: 10px;margin-right: 10px;margin-bottom: 50px;">
+        <table style="width: 100%;">
+            <tr>
+                <td>
+                    <p style="font-size: 3rem;padding-left: 20px;"><b><span
+                                class="glyphicon glyphicon-thumbs-up"></span>&nbsp;&nbsp;New House
+                            Rencently</b></p>
+                </td>
+                <!-- <td align="right" style="padding-right: 25px;vertical-align: bottom;"><a href="{{ url_for('buy') }}" id="image">More</a></td> -->
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <table style="width: 100%;margin-top: 20px;">
+                        <tr>
+                            <td colspan="2" width="250px" align="center">
+                                <a href="" id="image"><img src="{{ url_for('static', filename='img/house.jpg') }}"
+                                        alt="house" width="270px" height="160px" class="img-rounded" /></a>
+                            </td>
+                            <td colspan="2" width="250px" align="center">
+                                <a href="" id="image"><img src="{{ url_for('static', filename='img/house1.jpg') }}"
+                                        alt="house" width="270px" height="160px" class="img-rounded" /></a>
+                            </td>
+                            <td colspan="2" width="250px" align="center">
+                                <a href="" id="image"><img src="{{ url_for('static', filename='img/house3.jpg') }}"
+                                        alt="house" width="270px" height="160px" class="img-rounded" /></a>
+                            </td>
+                            <td colspan="2" width="250px" align="center">
+                                <a href="" id="image"><img src="{{ url_for('static', filename='img/house3.jpg') }}"
+                                        alt="house" width="270px" height="160px" class="img-rounded" /></a>
+                            </td>
+                        </tr>
+                        <tr style="font-size: 1.7rem;">
+                            <td colspan="2" style="padding-left: 20px;padding-top: 5px;"><b>Name1</b></td>
+                            <td colspan="2" style="padding-left: 20px;padding-top: 5px;"><b>Name2</b></td>
+                            <td colspan="2" style="padding-left: 20px;padding-top: 5px;"><b>Name3</b></td>
+                            <td colspan="2" style="padding-left: 20px;padding-top: 5px;"><b>Name4</b></td>
+                        </tr>
+                        <tr style="font-size: 1.4rem;margin-left: 5px;padding-right: 5px;">
+                            <td style="padding-left: 20px;">Square:xxxm<sup>2</sup></td>
+                            <td align="center" style="padding-right: 5px;color: red;">Price:$xxx,xxx,xxx</td>
+                            <td style="padding-left: 20px;">Square:xxxm<sup>2</sup></td>
+                            <td align="center" style="padding-right: 5px;color: red;">Price:$xxx,xxx,xxx</td>
+                            <td style="padding-left: 20px;">Square:xxxm<sup>2</sup></td>
+                            <td align="center" style="padding-right: 5px;color: red;">Price:$xxx,xxx,xxx</td>
+                            <td style="padding-left: 20px;">Square:xxxm<sup>2</sup></td>
+                            <td align="center" style="padding-right: 5px;color: red;">Price:$xxx,xxx,xxx</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+    </div>
 <!-- <div id="page1" style="display:none;">这是第1页的内容</div>
 <div id="page2" style="display:inline;">这是第2页的内容</div>
 <div id="page3" style="display:none;">这是第3页的内容</div>
 <div id="page4" style="display:none;">这是第4页的内容</div>
 <div id="page5" style="display:none;">这是第5页的内容</div> -->
-<div align="center" style="margin-bottom: 30px;">
+<!-- <div align="center" style="margin-bottom: 30px;">
     <ul class="pagination">
         <li><a href="#">&laquo;</a></li>
         <li><a href="#" onclick="showpage(1)">1</a></li>
@@ -141,28 +343,41 @@
         <li><a href="#" onclick="showpage(5)">5</a></li>
         <li><a href="#">&raquo;</a></li>
     </ul>
+</div> -->
+<!-- <div id="dataid" d="{{ data[i] }}" style="display:none">
+    
+    </div> -->
+
+
+<div id="dd">
+
 </div>
+<style>
+    .button {
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: #cc8c5e;
+    color: #ffffff;
+    border: 2px solid #cc8c5e;
+}
+
+.button:hover {
+    background-color: #ffffff;
+    color:#cc8c5e;
+}
+</style>
 <script>
     var input = document.querySelectorAll('input')
     var img = document.getElementById('image')
-    function deleteAll() {
-        for (var i = 0; i < input.length; i++) {
-            if (input[i].checked == true) {
-                input[i].checked = false;
-            }
-        }
-    }
-    function check() {
-        for (var i = 0; i < radio_1.length; i++) {
-            if (radio_1[i].checked) {
-                price = radio_1[i].value
-            }
-        }
-        if (price == "low") {
-
-        }
-
-    }
     function showpage(page) {
         for (var i = 1; i < 6; i++) {
             if (page == i) {
@@ -177,18 +392,8 @@
     function details() {
         img.href = "{{ url_for('details') }}";
     }
-    function load(name) {
-        let xhr = new XMLHttpRequest(),
-            okStatus = document.location.protocol === "file:" ? 0 : 200;
-        xhr.open('GET', name, false);
-        xhr.overrideMimeType("text/html;charset=utf-8");//默认为utf-8
-        xhr.send(null);
-        return xhr.status === okStatus ? xhr.responseText : null;
-    }
 
-    let text = load("aa.csv");
-
-    console.log(text);
 </script>
+
 {% include 'footer.html' %}
 {% endblock %}
