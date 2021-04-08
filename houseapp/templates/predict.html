@@ -3,120 +3,157 @@
 {% block content %}
 
 
-<div style="margin-top: 60px; margin-left: 40px;margin-right:40px;" align="center">
-    <h2 style="text-shadow: 5px 5px 5px rgb(172, 172, 172);"><span class="glyphicon glyphicon-backward"></span>&nbsp;&nbsp;Predict Your House Price&nbsp;&nbsp;<span
-            class="glyphicon glyphicon-forward"></span></h2>
+<div style="margin-top: 60px; margin-left: 300px;margin-right:300px;margin-bottom: 60px; background-color: rgb(255, 255, 255);opacity: 0.9;padding: 10px 0 10px 0;border-radius: 20px;box-shadow: 5px 5px 5px rgb(172, 172, 172);" align="center">
+    <h2><span class="glyphicon glyphicon-leaf"></span>&nbsp;&nbsp;<b>Predict Your House Price</b>&nbsp;&nbsp;<span
+            class="glyphicon glyphicon-leaf"></span></h2>
 
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
-        <div class="input-group" style="width: 60%; margin-top: 20px;box-shadow: 5px 5px 5px rgb(172, 172, 172);">
-            <span class="input-group-addon">Lng</span>
-            {{ form.lng(class_="form-control", placeholder="lng") }}
-        </div>
-        <div class="input-group" style="width: 60%; margin-top: 20px;box-shadow: 5px 5px 5px rgb(172, 172, 172);">
-            <span class="input-group-addon">Lat</span>
-            {{ form.lat(class_="form-control", placeholder="lat") }}
-        </div>
-        <p>
-        <div class="input-group" style="width: 60%; margin-top: 20px;box-shadow: 5px 5px 5px rgb(172, 172, 172);">
-            <span class="input-group-addon">*Square</span>
-            {{ form.square(class_="form-control", placeholder="square") }}
-        </div>
-
-        {% for error in form.square.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-
-        </p>
-        <p>
-        <div class="input-group" style="width: 60%; margin-top: 20px;box-shadow: 5px 5px 5px rgb(172, 172, 172);">
-            <span class="input-group-addon">*Living Room</span>
-            {{ form.living_room(class_="form-control") }}
-        </div>
-
-        {% for error in form.living_room.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-
-        </p>
-        <p>
-        <div class="input-group" style="width: 60%; margin-top: 20px;box-shadow: 5px 5px 5px rgb(172, 172, 172);">
-            <span class="input-group-addon">*Drawing Room</span>
-            {{ form.drawing_room(class_="form-control") }}
-        </div>
-
-        {% for error in form.drawing_room.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-
-        </p>
-        <p>
-        <div class="input-group" style="width: 60%; margin-top: 20px;box-shadow: 5px 5px 5px rgb(172, 172, 172);">
-            <span class="input-group-addon">*Kitchen</span>
-            {{ form.kitchen(class_="form-control") }}
-        </div>
-
-        {% for error in form.kitchen.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-
-        </p>
-        <p>
-        <div class="input-group" style="width: 60%; margin-top: 20px;box-shadow: 5px 5px 5px rgb(172, 172, 172);">
-            <span class="input-group-addon">*Bathroom</span>
-            {{ form.bathroom(class_="form-control") }}
-        </div>
-
-        {% for error in form.bathroom.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-
-        </p>
-        <p>
-        <div class="input-group" style="width: 60%; margin-top: 20px;box-shadow: 5px 5px 5px rgb(172, 172, 172);">
-            <span class="input-group-addon">*Floor</span>
-            {{ form.floor(class_="form-control") }}
-        </div>
-
-        {% for error in form.floor.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-
-        </p>
-        <div class="input-group" style="width: 60%; margin-top: 20px;box-shadow: 5px 5px 5px rgb(172, 172, 172);">
-            <span class="input-group-addon">Building Type</span>
-            {{ form.building_type(class_="form-control") }}
-        </div>
-        <div class="input-group" style="width: 60%; margin-top: 20px;box-shadow: 5px 5px 5px rgb(172, 172, 172);">
-            <span class="input-group-addon">Renovation Condition</span>
-            {{ form.renovation_con(class_="form-control") }}
-        </div>
-        <p>
-        <div class="input-group" style="width: 60%; margin-top: 20px;box-shadow: 5px 5px 5px rgb(172, 172, 172);">
-            <span class="input-group-addon">*District</span>
-            {{ form.district(class_="form-control") }}
-        </div>
-
-        {% for error in form.district.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-
-        </p>
-        <table width="60%" style="margin-top: 20px;">
+        <table style="width: 90%;">
             <tr>
-                <td align="center" style="text-shadow: 5px 5px 5px rgb(172, 172, 172);"><label class="checkbox-inline">
+                <td style="width: 40%;" align="center">
+                    <p>
+                    <div class="input-group" style="width: 90%; margin-top: 20px;">
+                        <span class="input-group-addon">Lng</span>
+                        {{ form.lng(class_="form-control", placeholder="lng") }}
+                    </div>
+                    </p>
+                </td>
+                <td style="width: 40%;" align="center">
+                    <p>
+                    <div class="input-group" style="width: 90%; margin-top: 20px;">
+                        <span class="input-group-addon">Lat</span>
+                        {{ form.lat(class_="form-control", placeholder="lat") }}
+                    </div>
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 40%;" align="center">
+                    <p>
+                        <div class="input-group" style="width: 90%; margin-top: 20px;">
+                            <span class="input-group-addon">*Square</span>
+                            {{ form.square(class_="form-control", placeholder="square") }}
+                        </div>
+                        {% for error in form.square.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}  
+                    </p>
+                </td>
+                <td style="width: 40%;" align="center">
+                    <p>
+                        <div class="input-group" style="width: 90%; margin-top: 20px;">
+                            <span class="input-group-addon">*Floor</span>
+                            {{ form.floor(class_="form-control") }}
+                        </div>
+                
+                        {% for error in form.floor.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 40%;" align="center">
+                    <p>
+                        <div class="input-group" style="width: 90%; margin-top: 20px;">
+                            <span class="input-group-addon">*Living Room</span>
+                            {{ form.living_room(class_="form-control") }}
+                        </div>
+                
+                        {% for error in form.living_room.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                
+                    </p>
+                </td>
+                <td style="width: 40%;" align="center">
+                    <p>
+                        <div class="input-group" style="width: 90%; margin-top: 20px;">
+                            <span class="input-group-addon">*Drawing Room</span>
+                            {{ form.drawing_room(class_="form-control") }}
+                        </div>
+                
+                        {% for error in form.drawing_room.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 40%;" align="center">
+                    <p>
+                        <div class="input-group" style="width: 90%; margin-top: 20px;">
+                            <span class="input-group-addon">*Kitchen</span>
+                            {{ form.kitchen(class_="form-control") }}
+                        </div>
+                
+                        {% for error in form.kitchen.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                
+                    </p>
+                </td>
+                <td style="width: 40%;" align="center">
+                    <p>
+                        <div class="input-group" style="width: 90%; margin-top: 20px;">
+                            <span class="input-group-addon">*Bathroom</span>
+                            {{ form.bathroom(class_="form-control") }}
+                        </div>
+                
+                        {% for error in form.bathroom.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 40%;" align="center">
+                    <p>
+                    <div class="input-group" style="width: 90%; margin-top: 20px;">
+                        <span class="input-group-addon">Building Type</span>
+                        {{ form.building_type(class_="form-control") }}
+                    </div></p>
+                </td>
+                <td style="width: 40%;" align="center">
+                    <p>
+                    <div class="input-group" style="width: 90%; margin-top: 20px;">
+                        <span class="input-group-addon">Renovation Condition</span>
+                        {{ form.renovation_con(class_="form-control") }}
+                    </div></p>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center" style="width: 80%;">
+                    <p>
+                        <div class="input-group" style="width: 95%; margin-top: 20px;">
+                            <span class="input-group-addon">*District</span>
+                            {{ form.district(class_="form-control") }}
+                        </div>
+                
+                        {% for error in form.district.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" style="padding-top: 20px"><label class="checkbox-inline">
                     {{ form.elevator() }} Elevator
                     </label>
                 </td>
-                <td align="center" style="text-shadow: 5px 5px 5px rgb(172, 172, 172);"><label class="checkbox-inline">
+                <td align="center" style="padding-top: 20px"><label class="checkbox-inline">
                     {{ form.subway() }} Subway
                     </label></td>
             </tr>
-
         </table>
 
         {% if user %}
-        <div style="width: 60%; margin-top: 20px;margin-bottom:40px;box-shadow: 5px 5px 5px rgb(172, 172, 172);">
+        <div style="width: 30%; margin-top: 20px;margin-bottom:40px;">
             <p>{{ form.submit(class="btn btn-defult btn-block", width="100%") }}</p>
         </div>
         {% else %}
