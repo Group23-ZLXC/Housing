@@ -73,7 +73,7 @@ def buy():
             db.session.add(check)
             db.session.commit()
             for house in houses:
-                checked_data_1.append((house.user_id, house.total_price, house.total_price/house.square, house.square, house.living_room, house.drawing_room, house.kitchen, house.bathroom, house.floor, house.building_type, house.renovation_con, house.elevator, house.subway))
+                checked_data_1.append((house.user_id, house.total_price, round(house.total_price/house.square, 2), house.square, house.living_room, house.drawing_room, house.kitchen, house.bathroom, house.floor, house.building_type, house.renovation_con, house.elevator, house.subway))
             if check.living_room != 0:
                 for d in data:
                     if int(check.living_room) == int(d[11])+1:
