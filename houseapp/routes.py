@@ -66,7 +66,7 @@ def buy():
         username = session.get("USERNAME")
         user_in_db = User.query.filter(User.username == username).first()
         if form.validate_on_submit():
-            check = Check(user_id = user_in_db.id, total_price = form.price.data, average_price = form.average_price.data, square = form.square.data, 
+            check = Check(user_id = user_in_db.id, total_price = form.price.data, average_price = form.average_price.data, square = form.square.data,
                 living_room=form.living_room.data, drawing_room=form.drawing_room.data, kitchen=form.kitchen.data,
                 bathroom = form.bathroom.data, floor=form.floor.data, building_type = form.building_type.data,
                 renovation_con = form.renovation_con.data, elevator=form.elevator.data, subway=form.subway.data)
@@ -266,7 +266,7 @@ def buy():
                 for i in range(len(checked_data_1)-1,-1,-1):
                     if (int(checked_data_1[i][8]) < 21):
                         checked_data_1.remove(checked_data_1[i])
-        
+
     return render_template('buy.html',title='Buy', data=data, user=user_in_db, houses=houses, form=form, checked=checked_data, checked_1=checked_data_1)
 
 @app.route('/predict', methods=['GET','POST'])
