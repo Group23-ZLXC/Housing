@@ -66,4 +66,4 @@ class SignupForm(FlaskForm):
                               render_kw={"class": "form-control", "placeholder": "Repeat Password",
                                          "required": 'required'})
 
-    submit = SubmitField('Register')
+    submit = SubmitField('Sign Up')

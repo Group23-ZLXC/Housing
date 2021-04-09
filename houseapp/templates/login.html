@@ -22,15 +22,15 @@
                     up</a></td>
         </tr>
     </table>
-    <div style="margin-top: 90px;margin-left:350px;margin-right:350px;border:2px solid rgb(241, 241, 241);border-radius: 30px;background-color: rgb(255, 255, 255);opacity: 0.85;"
+    <div style="margin-top: 90px;margin-left:350px;margin-right:350px;border:2px solid rgb(255, 255, 255);border-radius: 30px;background-color: rgb(255, 255, 255);opacity: 0.9;box-shadow: 5px 5px 5px rgb(172, 172, 172);"
         align="center">
 
-        <h1><b style="text-shadow: 5px 5px 5px rgb(172, 172, 172);">Log in</b></h1>
+        <h1><b>Log in</b></h1>
 
         <form action="" method="post" novalidate>
             {{ form.hidden_tag() }}
             <p>
-            <div class="input-group" style="width: 70%; margin-top: 30px;box-shadow: 5px 5px 5px rgb(172, 172, 172);">
+            <div class="input-group" style="width: 70%; margin-top: 30px;">
                 <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
                 {{ form.username(size=32, class_="form-control", placeholder="user name") }}
             </div>
@@ -41,7 +41,7 @@
 
             </p>
             <p>
-            <div class="input-group" style="width: 70%; margin-top: 20px;box-shadow: 5px 5px 5px rgb(172, 172, 172);">
+            <div class="input-group" style="width: 70%; margin-top: 20px;">
                 <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
                 {{ form.password(size=32, class_="form-control", placeholder="password") }}
             </div>
@@ -52,13 +52,13 @@
 
             </p>
 
-            <table width=70% style="margin-top: 20px;text-shadow: 5px 5px 5px rgb(172, 172, 172);">
+            <table width=70% style="margin-top: 20px;">
                 <tr>
                     <td align="left">
                         <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
                     </td>
                     <td align="right" style="width: 5%;">
-                        <p style="box-shadow: 5px 5px 5px rgb(172,172,172);">{{ form.submit(class="btn btn-defult") }}
+                        <p>{{ form.submit(class="btn btn-defult") }}
                         </p>
                     </td>
                 </tr>

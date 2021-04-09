@@ -22,14 +22,14 @@
                     up</a></td>
         </tr>
     </table>
-    <div style="margin-top: 50px;margin-left:350px;margin-right:350px;border:2px solid rgb(241, 241, 241);border-radius: 30px;background-color: rgb(255, 255, 255);opacity: 0.85;"
+    <div style="margin-top: 50px;margin-left:350px;margin-right:350px;border:2px solid rgb(255, 255, 255);border-radius: 30px;background-color: rgb(255, 255, 255);opacity: 0.9;box-shadow: 5px 5px 5px rgb(172, 172, 172);"
         align="center">
 
-        <h1><b style="text-shadow: 5px 5px 5px rgb(172, 172, 172);">Register</b></h1>
+        <h1><b>Sign Up</b></h1>
         <form action="" method="post" novalidate>
             {{ form.hidden_tag() }}
             <p style="margin-top: 20px;">
-            <div class="input-group" style="width: 70%; margin-top: 30px;box-shadow: 5px 5px 5px rgb(172, 172, 172);">
+            <div class="input-group" style="width: 70%; margin-top: 30px;">
                 <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
                 {{ form.username(size=32, class_="form-control", placeholder="user name") }}
             </div>
@@ -40,7 +40,7 @@
 
             </p>
             <p>
-            <div class="input-group" style="width: 70%; margin-top: 20px;box-shadow: 5px 5px 5px rgb(172, 172, 172);">
+            <div class="input-group" style="width: 70%; margin-top: 20px;">
                 <span class="input-group-addon"><b>@</b></span>
                 {{ form.email(size=35, class_="form-control", placeholder="email address") }}
             </div>
@@ -50,7 +50,7 @@
 
             </p>
             <p>
-            <div class="input-group" style="width: 70%; margin-top: 20px;box-shadow: 5px 5px 5px rgb(172, 172, 172);">
+            <div class="input-group" style="width: 70%; margin-top: 20px;">
                 <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
                 {{ form.password(size=32, class_="form-control", placeholder="password") }}
             </div>
@@ -61,7 +61,7 @@
 
             </p>
             <p>
-            <div class="input-group" style="width: 70%; margin-top: 20px;box-shadow: 5px 5px 5px rgb(172, 172, 172);">
+            <div class="input-group" style="width: 70%; margin-top: 20px;">
                 <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
                 {{ form.password2(size=32, class_="form-control", placeholder="password for check") }}
             </div>
@@ -71,7 +71,7 @@
             {% endfor %}
 
             </p>
-            <div style="width: 70%; margin-top: 20px;margin-bottom:40px;box-shadow: 5px 5px 5px rgb(172, 172, 172);">
+            <div style="width: 70%; margin-top: 20px;margin-bottom:40px;">
                 <p>{{ form.submit(class="btn btn-defult btn-block", width="100%") }}</p>
             </div>
 
