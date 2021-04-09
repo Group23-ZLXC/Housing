@@ -132,7 +132,9 @@
 
     </table> -->
 </form>
-
+{% for house in houses %}
+<a href=" {{ url_for('details', house_id=house.id )}}">{{ house.id }}</a>
+{% endfor %}
 <div style="margin: 0 30px 10px 30px;">
     <hr>
     <h2><b>Find {{ checked|length + checked_1|length }} suitable houses for you ^_^</b></h2>

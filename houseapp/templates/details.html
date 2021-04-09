@@ -55,7 +55,7 @@
         <h2 style="color: red;"><strong>Pending</strong></h2>
         {% endif %}
         {% if house.total_price %}
-        <p style="color: darkgray; font-size: 15px;">{{ '%.2f' %(house.total_price / house.square) }}</p>
+        <p style="color: darkgray; font-size: 15px;">$ {{ '%.2f' %(house.total_price / house.square) }}</p>
         {% else %}
         <p style="color: darkgray; font-size: 15px;">Pending</p>
         {% endif %}
@@ -155,7 +155,7 @@
               <tr class="active">
                 <td style="padding-left: 20px;vertical-align: middle;">Price:</td>
                 {% if house.total_price %}
-                <td width="20%" style="vertical-align: middle;"><b>{{ '%.2f' %(house.total_price / house.square) }}</b></td>
+                <td width="20%" style="vertical-align: middle;"><b>$ {{ '%.2f' %(house.total_price / house.square) }}</b></td>
                 {% else %}
                 <td width="20%" style="vertical-align: middle;"><b>Pending</b></td>
               {% endif %}
