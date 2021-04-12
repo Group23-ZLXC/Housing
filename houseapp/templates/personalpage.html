@@ -9,6 +9,7 @@
   <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
   <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
+<body>
 <div style="margin-top: 60px;margin-left: 50px;margin-right: 50px;margin-bottom: 30px;">
   <table width="100%">
     <tr>
@@ -70,9 +71,8 @@
         <tr>
           <td style="padding-left: 5px;"> {{ house.id }}</td>
           <td style="padding-left: 5px;"> {{ house.date }}</td>
-          <td style="padding-left: 5px;"><a href="{{ url_for('details',house_id=house.id) }}"><button type="button"
-                name="button" class="btn btn-warning btn-xs">View</button></a></td>
-          <td style="padding-left: 5px;"><a href="{{ url_for('upload_house',house_id1=house.id) }}"><button class="btn btn-danger btn-xs" type="button"
+          <td style="padding-left: 5px;"><a href="{{ url_for('details',house_id=house.id) }}"><button type="button" name="button" class="btn btn-success btn-xs">View</button></a></td>
+          <td style="padding-left: 5px;"><a href="{{ url_for('upload_house',house_id1=house.id) }}"><button class="btn btn-success btn-xs" type="button"
               name="button">Upload</button></a></td>
         </tr>
         {% endif %}
@@ -100,10 +100,9 @@
         <tr>
           <td style="padding-left: 5px;"> {{ house.id }}</td>
           <td style="padding-left: 5px;"> {{ house.date }}</td>
-          <td style="padding-left: 5px;"><a href="{{ url_for('details',house_id=house.id) }}"><button class="btn btn-info btn-xs" type="button" name="button">View</a></button>
+          <td style="padding-left: 5px;"><a href="{{ url_for('details',house_id=house.id) }}"><button class="btn btn-info btn-xs" type="button" name="button">View</button></a>
           </td>
-          <td style="padding-left: 5px;"><a href="{{ url_for('delete_house',house_id=house.id) }}"><button class="btn btn-danger btn-xs" type="button"
-              name="button">Delete</a></button></td>
+          <td style="padding-left: 5px;"><a href="{{ url_for('delete_house',house_id=house.id) }}"><button class="btn btn-danger btn-xs" type="button"name="button">Delete</button></a></td>
         </tr>
         {% endif %}
         {% endfor %}
@@ -112,9 +111,10 @@
     </div>
   </div>
 </div>
-<div style="margin-top: 60px;margin-left: 50px;margin-right: 50px;margin-bottom: 30px;">
+<div style="margin-top: 30px;margin-left: 50px;margin-right: 50px;margin-bottom: 30px;">
   <p style="font-size: 3.5rem;"><span class="	glyphicon glyphicon-hand-right"></span>&nbsp;&nbsp;<b>My
             Favorite</b>&nbsp;&nbsp;<span class="glyphicon glyphicon-hand-left"></span></p>
+
   {% if favorites %}
     <table>
     {% for f in favorites %}
@@ -127,5 +127,7 @@
   {% else %}
     <p>There is no house in the collection yet. Go and have a look!</p>
   {% endif %}
+</div>
 {% include 'footer.html' %}
+</body>
 {% endblock %}
