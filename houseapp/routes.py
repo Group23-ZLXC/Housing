@@ -68,7 +68,7 @@ def remove_favorite():
     favorite_in_db = Favorite.query.filter(Favorite.house_id == house_id, Favorite.user_id == user_id).first()
     db.session.delete(favorite_in_db)
     db.session.commit()
-    return redirect(url_for('personal'))
+    return redirect(url_for('details', house_id=house_id))
 
 @app.route('/buy', methods=['GET','POST'])
 def buy():

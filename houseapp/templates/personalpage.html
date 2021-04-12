@@ -9,125 +9,146 @@
   <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
   <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
+
 <body>
-<div style="margin-top: 60px;margin-left: 50px;margin-right: 50px;margin-bottom: 30px;">
-  <table width="100%">
-    <tr>
-      <td>
-        <p style="font-size: 3.5rem;"><span class="	glyphicon glyphicon-hand-right"></span>&nbsp;&nbsp;<b>My
-            Predictions</b>&nbsp;&nbsp;<span class="glyphicon glyphicon-hand-left"></span></p>
-      </td>
-      <td align="right" style="vertical-align: bottom;">
-        <p style="font-size: 1.5rem;"> Add a new prediction? <a href="{{ url_for('predict') }}"><span
-              class="glyphicon glyphicon-stats"></span>&nbsp;Predict</a></p>
-      </td>
-    </tr>
-  </table>
-  <div class="panel panel-warning" style="margin-top:10px">
-    <div class="panel-heading">
-      <h3 class="panel-title"><b>In the Processing</b></h3>
-    </div>
-    <div class="panel-body">
-      <table width="100%" class="table table-hover">
-        <tr>
-          <th style="padding-left: 5px;width:25%">House ID</th>
-          <th style="padding-left: 5px;width:25%">Date</th>
-          <th style="padding-left: 5px;width:25%">View</th>
-          <th style="padding-left: 5px;width:25%">Cancel</th>
-        </tr>
-        {% if houses %}
-        {% for house in houses %}
-        {% if house.status == 0 %}
-        <tr>
-          <td style="padding-left: 5px;"> {{ house.id }}</td>
-          <td style="padding-left: 5px;"> {{ house.date }}</td>
-          <td style="padding-left: 5px;"><a href="{{ url_for('details',house_id=house.id) }}"><button type="button"
-                name="button" class="btn btn-warning btn-xs">View</button></a></td>
-          <td style="padding-left: 5px;"><a href="{{ url_for('delete_house',house_id=house.id) }}"><button class="btn btn-danger btn-xs" type="button"
-              name="button">Cancel</button></a></td>
-        </tr>
-        {% endif %}
-        {% endfor %}
-        {% endif %}
-      </table>
-    </div>
-  </div>
-  <div class="panel panel-success">
-    <div class="panel-heading">
-      <h3 class="panel-title"><b>Completed</b></h3>
-    </div>
-    <div class="panel-body">
-      <table width="100%" class="table table-hover">
-        <tr>
-          <th style="padding-left: 5px;width:25%"> House ID</th>
-          <th style="padding-left: 5px;width:25%"> Date </th>
-          <th style="padding-left: 5px;width:25%"> View </th>
-          <th style="padding-left: 5px;width:25%"> Upload</th>
-        </tr>
-
-        {% if houses %}
-        {% for house in houses %}
-        {% if house.status == 1 %}
-        <tr>
-          <td style="padding-left: 5px;"> {{ house.id }}</td>
-          <td style="padding-left: 5px;"> {{ house.date }}</td>
-          <td style="padding-left: 5px;"><a href="{{ url_for('details',house_id=house.id) }}"><button type="button" name="button" class="btn btn-success btn-xs">View</button></a></td>
-          <td style="padding-left: 5px;"><a href="{{ url_for('upload_house',house_id1=house.id) }}"><button class="btn btn-success btn-xs" type="button"
-              name="button">Upload</button></a></td>
-        </tr>
-        {% endif %}
-        {% endfor %}
-        {% endif %}
-      </table>
-    </div>
-  </div>
-  <div class="panel panel-info">
-    <div class="panel-heading">
-      <h3 class="panel-title"><b>Uploaded</b></h3>
-    </div>
-    <div class="panel-body">
-      <table width="100%" class="table table-hover">
-        <tr>
-          <th style="padding-left: 5px;width:25%"> House ID</th>
-          <th style="padding-left: 5px;width:25%"> Date </th>
-          <th style="padding-left: 5px;width:25%"> View </th>
-          <th style="padding-left: 5px;width:25%"> Delete</th>
-        </tr>
-
-        {% if houses %}
-        {% for house in houses %}
-        {% if house.status == 2 %}
-        <tr>
-          <td style="padding-left: 5px;"> {{ house.id }}</td>
-          <td style="padding-left: 5px;"> {{ house.date }}</td>
-          <td style="padding-left: 5px;"><a href="{{ url_for('details',house_id=house.id) }}"><button class="btn btn-info btn-xs" type="button" name="button">View</button></a>
-          </td>
-          <td style="padding-left: 5px;"><a href="{{ url_for('delete_house',house_id=house.id) }}"><button class="btn btn-danger btn-xs" type="button"name="button">Delete</button></a></td>
-        </tr>
-        {% endif %}
-        {% endfor %}
-        {% endif %}
-      </table>
-    </div>
-  </div>
-</div>
-<div style="margin-top: 30px;margin-left: 50px;margin-right: 50px;margin-bottom: 30px;">
-  <p style="font-size: 3.5rem;"><span class="	glyphicon glyphicon-hand-right"></span>&nbsp;&nbsp;<b>My
-            Favorite</b>&nbsp;&nbsp;<span class="glyphicon glyphicon-hand-left"></span></p>
-
-  {% if favorites %}
-    <table>
-    {% for f in favorites %}
+  <div style="margin-top: 60px;margin-left: 50px;margin-right: 50px;margin-bottom: 30px;">
+    <table width="100%">
       <tr>
-        <td><a href="{{ url_for('details', house_id=f.house_id) }} "> {{ f.house_id }}</a></td>
-        <td><a href="{{ url_for('remove_favorite',house_id2=f.house_id, user_id2=user.id) }}"><button type="button" name="button">Remove from Favorite </button></a></td>
+        <td>
+          <p style="font-size: 3.5rem;"><span class="	glyphicon glyphicon-hand-right"></span>&nbsp;&nbsp;<b>My
+              Predictions</b>&nbsp;&nbsp;<span class="glyphicon glyphicon-hand-left"></span></p>
+        </td>
+        <td align="right" style="vertical-align: bottom;">
+          <p style="font-size: 1.5rem;"> Add a new prediction? <a href="{{ url_for('predict') }}"><span
+                class="glyphicon glyphicon-stats"></span>&nbsp;Predict</a></p>
+        </td>
       </tr>
-    {% endfor %}
     </table>
-  {% else %}
+    <div class="panel panel-warning" style="margin-top:10px">
+      <div class="panel-heading">
+        <h3 class="panel-title"><b>In the Processing</b></h3>
+      </div>
+      <div class="panel-body">
+        <table width="100%" class="table table-hover">
+          <tr>
+            <th style="padding-left: 5px;width:25%">House ID</th>
+            <th style="padding-left: 5px;width:25%">Date</th>
+            <th style="padding-left: 5px;width:25%">View</th>
+            <th style="padding-left: 5px;width:25%">Cancel</th>
+          </tr>
+          {% if houses %}
+          {% for house in houses %}
+          {% if house.status == 0 %}
+          <tr>
+            <td style="padding-left: 5px;"> {{ house.id }}</td>
+            <td style="padding-left: 5px;"> {{ house.date }}</td>
+            <td style="padding-left: 5px;"><a href="{{ url_for('details',house_id=house.id) }}"><button type="button"
+                  name="button" class="btn btn-warning btn-xs">View</button></a></td>
+            <td style="padding-left: 5px;"><a href="{{ url_for('delete_house',house_id=house.id) }}"><button
+                  class="btn btn-danger btn-xs" type="button" name="button">Cancel</button></a></td>
+          </tr>
+          {% endif %}
+          {% endfor %}
+          {% endif %}
+        </table>
+      </div>
+    </div>
+    <div class="panel panel-success">
+      <div class="panel-heading">
+        <h3 class="panel-title"><b>Completed</b></h3>
+      </div>
+      <div class="panel-body">
+        <table width="100%" class="table table-hover">
+          <tr>
+            <th style="padding-left: 5px;width:25%"> House ID</th>
+            <th style="padding-left: 5px;width:25%"> Date </th>
+            <th style="padding-left: 5px;width:25%"> View </th>
+            <th style="padding-left: 5px;width:25%"> Upload</th>
+          </tr>
+
+          {% if houses %}
+          {% for house in houses %}
+          {% if house.status == 1 %}
+          <tr>
+            <td style="padding-left: 5px;"> {{ house.id }}</td>
+            <td style="padding-left: 5px;"> {{ house.date }}</td>
+            <td style="padding-left: 5px;"><a href="{{ url_for('details',house_id=house.id) }}"><button type="button"
+                  name="button" class="btn btn-success btn-xs">View</button></a></td>
+            <td style="padding-left: 5px;"><a href="{{ url_for('upload_house',house_id1=house.id) }}"><button
+                  class="btn btn-success btn-xs" type="button" name="button">Upload</button></a></td>
+          </tr>
+          {% endif %}
+          {% endfor %}
+          {% endif %}
+        </table>
+      </div>
+    </div>
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h3 class="panel-title"><b>Uploaded</b></h3>
+      </div>
+      <div class="panel-body">
+        <table width="100%" class="table table-hover">
+          <tr>
+            <th style="padding-left: 5px;width:25%"> House ID</th>
+            <th style="padding-left: 5px;width:25%"> Date </th>
+            <th style="padding-left: 5px;width:25%"> View </th>
+            <th style="padding-left: 5px;width:25%"> Delete</th>
+          </tr>
+
+          {% if houses %}
+          {% for house in houses %}
+          {% if house.status == 2 %}
+          <tr>
+            <td style="padding-left: 5px;"> {{ house.id }}</td>
+            <td style="padding-left: 5px;"> {{ house.date }}</td>
+            <td style="padding-left: 5px;"><a href="{{ url_for('details',house_id=house.id) }}"><button
+                  class="btn btn-info btn-xs" type="button" name="button">View</button></a>
+            </td>
+            <td style="padding-left: 5px;"><a href="{{ url_for('delete_house',house_id=house.id) }}"><button
+                  class="btn btn-danger btn-xs" type="button" name="button">Delete</button></a></td>
+          </tr>
+          {% endif %}
+          {% endfor %}
+          {% endif %}
+        </table>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top: 30px;margin-left: 50px;margin-right: 50px;margin-bottom: 30px;">
+    <p style="font-size: 3.5rem;"><span class="	glyphicon glyphicon-hand-right"></span>&nbsp;&nbsp;<b>My
+        Favorite</b>&nbsp;&nbsp;<span class="glyphicon glyphicon-hand-left"></span></p>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title"><b>Uploaded</b></h3>
+          </div>
+          <div class="panel-body">
+    {% if favorites %}
+    <table width="100%" class="table table-hover">
+      <tr>
+        <th style="padding-left: 5px;width:25%"> House ID </th>
+        <th style="padding-left: 5px;width:25%"> Date </th>
+        <th style="padding-left: 5px;width:25%"> View </th>
+        <th style="padding-left: 5px;width:25%"> Remove</th>
+      </tr>
+      {% for f in favorites %}
+      <tr>
+        <td style="padding-left: 5px;">{{ f.house_id }}</td>
+        <td style="padding-left: 5px;"> {{ f.house.date }}</td>
+        <td style="padding-left: 5px;"><a href="{{ url_for('details',house_id=f.house.id) }}"><button
+          class="btn btn-primary btn-xs" type="button" name="button">View</button></a>
+        </td>
+        <td><a href="{{ url_for('remove_favorite',house_id2=f.house_id, user_id2=user.id) }}"><button class="btn btn-danger btn-xs" type="button"
+              name="button">Remove</button></a></td>
+      </tr>
+      {% endfor %}
+    </table>
+    {% else %}
     <p>There is no house in the collection yet. Go and have a look!</p>
-  {% endif %}
-</div>
-{% include 'footer.html' %}
+    {% endif %}
+  </div>
+  </div>
+  </div>
+  {% include 'footer.html' %}
 </body>
 {% endblock %}

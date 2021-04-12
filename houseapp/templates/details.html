@@ -44,24 +44,21 @@
           </a>
         </div>
       </td>
-      <td colspan="2" style="vertical-align: top; padding-left: 20px; height: 30%;">
+      <td style="vertical-align: top; padding-left: 20px; height: 30%;">
         {% if house.total_price %}
-          {% if house.status == 1 %}
-            {% if house.user_id == user.id %}
-            <span><h2 style="color: red;"><strong>$ {{ house.total_price }}</strong></h2><a href="{{ url_for('upload_house',house_id1=house.id) }}"><button type="button" name="button">Upload</button></a></span>
-            {% else %}
-            <span><h2 style="color: red;"><strong>$ {{ house.total_price }}</strong></h2></span>
-            {% endif %}
-          {% else %}
-            <h2 style="color: red;"><strong>$ {{ house.total_price }}</strong></h2>
-            {% if not house.user_id == user.id %}
-              {% if favorite %}
-                <a href="{{ url_for('remove_favorite',house_id2=house.id, user_id2=user.id) }}"><button type="button" name="button">Remove from Favorite </button></a>
-              {% else %}
-                <a href="{{ url_for('add_to_favorite',house_id2=house.id, user_id2=user.id) }}"><button type="button" name="button">Add to Favorite </button></a>
-              {% endif %}
-            {% endif %}
-          {% endif %}
+        {% if house.status == 1 %}
+        {% if house.user_id == user.id %}
+        <span>
+          <h2 style="color: red;"><strong>$ {{ house.total_price }}</strong></h2>
+        </span>
+        {% else %}
+        <span>
+          <h2 style="color: red;"><strong>$ {{ house.total_price }}</strong></h2>
+        </span>
+        {% endif %}
+        {% else %}
+        <h2 style="color: red;"><strong>$ {{ house.total_price }}</strong></h2>
+        {% endif %}
         {% else %}
         <h2 style="color: red;"><strong>Pending</strong></h2>
         {% endif %}
@@ -71,91 +68,110 @@
         <p style="color: darkgray; font-size: 15px;">Pending</p>
         {% endif %}
       </td>
+      <td style="vertical-align: middle;" align="right">
+        {% if house.status == 1 %}
+        {% if house.user_id == user.id %}
+          <a href="{{ url_for('upload_house',house_id1=house.id) }}"><button class="btn btn-defult" type="button"
+              name="button"><span class="glyphicon glyphicon-cloud-upload" style="padding-top: 3px;"></span>&nbsp;Upload</button></a>
+        {% endif %}
+        {% if not house.user_id == user.id %}
+        {% if favorite %}
+        <a href="{{ url_for('remove_favorite',house_id2=house.id, user_id2=user.id) }}"><button
+            class="btn btn-danger btn-xs" type="button" name="button"><span class="glyphicon glyphicon-star"
+              style="padding-top: 3px;"></span>&nbsp;Remove from Favorite </button></a>
+        {% else %}
+        <a href="{{ url_for('add_to_favorite',house_id2=house.id, user_id2=user.id) }}"><button
+            class="btn btn-warning btn-xs" type="button" name="button"><span class="glyphicon glyphicon-star-empty"
+              style="padding-top: 3px;"></span>&nbsp;Add to Favorite </button></a>
+        {% endif %}
+        {% endif %}
+        {% endif %}
+      </td>
     </tr>
 
-  <tr>
-    <td style="padding-left: 20px;vertical-align: middle;">Building Type:</td>
-    {% if house.building_type == 1 %}
+    <tr>
+      <td style="padding-left: 20px;vertical-align: middle;">Building Type:</td>
+      {% if house.building_type == 1 %}
       <td width="20%" style="vertical-align: middle;"><b>Tower</b></td>
-    {% elif house.building_type == 2 %}
+      {% elif house.building_type == 2 %}
       <td width="20%" style="vertical-align: middle;"><b>Bungalow</b></td>
-    {% elif house.building_type == 3 %}
+      {% elif house.building_type == 3 %}
       <td width="20%" style="vertical-align: middle;"><b>Plate & Tower</b></td>
-    {% elif house.building_type == 4 %}
+      {% elif house.building_type == 4 %}
       <td width="20%" style="vertical-align: middle;"><b>Plate</b></td>
-    {% endif %}
-  </tr>
+      {% endif %}
+    </tr>
 
-  <tr class="active">
-    <td style="padding-left: 20px;vertical-align: middle;">Square:</td>
-    <td width="20%" style="vertical-align: middle;"><b>{{ house.square }} sq metres</b></td>
-  </tr>
-  <tr>
-    <td style="padding-left: 20px;vertical-align: middle;">Floor:</td>
-    <td width="20%" style="vertical-align: middle;"><b>{{ house.floor }}</b></td>
-  </tr>
+    <tr class="active">
+      <td style="padding-left: 20px;vertical-align: middle;">Square:</td>
+      <td width="20%" style="vertical-align: middle;"><b>{{ house.square }} sq metres</b></td>
+    </tr>
+    <tr>
+      <td style="padding-left: 20px;vertical-align: middle;">Floor:</td>
+      <td width="20%" style="vertical-align: middle;"><b>{{ house.floor }}</b></td>
+    </tr>
 
-  <tr class="active">
-    <td style="padding-left: 20px;vertical-align: middle;">Renovation Type:</td>
-    {% if house.renovation_con == 1 %}
+    <tr class="active">
+      <td style="padding-left: 20px;vertical-align: middle;">Renovation Type:</td>
+      {% if house.renovation_con == 1 %}
       <td width="20%" style="vertical-align: middle;"><b>Other</b></td>
-    {% elif house.renovation_con == 2 %}
+      {% elif house.renovation_con == 2 %}
       <td width="20%" style="vertical-align: middle;"><b>Rough</b></td>
-    {% elif house.renovation_con == 3 %}
+      {% elif house.renovation_con == 3 %}
       <td width="20%" style="vertical-align: middle;"><b>Simplicity</b></td>
-    {% elif house.renovation_con == 4 %}
+      {% elif house.renovation_con == 4 %}
       <td width="20%" style="vertical-align: middle;"><b>Hardcover</b></td>
-    {% endif %}
-  </tr>
+      {% endif %}
+    </tr>
 
-  <tr>
-    <td style="padding-left: 20px;vertical-align: middle;">District:</td>
-    {% if house.district == 1 %}
+    <tr>
+      <td style="padding-left: 20px;vertical-align: middle;">District:</td>
+      {% if house.district == 1 %}
       <td width="20%" style="vertical-align: middle;"><b>DongCheng</b></td>
-    {% elif house.district == 2 %}
+      {% elif house.district == 2 %}
       <td width="20%" style="vertical-align: middle;"><b>FengTai</b></td>
-    {% elif house.district == 3 %}
+      {% elif house.district == 3 %}
       <td width="20%" style="vertical-align: middle;"><b>TongZhou</b></td>
-    {% elif house.district == 4 %}
+      {% elif house.district == 4 %}
       <td width="20%" style="vertical-align: middle;"><b>DaXing</b></td>
-    {% elif house.district == 5 %}
+      {% elif house.district == 5 %}
       <td width="20%" style="vertical-align: middle;"><b>FangShan</b></td>
-    {% elif house.district == 6 %}
+      {% elif house.district == 6 %}
       <td width="20%" style="vertical-align: middle;"><b>ChangPing</b></td>
-    {% elif house.district == 7 %}
+      {% elif house.district == 7 %}
       <td width="20%" style="vertical-align: middle;"><b>ChaoYang</b></td>
-    {% elif house.district == 8 %}
+      {% elif house.district == 8 %}
       <td width="20%" style="vertical-align: middle;"><b>HaiDian</b></td>
-    {% elif house.district == 9 %}
+      {% elif house.district == 9 %}
       <td width="20%" style="vertical-align: middle;"><b>XiCheng</b></td>
-    {% elif house.district == 10 %}
+      {% elif house.district == 10 %}
       <td width="20%" style="vertical-align: middle;"><b>ShiJingShan</b></td>
-    {% elif house.district == 11 %}
+      {% elif house.district == 11 %}
       <td width="20%" style="vertical-align: middle;"><b>PingGu</b></td>
-    {% elif house.district == 12 %}
+      {% elif house.district == 12 %}
       <td width="20%" style="vertical-align: middle;"><b>MenTouGou</b></td>
-    {% elif house.district == 13 %}
+      {% elif house.district == 13 %}
       <td width="20%" style="vertical-align: middle;"><b>ShunYi</b></td>
-    {% endif %}
-  </tr>
+      {% endif %}
+    </tr>
 
-</table>
-<div style="margin: 30px 50px 30px 50px;">
-  <div class="panel-group" id="accordion">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" href="#details">
-            <b style="font-size:3rem;">Details</b>
-          </a>
-        </h4>
-      </div>
-      <div id="details" class="panel-collapse collapse in">
-        <div class="panel-body">
-          <table class="table">
-            <tr>
-              <td style="padding-left: 20px;vertical-align: middle;">Total Price:</td>
-              {% if house.total_price %}
+  </table>
+  <div style="margin: 30px 50px 30px 50px;">
+    <div class="panel-group" id="accordion">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#details">
+              <b style="font-size:3rem;">Details</b>
+            </a>
+          </h4>
+        </div>
+        <div id="details" class="panel-collapse collapse in">
+          <div class="panel-body">
+            <table class="table">
+              <tr>
+                <td style="padding-left: 20px;vertical-align: middle;">Total Price:</td>
+                {% if house.total_price %}
                 <td width="20%" style="vertical-align: middle;"><b>$ {{ house.total_price }}</b></td>
                 {% else %}
                 <td width="20%" style="vertical-align: middle;"><b>Pending</b></td>
@@ -166,82 +182,83 @@
               <tr class="active">
                 <td style="padding-left: 20px;vertical-align: middle;">Price:</td>
                 {% if house.total_price %}
-                <td width="20%" style="vertical-align: middle;"><b>$ {{ '%.2f' %(house.total_price / house.square) }}</b></td>
+                <td width="20%" style="vertical-align: middle;"><b>$ {{ '%.2f' %(house.total_price / house.square)
+                    }}</b></td>
                 {% else %}
                 <td width="20%" style="vertical-align: middle;"><b>Pending</b></td>
-              {% endif %}
-            </tr>
-            <tr>
-              <td style="padding-left: 20px;vertical-align: middle;">Square:</td>
-              <td width="20%" style="vertical-align: middle;"><b>{{ house.square }}</b></td>
-            </tr>
-            <tr class="active">
-              <td style="padding-left: 20px;vertical-align: middle;">Livingroom:</td>
-              <td width="20%" style="vertical-align: middle;"><b>{{ house.living_room }}</b></td>
-            </tr>
-            <tr>
-              <td style="padding-left: 20px;vertical-align: middle;">Drawingroom:</td>
-              <td width="20%" style="vertical-align: middle;"><b>{{ house.drawing_room }}</b></td>
-            </tr>
-            <tr class="active">
-              <td style="padding-left: 20px;vertical-align: middle;">Kitchen:</td>
-              <td width="20%" style="vertical-align: middle;"><b>{{ house.kitchen }}</b></td>
-            </tr>
-            <tr>
-              <td style="padding-left: 20px;vertical-align: middle;">Bathroom:</td>
-              <td width="20%" style="vertical-align: middle;"><b>{{ house.bathroom }}</b></td>
-            </tr>
-            <tr class="active">
-              <td style="padding-left: 20px;vertical-align: middle;">Floor:</td>
-              <td width="20%" style="vertical-align: middle;"><b>{{ house.floor }}</b></td>
-            </tr>
-            <tr>
-              <td style="padding-left: 20px;vertical-align: middle;">Elevator: </td>
-              {% if house.elevator == 1 %}
+                {% endif %}
+              </tr>
+              <tr>
+                <td style="padding-left: 20px;vertical-align: middle;">Square:</td>
+                <td width="20%" style="vertical-align: middle;"><b>{{ house.square }}</b></td>
+              </tr>
+              <tr class="active">
+                <td style="padding-left: 20px;vertical-align: middle;">Livingroom:</td>
+                <td width="20%" style="vertical-align: middle;"><b>{{ house.living_room }}</b></td>
+              </tr>
+              <tr>
+                <td style="padding-left: 20px;vertical-align: middle;">Drawingroom:</td>
+                <td width="20%" style="vertical-align: middle;"><b>{{ house.drawing_room }}</b></td>
+              </tr>
+              <tr class="active">
+                <td style="padding-left: 20px;vertical-align: middle;">Kitchen:</td>
+                <td width="20%" style="vertical-align: middle;"><b>{{ house.kitchen }}</b></td>
+              </tr>
+              <tr>
+                <td style="padding-left: 20px;vertical-align: middle;">Bathroom:</td>
+                <td width="20%" style="vertical-align: middle;"><b>{{ house.bathroom }}</b></td>
+              </tr>
+              <tr class="active">
+                <td style="padding-left: 20px;vertical-align: middle;">Floor:</td>
+                <td width="20%" style="vertical-align: middle;"><b>{{ house.floor }}</b></td>
+              </tr>
+              <tr>
+                <td style="padding-left: 20px;vertical-align: middle;">Elevator: </td>
+                {% if house.elevator == 1 %}
                 <td width="20%" style="vertical-align: middle;"><b>Available</b></td>
-              {% elif house.elevator == 0 %}
+                {% elif house.elevator == 0 %}
                 <td width="20%" style="vertical-align: middle;"><b>Not Available</b></td>
-              {% endif %}
-            </tr>
-            <tr class="active">
-              <td style="padding-left: 20px;vertical-align: middle;">Subway: </td>
-              {% if house.subway == 1 %}
+                {% endif %}
+              </tr>
+              <tr class="active">
+                <td style="padding-left: 20px;vertical-align: middle;">Subway: </td>
+                {% if house.subway == 1 %}
                 <td width="20%" style="vertical-align: middle;"><b>Available</b></td>
-              {% elif house.subway == 0 %}
+                {% elif house.subway == 0 %}
                 <td width="20%" style="vertical-align: middle;"><b>Not Available</b></td>
-              {% endif %}
-            </tr>
+                {% endif %}
+              </tr>
 
-            <tr>
-              <td style="padding-left: 20px;vertical-align: middle;">Building Type:</td>
-              {% if house.building_type == 1 %}
+              <tr>
+                <td style="padding-left: 20px;vertical-align: middle;">Building Type:</td>
+                {% if house.building_type == 1 %}
                 <td width="20%" style="vertical-align: middle;"><b>Tower</b></td>
-              {% elif house.building_type == 2 %}
+                {% elif house.building_type == 2 %}
                 <td width="20%" style="vertical-align: middle;"><b>Bungalow</b></td>
-              {% elif house.building_type == 3 %}
+                {% elif house.building_type == 3 %}
                 <td width="20%" style="vertical-align: middle;"><b>Plate & Tower</b></td>
-              {% elif house.building_type == 4 %}
+                {% elif house.building_type == 4 %}
                 <td width="20%" style="vertical-align: middle;"><b>Plate</b></td>
-              {% endif %}
-            </tr>
+                {% endif %}
+              </tr>
 
-            <tr class="active">
-              <td style="padding-left: 20px;vertical-align: middle;">Renovation Type:</td>
-              {% if house.renovation_con == 1 %}
+              <tr class="active">
+                <td style="padding-left: 20px;vertical-align: middle;">Renovation Type:</td>
+                {% if house.renovation_con == 1 %}
                 <td width="20%" style="vertical-align: middle;"><b>Other</b></td>
-              {% elif house.renovation_con == 2 %}
+                {% elif house.renovation_con == 2 %}
                 <td width="20%" style="vertical-align: middle;"><b>Rough</b></td>
-              {% elif house.renovation_con == 3 %}
+                {% elif house.renovation_con == 3 %}
                 <td width="20%" style="vertical-align: middle;"><b>Simplicity</b></td>
-              {% elif house.renovation_con == 4 %}
+                {% elif house.renovation_con == 4 %}
                 <td width="20%" style="vertical-align: middle;"><b>Hardcover</b></td>
-              {% endif %}
-            </tr>
+                {% endif %}
+              </tr>
 
-          </table>
+            </table>
+          </div>
         </div>
       </div>
-    </div>
     </div>
     {% if user.id == house.user_id %}
     <div class="panel-group" id="accordion">
@@ -256,16 +273,28 @@
         <div id="recommendation" class="panel-collapse collapse in">
           <div class="panel-body">
             {% if recommendations %}
-              {% for r in recommendations %}
-                <ul>
-                  <li>{{ r.reason }}</li>
-                </ul>
-              {% endfor %}
+            {% for r in recommendations %}
+            <ul>
+              <li>{{ r.reason }}</li>
+            </ul>
+            {% endfor %}
             {% else %}
-              <p>Would you like to write someting to make your house more attractive and competitive?</p>
+            <p style="margin: 10px 0 0 15px;">Would you like to write someting to make your house more attractive and
+              competitive?</p>
             {% endif %}
-            <button type="button" name="Add" id='AddRecommendation'>Add</button>
-            <div id="recom_form" style="display: none;">
+            <!-- <button type="button" name="Add" id='AddRecommendation'>Add</button> -->
+            <div class="panel-body">
+              <form action="" method="post" novalidate>
+                {{ form.hidden_tag() }}
+                <p><b>{{ form1.reason.label }}</b></p>
+                <p>{{ form1.reason(rows=8, cols=80, class="form-control") }}</p>
+                {% for error in form1.reason.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+                <p align="right">{{ form.submit(class="btn btn-defult") }}</p>
+
+            </div>
+            <!-- <div id="recom_form" style="display: none;">
               <form action="" method="post" novalidate>
                 {{ form1.hidden_tag() }}
                 <p><b>{{ form1.reason.label }}</b></p>
@@ -274,103 +303,103 @@
                 <span style="color: red;">[{{ error }}]</span>
                 {% endfor %}
                 <p>{{ form1.submit() }}</p>
-            </form>
-          </div>
-    {% else %}
-      {% if recommendations %}
-      <div class="panel-group" id="accordion">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#accordion" href="#recommendation">
-                <b style="font-size:3rem;">Recommendation</b>
-              </a>
-            </h4>
-          </div>
-
-        {% for r in recommendations %}
-          <div id="recommendation" class="panel-collapse collapse in">
-            <div class="panel-body">
-              <ul>
-              <li>{{ r.reason }}</li>
-            </ul>
-          </div>
-        {% endfor %}
-      {% endif %}
-    {% endif %}
-
-
-
-
-          <div id="contact" style="margin-left: 30px;margin-right: 30px;">
-            <p style="font-size: large;"><b>Contact Agent</b></p>
-            <hr>
-            <table width="60%" style="margin-bottom: 30px;">
-              <tr>
-                <td width="20%" style="color:steelblue;"><span
-                    class="glyphicon glyphicon-user"></span><b>&nbsp;&nbsp;&nbsp;{{ owner.username }}</b></td>
-                <td style="color:steelblue"><span class="glyphicon glyphicon-envelope"></span><b>&nbsp;&nbsp;&nbsp;{{ owner.email }}</b></td>
-              </tr>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-    {% if house.status == 2 %}
-    <div class="panel-group" id="accordion" style="margin-top: 20px;margin-bottom: 50px;">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h4 class="panel-title">
-            <a data-toggle="collapse" data-parent="#accordion" href="#comments">
-              <b style="font-size:3rem;">Comments</b>
-            </a>
-          </h4>
-        </div>
-        <div id="comments" class="panel-collapse collapse in">
-          <div class="panel-body">
-            <table style="margin-left: 20px; margin-right: 20px;">
-              {% if comments %}
-                {% for c in comments %}
-                <tr>
-                  <td width="15%"><span class="glyphicon glyphicon-user"></span><b>&nbsp;&nbsp;{{ c.user_id }}</b></td>
-                  <td class="comment">{{ c.body }}</td>
-                </tr>
-                {% endfor %}
-              {% endif %}
-            </table>
-
-            <hr style="margin-right: 20px;margin-left: 20px;">
-            <div class="panel-body">
-              {% if user %}
-              <form action="" method="post" novalidate>
-                {{ form.hidden_tag() }}
-                <p>
-                  {{ form.comment.label }}<br>
-                  {{ form.comment(rows=8, cols=80, class="form-control") }}
-
-                {% for error in form.comment.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-                {% endfor %}
-              </p>
-              <p align="right">{{ form.submit(class="btn btn-defult") }}</p>
+              </form>
+            </div> -->
             {% else %}
-              <p style="color: red; "><b>You have to log in to comment</b></p><br>
-              <p><span>Already have an account?</span>
-                <a href="{{ url_for('login') }}"><span class="glyphicon glyphicon-user"></span> Log in</a>
-              </p><br>
-              <p><span>Create an account? </span>
-                <a href="{{ url_for('signup') }}"><span class="glyphicon glyphicon-user"></span> Register</a>
-              </p>
+            <div class="panel-group" id="accordion">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#recommendation">
+                      <b style="font-size:3rem;">Recommendation</b>
+                    </a>
+                  </h4>
+                </div>
+                <div id="recommendation" class="panel-collapse collapse in">
+                  {% if recommendations %}
+                  {% for r in recommendations %}
+                  <div class="panel-body">
+                    <ul>
+                      <li>{{ r.reason }}</li>
+                    </ul>
+                  </div>
+                  {% endfor %}
+                  {% else %}
+                  <div class="panel-body">
+                    <p style="margin: 10px 0 0 15px;color: gray;">The seller hasn't released any recommendation yet.</p>
+                  </div>
+                  {% endif %}
+                  <div id="contact" style="margin-left: 30px;margin-right: 30px;margin-top: 10px;">
+                    <p style="font-size: large;"><b>Contact Agent</b></p>
+                    <hr>
+                    <table width="60%" style="margin-bottom: 30px;">
+                      <tr>
+                        <td width="20%" style="color:steelblue;"><span
+                            class="glyphicon glyphicon-user"></span><b>&nbsp;&nbsp;&nbsp;{{ owner.username }}</b></td>
+                        <td style="color:steelblue"><span
+                            class="glyphicon glyphicon-envelope"></span><b>&nbsp;&nbsp;&nbsp;{{ owner.email }}</b></td>
+                      </tr>
+                    </table>
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            {% if house.status == 2 %}
+            <div class="panel-group" id="accordion" style="margin-top: 20px;margin-bottom: 50px;">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#comments">
+                      <b style="font-size:3rem;">Comments</b>
+                    </a>
+                  </h4>
+                </div>
+                <div id="comments" class="panel-collapse collapse in">
+                  <div class="panel-body">
+                    <table style="margin-left: 20px; margin-right: 20px;">
+                      {% if comments %}
+                      {% for c in comments %}
+                      <tr>
+                        <td width="15%"><span class="glyphicon glyphicon-user"></span><b>&nbsp;&nbsp;{{ c.user_id }}</b>
+                        </td>
+                        <td class="comment">{{ c.body }}</td>
+                      </tr>
+                      {% endfor %}
+                      {% endif %}
+                    </table>
+                    <hr style="margin-right: 20px;margin-left: 20px;">
+                    <div class="panel-body">
+                      {% if user %}
+                      <form action="" method="post" novalidate>
+                        {{ form.hidden_tag() }}
+                        <p>
+                          {{ form.comment.label }}<br>
+                          {{ form.comment(rows=8, cols=80, class="form-control") }}
+
+                          {% for error in form.comment.errors %}
+                          <span style="color: red;">[{{ error }}]</span>
+                          {% endfor %}
+                        </p>
+                        <p align="right">{{ form.submit(class="btn btn-defult") }}</p>
+                        {% else %}
+                        <p style="color: red; "><b>You have to log in to comment</b></p><br>
+                        <p><span>Already have an account?</span>
+                          <a href="{{ url_for('login') }}"><span class="glyphicon glyphicon-user"></span> Log in</a>
+                        </p><br>
+                        <p><span>Create an account? </span>
+                          <a href="{{ url_for('signup') }}"><span class="glyphicon glyphicon-user"></span> Register</a>
+                        </p>
+                        {% endif %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             {% endif %}
           </div>
         </div>
-      </div>
-      {% endif %}
-    </div>
-    </div>
-    </div>
-    </div>
-    
+
 </body>
 
 
@@ -395,10 +424,10 @@
   }
 </style>
 <script>
-    var btn = document.getElementById("AddRecommendation");
-    btn.onclick =function(){
-        document.getElementById("recom_form").style.display="block";
-    }
+  var btn = document.getElementById("AddRecommendation");
+  btn.onclick = function () {
+    document.getElementById("recom_form").style.display = "block";
+  }
 </script>
 {% include 'footer.html' %}
 {% endblock %}
