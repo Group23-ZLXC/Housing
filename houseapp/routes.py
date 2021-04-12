@@ -2,7 +2,7 @@ from houseapp import app, db
 from flask import render_template, flash, redirect, url_for, session, request, jsonify
 from houseapp.forms import CommentForm, LoginForm, SignupForm, PredictForm, BuyForm, RecommendationForm
 from werkzeug.security import generate_password_hash, check_password_hash
-from houseapp.models import User, House, Comment, Answer, Check, Recommendation, Favorite, Test
+from houseapp.models import User, House, Comment, Answer, Check, Recommendation, Favorite
 from houseapp.static import data
 
 
