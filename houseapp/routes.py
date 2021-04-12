@@ -2,7 +2,7 @@ from houseapp import app, db
 from flask import render_template, flash, redirect, url_for, session, request, jsonify
 from houseapp.forms import CommentForm, LoginForm, SignupForm, PredictForm, BuyForm, RecommendationForm
 from werkzeug.security import generate_password_hash, check_password_hash
-from houseapp.models import User, House, Comment, Answer, Check, Recommendation, Favorite
+from houseapp.models import User, House, Comment, Answer, Check, Recommendation, Favorite, Test
 from houseapp.static import data
 
 
@@ -83,10 +83,26 @@ def buy():
             f = f[:-1]
             a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z = f.split(",")
             data.append((a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z))
-     # read file
-    houses = House.query.filter(House.status == 2).all()
+    # read file
     checked_data = []
     checked_data_1 = []
+    # for d in data:
+    #     if d[21] == '1':
+    #         ele = True
+    #     if d[21] == '0':
+    #         ele = False
+    #     if d[23] == '1':
+    #         sub = True
+    #     if d[23] == '0':
+    #         sub = False
+    #     house = House(user_id = 4, lng=d[2], lat = d[3],total_price=round(float(d[8])*10000), square = d[10],
+    #     living_room=d[11], drawing_room=d[12], kitchen=d[13],
+    #     bathroom = d[14], floor=d[15], building_type = d[16],
+    #     renovation_con = d[18], elevator=ele, subway=sub,
+    #     district = d[24], status = 2)
+    #     db.session.add(house)
+    #     db.session.commit()
+    houses = House.query.filter(House.status == 2).all()
     if not session.get("USERNAME") is None:
         username = session.get("USERNAME")
         user_in_db = User.query.filter(User.username == username).first()
@@ -98,7 +114,7 @@ def buy():
             db.session.add(check)
             db.session.commit()
             for house in houses:
-                checked_data_1.append((house.user_id, house.total_price, round(house.total_price/house.square, 2), house.square, house.living_room, house.drawing_room, house.kitchen, house.bathroom, house.floor, house.building_type, house.renovation_con, house.elevator, house.subway))
+                checked_data_1.append((house.user_id, house.total_price, round(house.total_price/house.square, 2), house.square, house.living_room, house.drawing_room, house.kitchen, house.bathroom, house.floor, house.building_type, house.renovation_con, house.elevator, house.subway, house.id))
             if check.living_room != 0:
                 for d in data:
                     if int(check.living_room) == int(d[11])+1:
@@ -292,6 +308,7 @@ def buy():
                     if (int(checked_data_1[i][8]) < 21):
                         checked_data_1.remove(checked_data_1[i])
 
+    
     return render_template('buy.html',title='Buy', data=data, user=user_in_db, houses=houses, form=form, checked=checked_data, checked_1=checked_data_1)
 
 @app.route('/predict', methods=['GET','POST'])
@@ -301,7 +318,11 @@ def predict():
         username = session.get("USERNAME")
         user_in_db = User.query.filter(User.username == username).first()
         if form.validate_on_submit():
-            house = House(user_id = user_in_db.id, lng=form.lng.data, lat = form.lat.data, square = form.square.data,
+            if form.lng.data == "":
+                form.lng.data = 0.0
+            if form.lat.data == "":
+                form.lat.data = 0.0
+            house = House(user_id = user_in_db.id, lng= form.lng.data, lat = form.lat.data, square = form.square.data,
                 living_room=form.living_room.data, drawing_room=form.drawing_room.data, kitchen=form.kitchen.data,
                 bathroom = form.bathroom.data, floor=form.floor.data, building_type = form.building_type.data,
                 renovation_con = form.renovation_con.data, elevator=form.elevator.data, subway=form.subway.data,

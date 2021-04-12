@@ -132,23 +132,28 @@
 
     </table> -->
 </form>
-{% for house in houses %}
+<!-- {% for house in houses %}
 <a href=" {{ url_for('details', house_id=house.id )}}">{{ house.id }}</a>
-{% endfor %}
+{% endfor %} -->
 <div style="margin: 0 30px 10px 30px;">
     <hr>
-    <h2><b>Find {{ checked|length + checked_1|length }} suitable houses for you ^_^</b></h2>
+    <h2><b>Find {{ checked_1|length }} suitable houses for you ^_^</b></h2>
 
 </div>
 {% for house in checked_1 %}
 
+
     <div style="margin-left: 30px; margin-right: 30px;margin-top: 25px;">
         <table width="100%" class="table table-condensed">
             <tr>
+                {% for h in houses %}
+                {% if house[13] == h.id %}
                 <td rowspan="3" width="22%">
-                    <a href="" id="image"><img src="{{ url_for('static', filename='img/house.jpg') }}" alt="house"
-                            width="100%" height="170px" onclick="details()" class="img-rounded" /></a>
+                    <a href="{{ url_for('details', house_id=h.id )}}" id="image"><img src="{{ url_for('static', filename='img/house.jpg') }}" alt="house"
+                            width="100%" height="170px" class="img-rounded" /></a>
                 </td>
+                {% endif %}
+                {% endfor %}
                 {% if house[9] == 1 %}
                 <td colspan="2" class="active" style="vertical-align: middle;padding-left: 25px;width: 26%;font-size: 20px;"><strong>Type: Tower</strong></td>
                 {% elif house[9] == 2 %}
@@ -208,15 +213,19 @@
     </div>
     {% endfor %}
 
-    {% for house in checked %}
+    <!-- {% for house in checked %}
 
     <div style="margin-left: 30px; margin-right: 30px;margin-top: 25px;">
         <table width="100%" class="table table-condensed">
             <tr>
+                {% for h in houses %}
+                {% if house[13] == h.id %}
                 <td rowspan="3" width="22%">
-                    <a href="" id="image"><img src="{{ url_for('static', filename='img/house.jpg') }}" alt="house"
-                            width="100%" height="170px" onclick="details()" class="img-rounded" /></a>
+                    <a href="{{ url_for('details', house_id=h.id )}}" id="image"><img src="{{ url_for('static', filename='img/house.jpg') }}" alt="house"
+                            width="100%" height="170px" class="img-rounded" /></a>
                 </td>
+                {% endif %}
+                {% endfor %}
                 {% if house[16] == '1' %}
                 <td colspan="2" class="active" style="vertical-align: middle;padding-left: 25px;width: 26%;font-size: 20px;"><strong>Type: Tower</strong></td>
                 {% elif house[16] == '2' %}
@@ -274,7 +283,7 @@
             </tr>
         </table>
     </div>
-    {% endfor %}
+    {% endfor %} -->
 
     <hr style="margin-top: 20px; margin-left: 30px; margin-right: 30px;">
     <div style="margin-top: 20px;margin-left: 10px;margin-right: 10px;margin-bottom: 50px;">
