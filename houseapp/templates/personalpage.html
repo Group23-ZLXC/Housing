@@ -112,6 +112,20 @@
     </div>
   </div>
 </div>
-
+<div style="margin-top: 60px;margin-left: 50px;margin-right: 50px;margin-bottom: 30px;">
+  <p style="font-size: 3.5rem;"><span class="	glyphicon glyphicon-hand-right"></span>&nbsp;&nbsp;<b>My
+            Favorite</b>&nbsp;&nbsp;<span class="glyphicon glyphicon-hand-left"></span></p>
+  {% if favorites %}
+    <table>
+    {% for f in favorites %}
+      <tr>
+        <td><a href="{{ url_for('details', house_id=f.house_id) }} "> {{ f.house_id }}</a></td>
+        <td><a href="{{ url_for('remove_favorite',house_id2=f.house_id, user_id2=user.id) }}"><button type="button" name="button">Remove from Favorite </button></a></td>
+      </tr>
+    {% endfor %}
+    </table>
+  {% else %}
+    <p>There is no house in the collection yet. Go and have a look!</p>
+  {% endif %}
 {% include 'footer.html' %}
 {% endblock %}

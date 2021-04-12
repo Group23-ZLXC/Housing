@@ -47,9 +47,20 @@
       <td colspan="2" style="vertical-align: top; padding-left: 20px; height: 30%;">
         {% if house.total_price %}
           {% if house.status == 1 %}
+            {% if house.user_id == user.id %}
             <span><h2 style="color: red;"><strong>$ {{ house.total_price }}</strong></h2><a href="{{ url_for('upload_house',house_id1=house.id) }}"><button type="button" name="button">Upload</button></a></span>
+            {% else %}
+            <span><h2 style="color: red;"><strong>$ {{ house.total_price }}</strong></h2></span>
+            {% endif %}
           {% else %}
             <h2 style="color: red;"><strong>$ {{ house.total_price }}</strong></h2>
+            {% if not house.user_id == user.id %}
+              {% if favorite %}
+                <a href="{{ url_for('remove_favorite',house_id2=house.id, user_id2=user.id) }}"><button type="button" name="button">Remove from Favorite </button></a>
+              {% else %}
+                <a href="{{ url_for('add_to_favorite',house_id2=house.id, user_id2=user.id) }}"><button type="button" name="button">Add to Favorite </button></a>
+              {% endif %}
+            {% endif %}
           {% endif %}
         {% else %}
         <h2 style="color: red;"><strong>Pending</strong></h2>
@@ -232,7 +243,7 @@
       </div>
     </div>
     </div>
-
+    {% if user.id == house.user_id %}
     <div class="panel-group" id="accordion">
       <div class="panel panel-default">
         <div class="panel-heading">
@@ -244,18 +255,53 @@
         </div>
         <div id="recommendation" class="panel-collapse collapse in">
           <div class="panel-body">
-            <ul>
-              <li><b>Housing features:</b> good location, low total price, convenient transportation around. This house
-                is
-                wider than the
-                same area of the house, the sense of space is more open, living feeling more comfortable.</li>
-              <li><b>Community environment:</b> the community is well closed, green rate is high, there is a square for
-                everyone to
-                leisure and entertainment. There are supermarkets, laundries, nail salons and beauty salons around the
-                community.
-                Surrounding shopping malls and hospitals, convenient travel.</li>
+            {% if recommendations %}
+              {% for r in recommendations %}
+                <ul>
+                  <li>{{ r.reason }}</li>
+                </ul>
+              {% endfor %}
+            {% else %}
+              <p>Would you like to write someting to make your house more attractive and competitive?</p>
+            {% endif %}
+            <button type="button" name="Add" id='AddRecommendation'>Add</button>
+            <div id="recom_form" style="display: none;">
+              <form action="" method="post" novalidate>
+                {{ form1.hidden_tag() }}
+                <p><b>{{ form1.reason.label }}</b></p>
+                <p>{{ form1.reason() }}</p>
+                {% for error in form1.reason.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+                <p>{{ form1.submit() }}</p>
+            </form>
+          </div>
+    {% else %}
+      {% if recommendations %}
+      <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#recommendation">
+                <b style="font-size:3rem;">Recommendation</b>
+              </a>
+            </h4>
+          </div>
+
+        {% for r in recommendations %}
+          <div id="recommendation" class="panel-collapse collapse in">
+            <div class="panel-body">
+              <ul>
+              <li>{{ r.reason }}</li>
             </ul>
           </div>
+        {% endfor %}
+      {% endif %}
+    {% endif %}
+
+
+
+
           <div id="contact" style="margin-left: 30px;margin-right: 30px;">
             <p style="font-size: large;"><b>Contact Agent</b></p>
             <hr>
@@ -346,5 +392,11 @@
     left: -16px;
   }
 </style>
+<script>
+    var btn = document.getElementById("AddRecommendation");
+    btn.onclick =function(){
+        document.getElementById("recom_form").style.display="block";
+    }
+</script>
 {% include 'footer.html' %}
 {% endblock %}

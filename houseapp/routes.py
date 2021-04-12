@@ -1,8 +1,8 @@
 from houseapp import app, db
 from flask import render_template, flash, redirect, url_for, session, request, jsonify
-from houseapp.forms import CommentForm, LoginForm, SignupForm, PredictForm, BuyForm
+from houseapp.forms import CommentForm, LoginForm, SignupForm, PredictForm, BuyForm, RecommendationForm
 from werkzeug.security import generate_password_hash, check_password_hash
-from houseapp.models import User, House, Comment, Answer, Check
+from houseapp.models import User, House, Comment, Answer, Check, Recommendation, Favorite
 from houseapp.static import data
 
 
@@ -24,17 +24,25 @@ def details():
     house = House.query.filter(House.id == house_id).first()
     owner = User.query.filter(User.id == house.user_id).first()
     comments = Comment.query.filter(Comment.house_id == house.id).all()
+    recommendations = Recommendation.query.filter(Recommendation.house_id == house.id).all()
     form = CommentForm()
+    form1 = RecommendationForm()
     if not session.get("USERNAME") is None:
         username = session.get("USERNAME")
         user_in_db = User.query.filter(User.username == username).first()
+        favorite = Favorite.query.filter(Favorite.user_id == user_in_db.id, Favorite.house_id == house.id).first()
         if form.validate_on_submit():
             comment = Comment(body=form.comment.data, user_id = user_in_db.id, house_id = house.id)
             db.session.add(comment)
             db.session.commit()
             return redirect(url_for('details', house_id=house.id))
-        return render_template('details.html', title='Details', form=form, user=user_in_db, house = house, owner=owner, comments=comments)
-    return render_template('details.html', title='Details', form=form, house=house, owner=owner, commennts=comments)
+        if form1.validate_on_submit():
+            recommendation = Recommendation(reason=form1.reason.data, user_id=user_in_db.id, house_id=house.id)
+            db.session.add(recommendation)
+            db.session.commit()
+            return redirect(url_for('details', house_id=house.id))
+        return render_template('details.html', title='Details', form=form, form1=form1, user=user_in_db, house = house, owner=owner, comments=comments, recommendations=recommendations, favorite=favorite)
+    return render_template('details.html', title='Details', form=form, form1=form1, house=house, owner=owner, commennts=comments, recommendations=recommendations)
 
 @app.route('/upload_house')
 def upload_house():
@@ -44,6 +52,23 @@ def upload_house():
     db.session.commit()
     return redirect(url_for('buy'))
 
+@app.route('/add_to_favorite')
+def add_to_favorite():
+    user_id = request.args.get('user_id2')
+    house_id = request.args.get('house_id2')
+    favorite = Favorite(user_id=user_id, house_id=house_id)
+    db.session.add(favorite)
+    db.session.commit()
+    return redirect(url_for('details', house_id=house_id))
+
+@app.route('/remove_favorite')
+def remove_favorite():
+    house_id = request.args.get('house_id2')
+    user_id = request.args.get('user_id2')
+    favorite_in_db = Favorite.query.filter(Favorite.house_id == house_id, Favorite.user_id == user_id).first()
+    db.session.delete(favorite_in_db)
+    db.session.commit()
+    return redirect(url_for('personal'))
 
 @app.route('/buy', methods=['GET','POST'])
 def buy():
@@ -345,7 +370,8 @@ def personal():
         username = session.get("USERNAME")
         user_in_db = User.query.filter(User.username == username).first()
         houses = House.query.filter(House.user_id == user_in_db.id).all()
-        return render_template('personalpage.html', title="Personal Page", user=user_in_db, houses = houses)
+        favorites = Favorite.query.filter(Favorite.user_id == user_in_db.id).all()
+        return render_template('personalpage.html', title="Personal Page", user=user_in_db, houses = houses, favorites=favorites)
     else:
         flash("User needs to login first")
         return redirect(url_for('login'))

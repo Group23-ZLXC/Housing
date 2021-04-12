@@ -11,7 +11,7 @@ class BuyForm(FlaskForm):
     kitchen = SelectField('*Kitchen', choices = [(0,'All Kitchen'),(1,0),(2,1),(3,2),(4,3),(5,4),(6,5)])
     bathroom = SelectField('Bathroom', choices = [(0,'All Bathroom'),(1,0),(2,1),(3,2),(4,3),(5,4),(6,5),(7,6),(8,7)])
     floor = SelectField('Floor',choices=[(0,'All Floor'),(1,'1st - 3rd'),(2,'4th - 10th'),(3,'11th - 20th'),(4,'Over 21st')])
-    building_type = SelectField('Type',choices = [(0,'All Type'),(1,"Tower"), (2, "Bungalow"), (3, "Combination of plate and tower"), (4, "Plate")]) 
+    building_type = SelectField('Type',choices = [(0,'All Type'),(1,"Tower"), (2, "Bungalow"), (3, "Combination of plate and tower"), (4, "Plate")])
     renovation_con = SelectField('Renovation', choices = [(0,'All Renovation'),(1, 'Other'), (2, 'Rough'),(3, 'Simplicity'), (4, 'Hardcover')])
     elevator = SelectField('Elevator', choices = [(0,'Anyway'),(1, 'No'), (2, 'Yes')])
     subway = SelectField('Subway', choices = [(0,'Anyway'),(1, 'No'), (2, 'Yes')])
@@ -52,6 +52,10 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Log In')
+
+class RecommendationForm(FlaskForm):
+    reason = TextAreaField('Recommendation', validators=[DataRequired()])
+    submit = SubmitField('Submit')
 
 
 # render_kw: https://www.cnblogs.com/FRESHMANS/p/8529992.html

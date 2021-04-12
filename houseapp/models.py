@@ -9,6 +9,8 @@ class User(db.Model):
     comment = db.relationship('Comment', backref='author', lazy='dynamic')
     answer = db.relationship('Answer', backref='author', lazy='dynamic')
     house = db.relationship('House', backref='owner', lazy='dynamic')
+    recommendation = db.relationship('Recommendation', backref='author', lazy='dynamic')
+    favorite = db.relationship('Favorite', backref='user', lazy='dynamic')
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
@@ -49,6 +51,20 @@ class House(db.Model):
     status = db.Column(db.Integer) #0:pending; 1: finshed; 2: uploaded
     date = db.Column(db.Date, index=True, default = datetime.now)
     comment = db.relationship('Comment', backref='house', lazy='dynamic')
+    recommendation = db.relationship('Recommendation', backref='house', lazy='dynamic')
+    favorite = db.relationship('Favorite', backref='house', lazy='dynamic')
+
+class Favorite(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    house_id = db.Column(db.Integer, db.ForeignKey('house.id'))
+
+class Recommendation(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    house_id = db.Column(db.Integer, db.ForeignKey('house.id'))
+    reason = db.Column(db.String)
+
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
