@@ -16,17 +16,17 @@
       <ul class="nav navbar-nav" style="font-size: 15px;">
         <li><a href="{{ url_for('homepage') }}"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;Our House</a>
         </li>
-        <li><a href="{{ url_for('buy') }}"><span class="glyphicon glyphicon-usd"></span>&nbsp;&nbsp;Buy</a></li>
+        <li><a href="{{ url_for('buy') }}"><span class="glyphicon glyphicon-filter"></span>&nbsp;&nbsp;Buy</a></li>
         <li><a href="{{ url_for('predict') }}"><span class="glyphicon glyphicon-stats"></span>&nbsp;&nbsp;Predict</a>
         </li>
       </ul>
       <ul class="nav navbar-nav pull-right" style="font-size: 15px;">
         {% if user %}
-        <li><a href="{{ url_for('personal') }}"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Personal
+        <li><a href="{{ url_for('personal') }}"><span class="glyphicon glyphicon-tasks"></span>&nbsp;&nbsp;Personal
             Page</a></li>
-        <li><a href="{{ url_for('logout') }}"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Log Out</a></li>
+        <li><a href="{{ url_for('logout') }}"><span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;Log Out</a></li>
         {% else %}
-        <li><a href="{{ url_for('login') }}"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Log in</a></li>
+        <li><a href="{{ url_for('login') }}"><span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;Log in</a></li>
         <li><a href="{{ url_for('signup') }}"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Register</a>
         </li>
         {% endif %}

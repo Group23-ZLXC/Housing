@@ -20,11 +20,11 @@
             </td>
             {% if user %}
             <td style="width: 70%;" align="right"><a class="link" style="margin-right: 20px"
-                    href="{{ url_for('personal') }}"><span class="glyphicon glyphicon-user"></span>&nbsp;{{ user.username }},Hi&nbsp;!</a><a class="link" href="{{ url_for('logout') }}"><span
-                        class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Log Out</a></td>
+                    href="{{ url_for('personal') }}"><span class="glyphicon glyphicon-tasks"></span>&nbsp;{{ user.username }},Hi&nbsp;!</a><a class="link" href="{{ url_for('logout') }}"><span
+                        class="glyphicon glyphicon-log-out"></span>&nbsp;Log Out</a></td>
             {% else %}
             <td style="width: 70%;" align="right"><a class="link" style="margin-right: 20px"
-                    href="{{ url_for('login') }}"><span class="glyphicon glyphicon-user"></span>&nbsp;Log in</a><a
+                    href="{{ url_for('login') }}"><span class="	glyphicon glyphicon-log-in"></span>&nbsp;Log in</a><a
                     class="link" href="{{ url_for('signup') }}"><span class="glyphicon glyphicon-user"></span>&nbsp;Sign
                     up</a></td>
             {% endif %}
