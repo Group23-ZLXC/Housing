@@ -44,9 +44,32 @@
             <td style="padding-left: 5px;"> {{ house.date }}</td>
             <td style="padding-left: 5px;"><a href="{{ url_for('details',house_id=house.id) }}"><button type="button"
                   name="button" class="btn btn-warning btn-xs">View</button></a></td>
-            <td style="padding-left: 5px;"><a href="{{ url_for('delete_house',house_id=house.id) }}"><button
-                  class="btn btn-danger btn-xs" type="button" name="button">Cancel</button></a></td>
+            <td style="padding-left: 5px;"><a href="{{ url_for('delete_house',house_id=house.id) }}"><button class="btn btn-danger btn-xs" type="button" name="button" data-toggle="modal" data-target="#Cancel">Cancel</button></a>
+            </td>
           </tr>
+          <!-- <div class="modal fade" id="Cancel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                  </button>
+                  <h4 class="modal-title" id="myModalLabel">
+                    Are you sure to delete?
+                  </h4>
+                </div>
+                <div class="modal-body">
+                  You will delete id:&nbsp;<b>{{ house.id }}</b>.
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">No
+                  </button>
+                  <a href="{{ url_for('delete_house',house_id=house.id) }}"><button type="button" class="btn btn-success btn-sm">Yes
+                  </button></a>
+                </div>
+              </div>
+            </div>
+          </div> -->
           {% endif %}
           {% endfor %}
           {% endif %}
@@ -75,8 +98,31 @@
             <td style="padding-left: 5px;"><a href="{{ url_for('details',house_id=house.id) }}"><button type="button"
                   name="button" class="btn btn-success btn-xs">View</button></a></td>
             <td style="padding-left: 5px;"><a href="{{ url_for('upload_house',house_id1=house.id) }}"><button
-                  class="btn btn-success btn-xs" type="button" name="button">Upload</button></a></td>
+                  class="btn btn-success btn-xs" type="button" name="button" data-toggle="modal" data-target="#Upload">Upload</button></a></td>
           </tr>
+          <!-- <div class="modal fade" id="Upload" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                  </button>
+                  <h4 class="modal-title" id="myModalLabel">
+                    Are you sure to upload?
+                  </h4>
+                </div>
+                <div class="modal-body">
+                  You will upload id:&nbsp;<b>{{ house.id }}</b>.
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">No
+                  </button>
+                  <a href="{{ url_for('upload_house',house_id1=house.id) }}"><button type="button" class="btn btn-success btn-sm">Yes
+                  </button></a>
+                </div>
+              </div>
+            </div>
+          </div> -->
           {% endif %}
           {% endfor %}
           {% endif %}
@@ -106,8 +152,31 @@
                   class="btn btn-info btn-xs" type="button" name="button">View</button></a>
             </td>
             <td style="padding-left: 5px;"><a href="{{ url_for('delete_house',house_id=house.id) }}"><button
-                  class="btn btn-danger btn-xs" type="button" name="button">Delete</button></a></td>
+                  class="btn btn-danger btn-xs" type="button" name="button" data-toggle="modal" data-target="#Delete">Delete</button></a></td>
           </tr>
+          <!-- <div class="modal fade" id="Delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                  </button>
+                  <h4 class="modal-title" id="myModalLabel">
+                    Are you sure to delete?
+                  </h4>
+                </div>
+                <div class="modal-body">
+                  You will delete id:&nbsp;<b>{{ house.id }}</b>.
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">No
+                  </button>
+                  <a href="{{ url_for('delete_house',house_id=house.id) }}"><button type="button" class="btn btn-success btn-sm">Yes
+                  </button></a>
+                </div>
+              </div>
+            </div>
+          </div> -->
           {% endif %}
           {% endfor %}
           {% endif %}
