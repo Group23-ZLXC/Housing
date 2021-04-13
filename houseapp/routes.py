@@ -2,7 +2,7 @@ from houseapp import app, db
 from flask import render_template, flash, redirect, url_for, session, request, jsonify
 from houseapp.forms import CommentForm, LoginForm, SignupForm, PredictForm, BuyForm, RecommendationForm
 from werkzeug.security import generate_password_hash, check_password_hash
-from houseapp.models import User, House, Comment, Answer, Check, Recommendation, Favorite
+from houseapp.models import User, House, Comment, Answer, Check, Recommendation, Favorite, Checked
 from houseapp.static import data
 
 
@@ -113,6 +113,10 @@ def buy():
                 renovation_con = form.renovation_con.data, elevator=form.elevator.data, subway=form.subway.data)
             db.session.add(check)
             db.session.commit()
+            # checked_before = Checked.query.all()
+            db.session.query(Checked).filter(Checked.user_id == user_in_db.id).delete() 
+            db.session.commit()
+            # Checked.query.delete()
             for house in houses:
                 checked_data_1.append((house.user_id, house.total_price, round(house.total_price/house.square, 2), house.square, house.living_room, house.drawing_room, house.kitchen, house.bathroom, house.floor, house.building_type, house.renovation_con, house.elevator, house.subway, house.id))
             if check.living_room != 0:
@@ -308,8 +312,22 @@ def buy():
                     if (int(checked_data_1[i][8]) < 21):
                         checked_data_1.remove(checked_data_1[i])
 
-    
-    return render_template('buy.html',title='Buy', data=data, user=user_in_db, houses=houses, form=form, checked=checked_data, checked_1=checked_data_1)
+            for i in range(0,len(checked_data_1)):
+                checked_finally = Checked(user_id = user_in_db.id, total_price = checked_data_1[i][1], average_price = checked_data_1[i][2], square = checked_data_1[i][3],
+                living_room=checked_data_1[i][4], drawing_room=checked_data_1[i][5], kitchen=checked_data_1[i][6],
+                bathroom = checked_data_1[i][7], floor=checked_data_1[i][8], building_type = checked_data_1[i][9],
+                renovation_con = checked_data_1[i][10], elevator=checked_data_1[i][11], subway=checked_data_1[i][12], house_id = checked_data_1[i][13])
+                db.session.add(checked_finally)
+                db.session.commit()
+
+    page = int(request.args.get('page', 1))
+    per_page = int(request.args.get('per_page', 5))
+
+    paginate = Checked.query.order_by(Checked.id).filter(Checked.user_id == user_in_db.id).paginate(page, per_page, error_out=False)
+
+    houses_checked = paginate.items
+
+    return render_template('buy.html',title='Buy', data=data, user=user_in_db, houses=houses, form=form, checked=checked_data, checked_1=checked_data_1, paginate=paginate, houses_checked=houses_checked)
 
 @app.route('/predict', methods=['GET','POST'])
 def predict():

@@ -31,6 +31,23 @@ class Check(db.Model):
     elevator = db.Column(db.Integer)
     subway = db.Column(db.Integer)
 
+class Checked(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    total_price = db.Column(db.Integer)
+    average_price = db.Column(db.Float)
+    square = db.Column(db.Float)
+    living_room = db.Column(db.Integer)
+    drawing_room = db.Column(db.Integer)
+    kitchen = db.Column(db.Integer)
+    bathroom = db.Column(db.Integer)
+    floor = db.Column(db.Integer)
+    building_type = db.Column(db.Integer)
+    renovation_con = db.Column(db.Integer)
+    elevator = db.Column(db.Boolean)
+    subway = db.Column(db.Boolean)
+    house_id = db.Column(db.Integer, db.ForeignKey('house.id'))
+
 class House(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
@@ -53,26 +70,6 @@ class House(db.Model):
     comment = db.relationship('Comment', backref='house', lazy='dynamic')
     recommendation = db.relationship('Recommendation', backref='house', lazy='dynamic')
     favorite = db.relationship('Favorite', backref='house', lazy='dynamic')
-
-class Test(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    lng = db.Column(db.Float)
-    lat = db.Column(db.Float)
-    total_price = db.Column(db.Integer)
-    square = db.Column(db.Float)
-    living_room = db.Column(db.Integer)
-    drawing_room = db.Column(db.Integer)
-    kitchen = db.Column(db.Integer)
-    bathroom = db.Column(db.Integer)
-    floor = db.Column(db.Integer)
-    building_type = db.Column(db.Integer)
-    renovation_con = db.Column(db.Integer)
-    elevator = db.Column(db.Boolean)
-    subway = db.Column(db.Boolean)
-    district = db.Column(db.Integer)
-    status = db.Column(db.Integer) #0:pending; 1: finshed; 2: uploaded
-    date = db.Column(db.Date, index=True, default = datetime.now)
 
 class Favorite(db.Model):
     id = db.Column(db.Integer, primary_key=True)
