@@ -241,10 +241,12 @@
 </div>
 {% endfor %}
 <hr style="margin:30px 30px 0 30px;">
+{% if paginate.total != 0 %}
 <table align="center">
     <tr>
         <td align="center">
             <ul class="pagination">
+                
                 {% if paginate.has_prev %}
                 <li><a href="{{ url_for('buy', page = paginate.prev_num ) }}">&laquo;</a></li>
                 {% else %}
@@ -258,10 +260,12 @@
                 {% else %}
                 <li class="next disabled"><a href="{{ url_for('buy', page = paginate.next_num ) }}">&raquo;</a></li>
                 {% endif %}
+                
             </ul>            
         </td>
     </tr>
 </table>
+{% endif %}
 <!-- {% for house in checked %}
 
     <div style="margin-left: 30px; margin-right: 30px;margin-top: 25px;">
