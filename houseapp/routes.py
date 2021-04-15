@@ -1,6 +1,6 @@
 from houseapp import app, db
 from flask import render_template, flash, redirect, url_for, session, request, jsonify
-from houseapp.forms import CommentForm, LoginForm, SignupForm, PredictForm, BuyForm, RecommendationForm
+from houseapp.forms import CommentForm, LoginForm, SignupForm, PredictForm, BuyForm, RecommendationForm, EditRecomForm, ReplyForm
 from werkzeug.security import generate_password_hash, check_password_hash
 from houseapp.models import User, House, Comment, Answer, Check, Recommendation, Favorite, Checked
 from houseapp.static import data
@@ -21,28 +21,66 @@ def homepage():
 @app.route('/details', methods=['GET','POST'])
 def details():
     house_id = request.args.get('house_id')
+    comment_id = request.args.get('comment_id')
+    reply = request.args.get('reply')
     house = House.query.filter(House.id == house_id).first()
     owner = User.query.filter(User.id == house.user_id).first()
     comments = Comment.query.filter(Comment.house_id == house.id).all()
-    recommendations = Recommendation.query.filter(Recommendation.house_id == house.id).all()
+    answers = {}
+    for c in comments:
+        answers[c.id] = Answer.query.filter(Answer.question_id == c.id).all()
+
+    stored_recomm = Recommendation.query.filter(Recommendation.house_id == house.id).first()
+    # recom_id = request.args.get('recom_id')
     form = CommentForm()
     form1 = RecommendationForm()
+    form2 = EditRecomForm()
+    form3 = ReplyForm()
     if not session.get("USERNAME") is None:
         username = session.get("USERNAME")
         user_in_db = User.query.filter(User.username == username).first()
         favorite = Favorite.query.filter(Favorite.user_id == user_in_db.id, Favorite.house_id == house.id).first()
-        if form.validate_on_submit():
-            comment = Comment(body=form.comment.data, user_id = user_in_db.id, house_id = house.id)
-            db.session.add(comment)
-            db.session.commit()
-            return redirect(url_for('details', house_id=house.id))
-        if form1.validate_on_submit():
-            recommendation = Recommendation(reason=form1.reason.data, user_id=user_in_db.id, house_id=house.id)
-            db.session.add(recommendation)
-            db.session.commit()
-            return redirect(url_for('details', house_id=house.id))
-        return render_template('details.html', title='Details', form=form, form1=form1, user=user_in_db, house = house, owner=owner, comments=comments, recommendations=recommendations, favorite=favorite)
-    return render_template('details.html', title='Details', form=form, form1=form1, house=house, owner=owner, commennts=comments, recommendations=recommendations)
+        if not reply is None:
+            if form3.validate_on_submit():
+                answer = Answer(body=form3.comment.data,question_id=comment_id, user_id=user_in_db.id)
+                db.session.add(answer)
+                db.session.commit()
+                return redirect(url_for('details', house_id=house.id))
+            else:
+                form3.comment.data = "Reply to "+ comment_id +" : "
+                return render_template('details.html', title='Details', form=form, form1=form1, user=user_in_db, house = house, owner=owner, comments=comments,
+                    stored_recomm=stored_recomm, favorite=favorite, form2=form2,form3=form3, reply=reply, answers=answers)
+        else:
+            if form.validate_on_submit():
+                comment = Comment(body=form.comment.data, user_id = user_in_db.id, house_id = house.id)
+                db.session.add(comment)
+                db.session.commit()
+                return redirect(url_for('details', house_id=house.id))
+
+        if stored_recomm:
+            if form2.validate_on_submit():
+                stored_recomm.reason = form2.reason.data
+                db.session.commit()
+                return redirect(url_for('details', house_id=house.id))
+            else:
+                form2.reason.data = stored_recomm.reason
+                return render_template('details.html', title='Details', form=form, form1=form1, user=user_in_db,
+                    house = house, owner=owner, comments=comments, stored_recomm=stored_recomm, favorite=favorite,
+                    form2=form2,form3=form3, reply=reply, answers=answers)
+
+        else:
+            if form1.validate_on_submit():
+                recommendation = Recommendation(reason=form1.reason.data, user_id=user_in_db.id, house_id=house.id)
+                db.session.add(recommendation)
+                db.session.commit()
+                return redirect(url_for('details', house_id=house.id))
+            else:
+                return render_template('details.html', title='Details', form=form, form1=form1, user=user_in_db, house = house,
+                    owner=owner, comments=comments, favorite=favorite, form3=form3, reply=reply, answers=answers)
+
+    return render_template('details.html', title='Details', form=form, form1=form1, house=house, owner=owner, commennts=comments,
+        stored_recomm=stored_recomm,form3=form3, reply=reply, answers=answers)
+
 
 @app.route('/upload_house')
 def upload_house():
@@ -69,6 +107,10 @@ def remove_favorite():
     db.session.delete(favorite_in_db)
     db.session.commit()
     return redirect(url_for('details', house_id=house_id))
+
+# @app.route('/edit_recom')
+# def edit_recom():
+#     recom_id = request.args.get('recom_id')
 
 @app.route('/buy', methods=['GET','POST'])
 def buy():
@@ -114,7 +156,7 @@ def buy():
             db.session.add(check)
             db.session.commit()
             # checked_before = Checked.query.all()
-            db.session.query(Checked).filter(Checked.user_id == user_in_db.id).delete() 
+            db.session.query(Checked).filter(Checked.user_id == user_in_db.id).delete()
             db.session.commit()
             # Checked.query.delete()
             for house in houses:

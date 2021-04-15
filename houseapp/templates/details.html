@@ -46,22 +46,22 @@
       </td>
       <td style="vertical-align: top; padding-left: 20px; height: 30%;">
         {% if house.total_price %}
-        {% if house.status == 1 %}
-        {% if house.user_id == user.id %}
-        <span>
+          {% if house.status == 1 %}
+            {% if house.user_id == user.id %}
+            <span>
+              <h2 style="color: red;"><strong>$ {{ house.total_price }}</strong></h2>
+            </span>
+            {% endif %}
+          {% else %}
           <h2 style="color: red;"><strong>$ {{ house.total_price }}</strong></h2>
-        </span>
-        {% endif %}
-        {% else %}
-        <h2 style="color: red;"><strong>$ {{ house.total_price }}</strong></h2>
-        {% endif %}
+          {% endif %}
         {% else %}
         <h2 style="color: red;"><strong>Pending</strong></h2>
         {% endif %}
         {% if house.total_price %}
-        <p style="color: darkgray; font-size: 15px;">$ {{ '%.2f' %(house.total_price / house.square) }}</p>
+          <p style="color: darkgray; font-size: 15px;">$ {{ '%.2f' %(house.total_price / house.square) }}</p>
         {% else %}
-        <p style="color: darkgray; font-size: 15px;">Pending</p>
+          <p style="color: darkgray; font-size: 15px;">Pending</p>
         {% endif %}
       </td>
         {% if house.total_price %}
@@ -264,6 +264,7 @@
         </div>
       </div>
     </div>
+
     {% if user.id == house.user_id %}
     <div class="panel-group" id="accordion">
       <div class="panel panel-default">
@@ -276,40 +277,40 @@
         </div>
         <div id="recommendation" class="panel-collapse collapse in">
           <div class="panel-body">
-            {% if recommendations %}
-            {% for r in recommendations %}
-            <ul>
-              <li>{{ r.reason }}</li>
-            </ul>
-            {% endfor %}
-            {% else %}
-            <p style="margin: 10px 0 0 15px;">Would you like to write someting to make your house more attractive and
+            {% if not stored_recomm %}
+              <p style="margin: 10px 0 0 15px;">Would you like to write someting to make your house more attractive and
               competitive?</p>
-            {% endif %}
-            <!-- <button type="button" name="Add" id='AddRecommendation'>Add</button> -->
-            <div class="panel-body">
+              <div class="panel-body">
               <form action="" method="post" novalidate>
                 {{ form.hidden_tag() }}
-                <p><b>{{ form1.reason.label }}</b></p>
+                <!-- <p><b>{{ form1.reason.label }}</b></p> -->
                 <p>{{ form1.reason(rows=8, cols=80, class="form-control") }}</p>
                 {% for error in form1.reason.errors %}
                 <span style="color: red;">[{{ error }}]</span>
                 {% endfor %}
-                <p align="right">{{ form.submit(class="btn btn-defult") }}</p>
-
-            </div>
-            <!-- <div id="recom_form" style="display: none;">
+                <p align="right">{{ form1.submit(class="btn btn-defult") }}
+                <!-- <a href="url_for(delete_recomm, recom_id = stored_recomm.id)"<button type="button" name="button">Delete</button></a> -->
+                </p>
+              </div>
+            {% else %}
+            <div class="panel-body">
               <form action="" method="post" novalidate>
-                {{ form1.hidden_tag() }}
-                <p><b>{{ form1.reason.label }}</b></p>
-                <p>{{ form1.reason() }}</p>
+                {{ form2.hidden_tag() }}
+                <!-- <p><b>{{ form1.reason.label }}</b></p> -->
+                <p>{{ form2.reason(rows=4, cols=80, class="form-control") }}</p>
                 {% for error in form1.reason.errors %}
                 <span style="color: red;">[{{ error }}]</span>
                 {% endfor %}
-                <p>{{ form1.submit() }}</p>
-              </form>
-            </div> -->
-            {% else %}
+                <p align="right">{{ form2.edit(class="btn btn-defult") }}
+                <!-- <a href="url_for(delete_recomm, recom_id = stored_recomm.id)"<button type="button" name="button">Delete</button></a> -->
+                </p>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    {% else %}
             <div class="panel-group" id="accordion">
               <div class="panel panel-default">
                 <div class="panel-heading">
@@ -365,16 +366,52 @@
                       {% if comments %}
                       {% for c in comments %}
                       <tr>
+                        {% if c.user_id == owner.id %}
+                        <td width="15%"><span class="glyphicon glyphicon-user"></span><b>&nbsp;&nbsp;{{ c.user_id }}(Owner)</b></td>
+                        {% else %}
                         <td width="15%"><span class="glyphicon glyphicon-user"></span><b>&nbsp;&nbsp;{{ c.user_id }}</b>
                         </td>
-                        <td class="comment">{{ c.body }}</td>
+                        {% endif %}
+                        <td class="comment">{{ c.body }}
+                        <a href="{{ url_for('details', house_id=house.id, comment_id=c.id, reply=True)}}"
+                        <button type="button" name="button" id="reply_btn">Reply</button>
+                        </a>
+                        {% if answers[c.id] %}
+                          <ul>
+                            {% for a in answers[c.id] %}
+                              <li>User {{ a.user_id }} said: {{ a.body }}</li>
+                            {% endfor %}
+                          </ul>
+                        {% endif %}
+                      </td>
+                        <td>
                       </tr>
                       {% endfor %}
                       {% endif %}
                     </table>
                     <hr style="margin-right: 20px;margin-left: 20px;">
                     <div class="panel-body">
-                      {% if user %}
+                    {% if user %}
+                      {% if reply %}
+                      <!-- reply function -->
+                      <!-- <div id="reply_form" style="display:none"> -->
+                      <div>
+                        <form action="" method="post" novalidate>
+                          {{ form3.hidden_tag() }}
+                          <p>
+                            {{ form3.comment.label }}<br>
+                            {{ form3.comment(rows=8, cols=80, class="form-control") }}
+
+                            {% for error in form3.comment.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %}
+                          </p>
+                          <p align="right">{{ form3.submit(class="btn btn-defult") }}</p>
+                      </div>
+
+                      {% else %}
+                      <!-- comment function  -->
+                      <div id="comment_form">
                       <form action="" method="post" novalidate>
                         {{ form.hidden_tag() }}
                         <p>
@@ -386,15 +423,17 @@
                           {% endfor %}
                         </p>
                         <p align="right">{{ form.submit(class="btn btn-defult") }}</p>
-                        {% else %}
-                        <p style="color: red; "><b>You have to log in to comment</b></p><br>
-                        <p><span>Already have an account?</span>
-                          <a href="{{ url_for('login') }}"><span class="glyphicon glyphicon-user"></span> Log in</a>
-                        </p><br>
-                        <p><span>Create an account? </span>
-                          <a href="{{ url_for('signup') }}"><span class="glyphicon glyphicon-user"></span> Register</a>
-                        </p>
-                        {% endif %}
+                      </div>
+                      {% endif %}
+                    {% else %}
+                      <p style="color: red; "><b>You have to log in to comment</b></p><br>
+                      <p><span>Already have an account?</span>
+                        <a href="{{ url_for('login') }}"><span class="glyphicon glyphicon-user"></span> Log in</a>
+                      </p><br>
+                      <p><span>Create an account? </span>
+                        <a href="{{ url_for('signup') }}"><span class="glyphicon glyphicon-user"></span> Register</a>
+                      </p>
+                    {% endif %}
                     </div>
                   </div>
                 </div>
@@ -402,7 +441,7 @@
             </div>
             {% endif %}
           </div>
-        </div>
+
 
 </body>
 
@@ -426,12 +465,18 @@
     top: 6px;
     left: -16px;
   }
-</style> 
+</style>
 <script>
-  var btn = document.getElementById("AddRecommendation");
-  btn.onclick = function () {
-    document.getElementById("recom_form").style.display = "block";
-  }
+  // var btn = document.getElementById("AddRecommendation");
+  // btn.onclick = function () {
+  //   document.getElementById("recom_form").style.display = "block";
+  // }
+
+  // var reply_btn = document.getElementById("reply_btn");
+  // reply_btn.onclick = function () {
+  //   document.getElementById("comment_form").style.display = "none";
+  //   document.getElementById("reply_form").style.display = "block";
+  // }
 </script>
 {% include 'footer.html' %}
 {% endblock %}

@@ -47,6 +47,10 @@ class CommentForm(FlaskForm):
     comment = TextAreaField('Your Comment', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
+class ReplyForm(FlaskForm):
+    comment = TextAreaField('Your Reply', validators=[DataRequired()])
+    submit = SubmitField('Reply')
+
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
@@ -57,6 +61,10 @@ class RecommendationForm(FlaskForm):
     reason = TextAreaField('Recommendation', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
+class EditRecomForm(FlaskForm):
+    reason = TextAreaField('Recommendation', validators=[DataRequired()])
+    edit = SubmitField('Edit')
+    #delete = SubmitField('Delete')
 
 # render_kw: https://www.cnblogs.com/FRESHMANS/p/8529992.html
 class SignupForm(FlaskForm):
