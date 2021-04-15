@@ -47,7 +47,7 @@ def details():
                 db.session.commit()
                 return redirect(url_for('details', house_id=house.id))
             else:
-                form3.comment.data = "Reply to "+ comment_id +" : "
+                # form3.comment.data = "Reply to "+ comment_id +" : "
                 return render_template('details.html', title='Details', form=form, form1=form1, user=user_in_db, house = house, owner=owner, comments=comments,
                     stored_recomm=stored_recomm, favorite=favorite, form2=form2,form3=form3, reply=reply, answers=answers)
         else:

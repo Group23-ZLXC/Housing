@@ -321,14 +321,12 @@
                   </h4>
                 </div>
                 <div id="recommendation" class="panel-collapse collapse in">
-                  {% if recommendations %}
-                  {% for r in recommendations %}
+                  {% if stored_recomm %}
                   <div class="panel-body">
-                    <ul>
-                      <li>{{ r.reason }}</li>
-                    </ul>
+                   
+                      <p style="margin-left: 15px;">{{ stored_recomm.reason }}</p>
+                    
                   </div>
-                  {% endfor %}
                   {% else %}
                   <div class="panel-body">
                     <p style="margin: 10px 0 0 15px;color: gray;">The seller hasn't released any recommendation yet.</p>
@@ -346,10 +344,11 @@
                       </tr>
                     </table>
                   </div>
-                  {% endif %}
+                 
                 </div>
               </div>
             </div>
+             {% endif %}
             {% if house.status == 2 %}
             <div class="panel-group" id="accordion" style="margin-top: 20px;margin-bottom: 50px;">
               <div class="panel panel-default">
@@ -362,19 +361,19 @@
                 </div>
                 <div id="comments" class="panel-collapse collapse in">
                   <div class="panel-body">
-                    <table style="margin-left: 20px; margin-right: 20px;width: 27%;">
+                    <table style="margin-left: 20px; margin-right: 20px;width: 100%;">
                       {% if comments %}
                       {% for c in comments %}
                       <tr>
                         {% if c.user_id == owner.id %}
-                        <td width="15%"><span class="glyphicon glyphicon-user"></span><b>&nbsp;&nbsp;{{ c.user_id }}(Owner)</b></td>
+                        <td width="9%" style="vertical-align: top;padding-top: 13px;"><span class="glyphicon glyphicon-user"></span><b>&nbsp;&nbsp;{{ c.user_id }}</b><span class="label label-warning" style="margin-left: 7px;vertical-align: middle;">owner</span></td>
                         {% else %}
-                        <td width="15%"><span class="glyphicon glyphicon-user"></span><b>&nbsp;&nbsp;{{ c.user_id }}</b>
+                        <td width="9%" style="vertical-align: top;padding-top: 13px;"><span class="glyphicon glyphicon-user"></span><b>&nbsp;&nbsp;{{ c.user_id }}</b><span class="label label-info" style="margin-left: 7px;vertical-align: middle;">user</span>
                         </td>
                         {% endif %}
                         <td class="comment">{{ c.body }}
-                        <a href="{{ url_for('details', house_id=house.id, comment_id=c.id, reply=True)}}"
-                        <button type="button" name="button" id="reply_btn">Reply</button>
+                        <a href="{{ url_for('details', house_id=house.id, comment_id=c.id, reply=True)}}">
+                        <button type="button" name="button" id="reply_btn" class="btn btn-default btn-xs">Reply</button>
                         </a>
                         {% if answers[c.id] %}
                           <ul>
@@ -384,7 +383,6 @@
                           </ul>
                         {% endif %}
                       </td>
-                        <td>
                       </tr>
                       {% endfor %}
                       {% endif %}
@@ -396,11 +394,11 @@
                       <!-- reply function -->
                       <!-- <div id="reply_form" style="display:none"> -->
                       <div>
-                        <form action="" method="post" novalidate>
+                        <form action="" method="post" novalidate style="margin-right: 30px;">
                           {{ form3.hidden_tag() }}
                           <p>
                             {{ form3.comment.label }}<br>
-                            {{ form3.comment(rows=8, cols=80, class="form-control") }}
+                            {{ form3.comment(rows=8, cols=80, class="form-control",placeholder="Replying") }}
 
                             {% for error in form3.comment.errors %}
                             <span style="color: red;">[{{ error }}]</span>
@@ -440,12 +438,8 @@
               </div>
             </div>
             {% endif %}
-          </div>
-
-
-</body>
-
-
+            </div>
+        </body>
 <style>
   .comment {
     background-color: rgb(235, 235, 235);
