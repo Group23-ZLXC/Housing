@@ -3,8 +3,8 @@ from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextA
 from wtforms.validators import DataRequired
 
 class BuyForm(FlaskForm):
-    price = SelectField('Price', choices = [(0,'All Price'),(1,'Below $1M'),(2,'$1M - $3M'),(3,'$3M - $5M'),(4,'$5M - $10M'),(5,'Over $10M')])
-    average_price = SelectField('Average Price', choices=[(0,'All Average Price'),(1,'Below 10K'),(2,'10K - 30K'),(3,'30K - 50K'),(4,'50K - 100K'),(5,'Over 100K')])
+    price = SelectField('Price', choices = [(0,'All Price'),(1,'Below ¥1M'),(2,'¥1M - ¥3M'),(3,'¥3M - ¥5M'),(4,'¥5M - ¥10M'),(5,'Over ¥10M')])
+    average_price = SelectField('Average Price', choices=[(0,'All Average Price'),(1,'Below ¥10K'),(2,'¥10K - ¥30K'),(3,'¥30K - ¥50K'),(4,'¥50K - ¥100K'),(5,'Over ¥100K')])
     square = SelectField('Square', choices=[(0,'All Square'),(1,'Below 50sq.m.'),(2,'50sq.m. - 100sq.m.'),(3,'100sq.m. - 150sq.m.'),(4,'150sq.m. - 200sq.m.'),(5,'Over 200sq.m.')])
     living_room = SelectField('Living Room', choices=[(0,'All Living Room'),(1,0),(2,1),(3,2),(4,3),(5,4),(6,5),(7,6),(8,7),(9,8),(10,9)])
     drawing_room = SelectField('Drawing Room', choices=[(0,'All Drawing Room'),(1,0),(2,1),(3,2),(4,3),(5,4),(6,5),(7,6),(8,7),(9,8),(10,9)])

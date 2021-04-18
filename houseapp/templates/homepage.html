@@ -51,7 +51,6 @@
 
 
     </table>
-
     <div style="margin-top: 300px;margin-left: 30px;">
         <table style="width: 95%;">
             <tr>
@@ -103,10 +102,21 @@
                 </td>
             </tr>
         </table>
+    </div>
+    <hr style="margin:50px 30px 50px 30px;">
+    <div style="margin:20px 30px 20px 30px">
+        <h1 align="center"><b><span class="glyphicon glyphicon-align-right"></span>&nbsp;&nbsp;Our Data&nbsp;&nbsp;<span class="glyphicon glyphicon-align-left"></span></b></h1>
+        <table style="width: 100%;">
+            <tr>
+                <td style="width: 50%;">
+                    <div id="years" style="width:100%;height:400px"></div>
+                </td>
+                <td>lalalala</td>
+            </tr>
+        </table>
 
     </div>
-    <hr style="margin-top:50px;">
-
+    <hr style="margin:50px 30px 0 30px;">
     <div style="margin-top: 50px;margin-left: 30px;margin-right: 30px;margin-bottom: 150px;">
         <h1 align="center"><b><span class="glyphicon glyphicon-align-right"></span>&nbsp;&nbsp;Why Choose
                 Us&nbsp;&nbsp;<span class="glyphicon glyphicon-align-left"></span></b></h1>
@@ -147,7 +157,7 @@
     body {
         background-repeat: no-repeat;
         background-image: url("../static/img/backg.png");
-        background-size: 100% 45%;
+        background-size: 100% 35%;
     }
 
     .link:link {
@@ -202,6 +212,8 @@
         right: 0;
     }
 </style>
+<script src="http://cdn.highcharts.com.cn/highcharts/highcharts.js"></script>
+   
 <script>
     function buy() {
         window.location.href = "{{ url_for('buy') }}";
@@ -212,6 +224,39 @@
     function personal() {
         window.location.href = "{{ url_for('personal') }}";
     }
+     // 图表配置
+     var years = {
+        title: {
+            text: 'Number of Houses Sold Per Year'                 // 标题
+        },
+        xAxis: {
+            categories: ['before 2013','2013','2014','2015','2016','2017','2018','2019','2020','2021'],
+            title: {
+                text: 'year'                // y 轴标题
+            }   // x 轴分类
+        },
+        yAxis: {
+            title: {
+                text: 'Number of Houses'                // y 轴标题
+            }
+        },
+        plotOptions: {
+            column: {
+                // 关于柱状图数据标签的详细配置参考：https://api.hcharts.cn/highcharts#plotOptions.column.dataLabels
+                dataLabels: {
+                    enabled: true,
+                    color: '#ffffff',
+                    verticalAlign: 'top', // 竖直对齐方式，默认是 center
+                    inside: true
+                }
+            }
+        },
+        series: [{                              // 数据列
+            name: 'Number of House',                        // 数据列名
+            data: [parseInt('{{ year[0] }}'),parseInt('{{ year[1] }}'),parseInt('{{ year[2] }}'),parseInt('{{ year[3] }}'),parseInt('{{ year[4] }}'),parseInt('{{ year[5] }}'),parseInt('{{ year[6] }}'),parseInt('{{ year[7] }}'),parseInt('{{ year[8] }}'),parseInt('{{ year[9] }}')]            // 数据
+        }]
+    };
+    var chart_years = Highcharts.chart('years', years);
 </script>
 
 </html>

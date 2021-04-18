@@ -34,6 +34,7 @@
                         <div class="input-group" style="width: 90%; margin-top: 20px;">
                             <span class="input-group-addon">*Square</span>
                             {{ form.square(class_="form-control", placeholder="square") }}
+                            <span class="input-group-addon">m<sup>2</sup></span>
                         </div>
                         {% for error in form.square.errors %}
                         <span style="color: red;">[{{ error }}]</span>
