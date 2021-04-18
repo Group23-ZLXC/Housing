@@ -11,12 +11,99 @@ from houseapp.static import data
 @app.route('/homepage', methods=['GET'])
 def homepage():
     owner = User.query
+    data = []
+    with open(r"houseapp/static/data/total_data.csv", encoding='gbk', errors='ignore') as fin:
+        is_first_line =True
+        for f in fin.readlines():
+            if is_first_line:
+                is_first_line = False
+                continue
+            f = f[:-1]
+            a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z = f.split(",")
+            data.append((a,b,c,d,e,f[0:4],g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z))
+    year=[0,0,0,0,0,0,0,0,0,0]
+    for d in data:
+        if d[5] == "2010":
+            year[1]+=1
+        if d[5] == "2011":
+            year[2]+=1
+        if d[5] == "2012":
+            year[3]+=1
+        if d[5] == "2013":
+            year[4]+=1
+        if d[5] == "2014":
+            year[5]+=1
+        if d[5] == "2015":
+            year[6]+=1
+        if d[5] == "2016":
+            year[7]+=1
+        if d[5] == "2017":
+            year[8]+=1
+        if d[5] == "2018":
+            year[9]+=1
+        if d[5] == "2002" or d[5] == "2003" or d[5] == "2008" or d[5] == "2009":
+            year[0]+=1
     if not session.get("USERNAME") is None:
         username = session.get("USERNAME")
         user_in_db = User.query.filter(User.username == username).first()
-        return render_template('homepage.html', title='Home', user=user_in_db, owner=owner)
-    return render_template('homepage.html', owner=owner)
+        return render_template('homepage.html', title='Home', user=user_in_db, owner=owner, data=data,year=year)
+    return render_template('homepage.html', owner=owner, data=data,year=year)
 
+@app.route('/tips')
+def tips():
+    houses = House.query.filter(House.status == 2).all()
+    liv_0 = House.query.filter(House.status == 2).filter(House.living_room == 0).count()
+    liv_1 = House.query.filter(House.status == 2).filter(House.living_room == 1).count()
+    liv_2 = House.query.filter(House.status == 2).filter(House.living_room == 2).count()
+    liv_3 = House.query.filter(House.status == 2).filter(House.living_room == 3).count()
+    liv_4 = House.query.filter(House.status == 2).filter(House.living_room == 4).count()
+    liv_5 = House.query.filter(House.status == 2).filter(House.living_room == 5).count()
+    dra_0 = House.query.filter(House.status == 2).filter(House.drawing_room == 0).count()
+    dra_1 = House.query.filter(House.status == 2).filter(House.drawing_room == 1).count()
+    dra_2 = House.query.filter(House.status == 2).filter(House.drawing_room == 2).count()
+    dra_3 = House.query.filter(House.status == 2).filter(House.drawing_room == 3).count()
+    dra_4 = House.query.filter(House.status == 2).filter(House.drawing_room == 4).count()
+    dra_5 = House.query.filter(House.status == 2).filter(House.drawing_room == 5).count()
+    kit_0 = House.query.filter(House.status == 2).filter(House.kitchen == 0).count()
+    kit_1 = House.query.filter(House.status == 2).filter(House.kitchen == 1).count()
+    kit_2 = House.query.filter(House.status == 2).filter(House.kitchen == 2).count()
+    kit_3 = House.query.filter(House.status == 2).filter(House.kitchen == 3).count()
+    kit_4 = House.query.filter(House.status == 2).filter(House.kitchen == 4).count()
+    kit_5 = House.query.filter(House.status == 2).filter(House.kitchen == 5).count()
+    bat_0 = House.query.filter(House.status == 2).filter(House.bathroom == 0).count()
+    bat_1 = House.query.filter(House.status == 2).filter(House.bathroom == 1).count()
+    bat_2 = House.query.filter(House.status == 2).filter(House.bathroom == 2).count()
+    bat_3 = House.query.filter(House.status == 2).filter(House.bathroom == 3).count()
+    bat_4 = House.query.filter(House.status == 2).filter(House.bathroom == 4).count()
+    bat_5 = House.query.filter(House.status == 2).filter(House.bathroom == 5).count()
+
+    squ_1 = House.query.filter(House.status == 2).filter(House.square < 50).count()
+    squ_2 = House.query.filter(House.status == 2).filter(House.square > 50).filter(House.square < 100).count()
+    squ_3 = House.query.filter(House.status == 2).filter(House.square > 100).filter(House.square < 150).count()
+    squ_4 = House.query.filter(House.status == 2).filter(House.square > 150).filter(House.square < 200).count()
+    squ_5 = House.query.filter(House.status == 2).filter(House.square > 200).count()
+
+    tot_1 = House.query.filter(House.status == 2).filter(House.total_price < 1000000).count()
+    tot_2 = House.query.filter(House.status == 2).filter(House.total_price > 1000000).filter(House.total_price < 3000000).count()
+    tot_3 = House.query.filter(House.status == 2).filter(House.total_price > 3000000).filter(House.total_price < 5000000).count()
+    tot_4 = House.query.filter(House.status == 2).filter(House.total_price > 5000000).filter(House.total_price < 10000000).count()
+    tot_5 = House.query.filter(House.status == 2).filter(House.total_price > 10000000).count()
+
+    ave_1 = House.query.filter(House.status == 2).filter(House.total_price/House.square < 10000).count()
+    ave_2 = House.query.filter(House.status == 2).filter(House.total_price/House.square > 10000).filter(House.total_price/House.square < 30000).count()
+    ave_3 = House.query.filter(House.status == 2).filter(House.total_price/House.square > 30000).filter(House.total_price/House.square < 50000).count()
+    ave_4 = House.query.filter(House.status == 2).filter(House.total_price/House.square > 50000).filter(House.total_price/House.square < 100000).count()
+    ave_5 = House.query.filter(House.status == 2).filter(House.total_price/House.square > 100000).count()
+
+    data_living=[liv_0,liv_1,liv_2,liv_3,liv_4,liv_5]
+    data_drawing=[dra_0,dra_1,dra_2,dra_3,dra_4,dra_5]
+    data_kitchen=[kit_0,kit_1,kit_2,kit_3,kit_4,kit_5]
+    data_bathroom=[bat_0,bat_1,bat_2,bat_3,bat_4,bat_5]
+    square = [squ_1,squ_2,squ_3,squ_4,squ_5]
+    total_price = [tot_1,tot_2,tot_3,tot_4,tot_5]
+    average_price = [ave_1,ave_2,ave_3,ave_4,ave_5]
+
+    return render_template('tips.html', data_living=data_living, data_drawing=data_drawing,data_kitchen=data_kitchen,data_bathroom=data_bathroom,square=square,total_price=total_price,average_price=average_price)
 
 @app.route('/details', methods=['GET','POST'])
 def details():
