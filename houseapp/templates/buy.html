@@ -359,38 +359,23 @@
             <td colspan="2">
                 <table style="width: 100%;margin-top: 20px;">
                     <tr>
+                        {% for h in houses_recent %}
                         <td colspan="2" width="250px" align="center">
-                            <a href="" id="image"><img src="{{ url_for('static', filename='img/house.jpg') }}"
+                            <a href="{{ url_for('details', house_id=h.id )}}" id="image"><img src="{{ url_for('static', filename='img/house4.jpg') }}"
                                     alt="house" width="270px" height="160px" class="img-rounded" /></a>
                         </td>
-                        <td colspan="2" width="250px" align="center">
-                            <a href="" id="image"><img src="{{ url_for('static', filename='img/house1.jpg') }}"
-                                    alt="house" width="270px" height="160px" class="img-rounded" /></a>
-                        </td>
-                        <td colspan="2" width="250px" align="center">
-                            <a href="" id="image"><img src="{{ url_for('static', filename='img/house3.jpg') }}"
-                                    alt="house" width="270px" height="160px" class="img-rounded" /></a>
-                        </td>
-                        <td colspan="2" width="250px" align="center">
-                            <a href="" id="image"><img src="{{ url_for('static', filename='img/house3.jpg') }}"
-                                    alt="house" width="270px" height="160px" class="img-rounded" /></a>
-                        </td>
+                        {% endfor %}
                     </tr>
                     <tr style="font-size: 1.7rem;">
-                        <td colspan="2" style="padding-left: 20px;padding-top: 5px;"><b>Name1</b></td>
-                        <td colspan="2" style="padding-left: 20px;padding-top: 5px;"><b>Name2</b></td>
-                        <td colspan="2" style="padding-left: 20px;padding-top: 5px;"><b>Name3</b></td>
-                        <td colspan="2" style="padding-left: 20px;padding-top: 5px;"><b>Name4</b></td>
+                        {% for h in houses_recent %}
+                        <td colspan="2" style="padding-left: 20px;padding-top: 10px;"><b>House ID: {{ h.id }}</b></td>
+                        {% endfor %}
                     </tr>
                     <tr style="font-size: 1.4rem;margin-left: 5px;padding-right: 5px;">
-                        <td style="padding-left: 20px;">Square:xxxm<sup>2</sup></td>
-                        <td align="center" style="padding-right: 5px;color: red;">Price:$xxx,xxx,xxx</td>
-                        <td style="padding-left: 20px;">Square:xxxm<sup>2</sup></td>
-                        <td align="center" style="padding-right: 5px;color: red;">Price:$xxx,xxx,xxx</td>
-                        <td style="padding-left: 20px;">Square:xxxm<sup>2</sup></td>
-                        <td align="center" style="padding-right: 5px;color: red;">Price:$xxx,xxx,xxx</td>
-                        <td style="padding-left: 20px;">Square:xxxm<sup>2</sup></td>
-                        <td align="center" style="padding-right: 5px;color: red;">Price:$xxx,xxx,xxx</td>
+                        {% for h in houses_recent %}
+                        <td style="padding-left: 20px;padding-top:10px;">Square: {{ h.square }} m<sup>2</sup></td>
+                        <td align="center" style="padding-right: 5px;color: red;padding-top:10px;">Price: ¥ {{ h.total_price }}</td>
+                        {% endfor %}
                     </tr>
                 </table>
             </td>

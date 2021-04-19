@@ -238,6 +238,7 @@ def buy():
     #     db.session.add(house)
     #     db.session.commit()
     houses = House.query.filter(House.status == 2).all()
+    houses_recent = House.query.filter(House.status == 2).order_by(House.id.desc()).limit(4)
     if not session.get("USERNAME") is None:
         username = session.get("USERNAME")
         user_in_db = User.query.filter(User.username == username).first()
@@ -462,7 +463,7 @@ def buy():
 
     houses_checked = paginate.items
 
-    return render_template('buy.html',title='Buy', data=data, user=user_in_db, houses=houses, form=form, checked=checked_data, checked_1=checked_data_1, paginate=paginate, houses_checked=houses_checked)
+    return render_template('buy.html',title='Buy', data=data, user=user_in_db, houses=houses, form=form, checked=checked_data, checked_1=checked_data_1, paginate=paginate, houses_checked=houses_checked,houses_recent=houses_recent)
 
 @app.route('/predict', methods=['GET','POST'])
 def predict():
