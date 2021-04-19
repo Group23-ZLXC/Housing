@@ -65,7 +65,7 @@
                     <div class="poster-item  zturn-item">
                         <p class="houseid">House ID: {{ h.id }}</p>
                         <div class="for_btn">
-                            <img src="{{ url_for('static', filename='img/house4.jpg') }}" width="100%">
+                            <a href="{{ url_for('details', house_id=h.id )}}" id="image"><img src="{{ url_for('static', filename='img/house4.jpg') }}" width="100%"></a>
                         </div>
 
                         <div class="property">
