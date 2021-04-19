@@ -11,6 +11,8 @@ from houseapp.static import data
 @app.route('/homepage', methods=['GET'])
 def homepage():
     owner = User.query
+    houses = House.query.filter(House.status == 2).order_by(House.id.desc()).limit(11)
+    recommendations = Recommendation.query.all()
     # data = []
     # with open(r"houseapp/static/data/total_data.csv", encoding='gbk', errors='ignore') as fin:
     #     is_first_line =True
@@ -50,8 +52,8 @@ def homepage():
     if not session.get("USERNAME") is None:
         username = session.get("USERNAME")
         user_in_db = User.query.filter(User.username == username).first()
-        return render_template('homepage.html', title='Home', user=user_in_db, owner=owner)
-    return render_template('homepage.html', owner=owner)
+        return render_template('homepage.html', title='Home', user=user_in_db, owner=owner,houses=houses,recommendations=recommendations)
+    return render_template('homepage.html', owner=owner,houses=houses,recommendations=recommendations)
 
 @app.route('/tips')
 def tips():
