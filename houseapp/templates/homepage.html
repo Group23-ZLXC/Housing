@@ -20,7 +20,8 @@
             </td>
             {% if user %}
             <td style="width: 70%;" align="right"><a class="link" style="margin-right: 20px"
-                    href="{{ url_for('personal') }}"><span class="glyphicon glyphicon-tasks"></span>&nbsp;{{ user.username }},Hi&nbsp;!</a><a class="link" href="{{ url_for('logout') }}"><span
+                    href="{{ url_for('personal') }}"><span class="glyphicon glyphicon-tasks"></span>&nbsp;{{
+                    user.username }},Hi&nbsp;!</a><a class="link" href="{{ url_for('logout') }}"><span
                         class="glyphicon glyphicon-log-out"></span>&nbsp;Log Out</a></td>
             {% else %}
             <td style="width: 70%;" align="right"><a class="link" style="margin-right: 20px"
@@ -51,7 +52,7 @@
 
 
     </table>
-    <div style="margin-top: 300px;margin-left: 30px;">
+    <div style="margin-top: 200px;margin-left: 30px;">
         <table style="width: 95%;">
             <tr>
                 <td>
@@ -105,13 +106,30 @@
     </div>
     <hr style="margin:50px 30px 50px 30px;">
     <div style="margin:20px 30px 20px 30px">
-        <h1 align="center"><b><span class="glyphicon glyphicon-align-right"></span>&nbsp;&nbsp;Our Data&nbsp;&nbsp;<span class="glyphicon glyphicon-align-left"></span></b></h1>
-        <table style="width: 100%;">
+        <h1 align="center"><b><span class="glyphicon glyphicon-align-right"></span>&nbsp;&nbsp;Our Data&nbsp;&nbsp;<span
+                    class="glyphicon glyphicon-align-left"></span></b></h1>
+        <table style="width: 100%;margin-top: 50px;">
             <tr>
-                <td style="width: 50%;">
+                <td rowspan="4" style="width: 63%;">
                     <div id="years" style="width:100%;height:400px"></div>
                 </td>
-                <td>lalalala</td>
+                <td align="center" style="height: 25%;">
+                    <div id="grad1"><p style="padding-top: 27px;font-size: 20px;color: white;text-shadow: 3px 3px 5px #5984ac;"><b>Total number of houses sold:</b> {{ data|length }}</p></div>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" style="height: 25%;">
+                    <div id="grad1"><p style="padding-top: 27px;font-size: 20px;color: white;text-shadow: 3px 3px 5px #5984ac;"><b>Total turnover:</b> {{ '%.2f' %(price) }} billion</p></div>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" style="height: 25%;">
+                    <div id="grad1"><p style="padding-top: 27px;font-size: 20px;color: white;text-shadow: 3px 3px 5px #5984ac;"><b>Total followers:</b> {{ followers }}</p></div>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" style="height: 25%;">
+                </td>
             </tr>
         </table>
 
@@ -137,7 +155,8 @@
             <tr align="center" style="color: gray;">
                 <td style="padding-top: 20px;padding-left: 5px;padding-right: 5px;">Our information of houses are all in
                     <b>Beijing</b>, providing all kinds of houses for Beijing
-                    users.</td>
+                    users.
+                </td>
                 <td style="padding-top: 20px;padding-left: 5px;padding-right: 5px;">We provide users with attribute
                     filters to facilitate you to find houses
                     according to their needs.</td>
@@ -157,7 +176,7 @@
     body {
         background-repeat: no-repeat;
         background-image: url("../static/img/backg.png");
-        background-size: 100% 35%;
+        background-size: 100% 30%;
     }
 
     .link:link {
@@ -211,9 +230,19 @@
         opacity: 1;
         right: 0;
     }
+
+    #grad1 {
+        height: 80px;
+        width:87%;
+        background-color: red;
+        border: 0px;
+        border-radius: 10px;
+        /* 浏览器不支持时显示 */
+        background-image: linear-gradient(#cadbeb, #7cb5ec);
+    }
 </style>
 <script src="http://cdn.highcharts.com.cn/highcharts/highcharts.js"></script>
-   
+
 <script>
     function buy() {
         window.location.href = "{{ url_for('buy') }}";
@@ -224,16 +253,16 @@
     function personal() {
         window.location.href = "{{ url_for('personal') }}";
     }
-     // 图表配置
-     var years = {
+    // 图表配置
+    var years = {
+        chart: {
+            type: 'area'
+        },
         title: {
             text: 'Number of Houses Sold Per Year'                 // 标题
         },
         xAxis: {
-            categories: ['before 2013','2013','2014','2015','2016','2017','2018','2019','2020','2021'],
-            title: {
-                text: 'year'                // y 轴标题
-            }   // x 轴分类
+            categories: ['before 2013', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020']
         },
         yAxis: {
             title: {
@@ -241,19 +270,23 @@
             }
         },
         plotOptions: {
-            column: {
-                // 关于柱状图数据标签的详细配置参考：https://api.hcharts.cn/highcharts#plotOptions.column.dataLabels
-                dataLabels: {
-                    enabled: true,
-                    color: '#ffffff',
-                    verticalAlign: 'top', // 竖直对齐方式，默认是 center
-                    inside: true
+            area: {
+                fillOpacity: 0.3,
+                marker: {
+                    enabled: false,
+                    symbol: 'circle',
+                    radius: 2,
+                    states: {
+                        hover: {
+                            enabled: true
+                        }
+                    }
                 }
             }
         },
         series: [{                              // 数据列
             name: 'Number of House',                        // 数据列名
-            data: [parseInt('{{ year[0] }}'),parseInt('{{ year[1] }}'),parseInt('{{ year[2] }}'),parseInt('{{ year[3] }}'),parseInt('{{ year[4] }}'),parseInt('{{ year[5] }}'),parseInt('{{ year[6] }}'),parseInt('{{ year[7] }}'),parseInt('{{ year[8] }}'),parseInt('{{ year[9] }}')]            // 数据
+            data: [parseInt('{{ year[0] }}'), parseInt('{{ year[1] }}'), parseInt('{{ year[2] }}'), parseInt('{{ year[3] }}'), parseInt('{{ year[4] }}'), parseInt('{{ year[5] }}'), parseInt('{{ year[8] }}'), parseInt('{{ year[6] }}'), parseInt('{{ year[7] }}')]            // 数据
         }]
     };
     var chart_years = Highcharts.chart('years', years);
