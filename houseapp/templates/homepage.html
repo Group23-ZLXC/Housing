@@ -114,17 +114,26 @@
                     <div id="years" style="width:100%;height:400px"></div>
                 </td>
                 <td align="center" style="height: 25%;">
-                    <div id="grad1"><p style="padding-top: 27px;font-size: 20px;color: white;text-shadow: 3px 3px 5px #5984ac;"><b>Total number of houses sold:</b> {{ data|length }}</p></div>
+                    <div id="grad1">
+                        <p style="padding-top: 27px;font-size: 20px;color: white;text-shadow: 3px 3px 5px #5984ac;">
+                            <b>Total number of houses sold:</b> 318851</p>
+                    </div>
                 </td>
             </tr>
             <tr>
                 <td align="center" style="height: 25%;">
-                    <div id="grad1"><p style="padding-top: 27px;font-size: 20px;color: white;text-shadow: 3px 3px 5px #5984ac;"><b>Total turnover:</b> {{ '%.2f' %(price) }} billion</p></div>
+                    <div id="grad1">
+                        <p style="padding-top: 27px;font-size: 20px;color: white;text-shadow: 3px 3px 5px #5984ac;">
+                            <b>Total turnover:</b> 1112.89 billion</p>
+                    </div>
                 </td>
             </tr>
             <tr>
                 <td align="center" style="height: 25%;">
-                    <div id="grad1"><p style="padding-top: 27px;font-size: 20px;color: white;text-shadow: 3px 3px 5px #5984ac;"><b>Total followers:</b> {{ followers }}</p></div>
+                    <div id="grad1">
+                        <p style="padding-top: 27px;font-size: 20px;color: white;text-shadow: 3px 3px 5px #5984ac;">
+                            <b>Total followers:</b> 5334858</p>
+                    </div>
                 </td>
             </tr>
             <tr>
@@ -233,7 +242,7 @@
 
     #grad1 {
         height: 80px;
-        width:87%;
+        width: 87%;
         background-color: red;
         border: 0px;
         border-radius: 10px;
@@ -269,6 +278,9 @@
                 text: 'Number of Houses'                // y 轴标题
             }
         },
+        credits: {
+            enabled: false
+        },
         plotOptions: {
             area: {
                 fillOpacity: 0.3,
@@ -286,7 +298,7 @@
         },
         series: [{                              // 数据列
             name: 'Number of House',                        // 数据列名
-            data: [parseInt('{{ year[0] }}'), parseInt('{{ year[1] }}'), parseInt('{{ year[2] }}'), parseInt('{{ year[3] }}'), parseInt('{{ year[4] }}'), parseInt('{{ year[5] }}'), parseInt('{{ year[8] }}'), parseInt('{{ year[6] }}'), parseInt('{{ year[7] }}')]            // 数据
+            data: [6,189,6010,37221,38751,32602,43217,69805,90829]
         }]
     };
     var chart_years = Highcharts.chart('years', years);
