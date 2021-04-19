@@ -11,47 +11,47 @@ from houseapp.static import data
 @app.route('/homepage', methods=['GET'])
 def homepage():
     owner = User.query
-    data = []
-    with open(r"houseapp/static/data/total_data.csv", encoding='gbk', errors='ignore') as fin:
-        is_first_line =True
-        for f in fin.readlines():
-            if is_first_line:
-                is_first_line = False
-                continue
-            f = f[:-1]
-            a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z = f.split(",")
-            data.append((a,b,c,d,e,f[0:4],g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z))
-    year=[0,0,0,0,0,0,0,0,0,0]
-    price=0
-    followers=0
-    for d in data:
-        if d[5] == "2010":
-            year[1]+=1
-        if d[5] == "2011":
-            year[2]+=1
-        if d[5] == "2012":
-            year[3]+=1
-        if d[5] == "2013":
-            year[4]+=1
-        if d[5] == "2014":
-            year[5]+=1
-        if d[5] == "2015":
-            year[6]+=1
-        if d[5] == "2016":
-            year[7]+=1
-        if d[5] == "2017":
-            year[8]+=1
-        if d[5] == "2018":
-            year[9]+=1
-        if d[5] == "2002" or d[5] == "2003" or d[5] == "2008" or d[5] == "2009":
-            year[0]+=1
-        price+=float(d[8])/100000
-        followers+=int(d[7])
+    # data = []
+    # with open(r"houseapp/static/data/total_data.csv", encoding='gbk', errors='ignore') as fin:
+    #     is_first_line =True
+    #     for f in fin.readlines():
+    #         if is_first_line:
+    #             is_first_line = False
+    #             continue
+    #         f = f[:-1]
+    #         a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z = f.split(",")
+    #         data.append((a,b,c,d,e,f[0:4],g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z))
+    # year=[0,0,0,0,0,0,0,0,0,0]
+    # price=0
+    # followers=0
+    # for d in data:
+    #     if d[5] == "2010":
+    #         year[1]+=1
+    #     if d[5] == "2011":
+    #         year[2]+=1
+    #     if d[5] == "2012":
+    #         year[3]+=1
+    #     if d[5] == "2013":
+    #         year[4]+=1
+    #     if d[5] == "2014":
+    #         year[5]+=1
+    #     if d[5] == "2015":
+    #         year[6]+=1
+    #     if d[5] == "2016":
+    #         year[7]+=1
+    #     if d[5] == "2017":
+    #         year[8]+=1
+    #     if d[5] == "2018":
+    #         year[9]+=1
+    #     if d[5] == "2002" or d[5] == "2003" or d[5] == "2008" or d[5] == "2009":
+    #         year[0]+=1
+    #     price+=float(d[8])/100000
+    #     followers+=int(d[7])
     if not session.get("USERNAME") is None:
         username = session.get("USERNAME")
         user_in_db = User.query.filter(User.username == username).first()
-        return render_template('homepage.html', title='Home', user=user_in_db, owner=owner, data=data,year=year,price=price,followers=followers)
-    return render_template('homepage.html', owner=owner, data=data,year=year,price=price,followers=followers)
+        return render_template('homepage.html', title='Home', user=user_in_db, owner=owner)
+    return render_template('homepage.html', owner=owner)
 
 @app.route('/tips')
 def tips():
