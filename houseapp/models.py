@@ -62,8 +62,8 @@ class House(db.Model):
     floor = db.Column(db.Integer)
     building_type = db.Column(db.Integer)
     renovation_con = db.Column(db.Integer)
-    elevator = db.Column(db.Boolean)
-    subway = db.Column(db.Boolean)
+    elevator = db.Column(db.Integer)
+    subway = db.Column(db.Integer)
     district = db.Column(db.Integer)
     status = db.Column(db.Integer) #0:pending; 1: finshed; 2: uploaded
     date = db.Column(db.Date, index=True, default = datetime.now)

@@ -38,7 +38,7 @@
                         </div>
                         {% for error in form.square.errors %}
                         <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}  
+                        {% endfor %}
                     </p>
                 </td>
                 <td style="width: 40%;" align="center">
@@ -47,11 +47,11 @@
                             <span class="input-group-addon">*Floor</span>
                             {{ form.floor(class_="form-control") }}
                         </div>
-                
+
                         {% for error in form.floor.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                         {% endfor %}
-                
+
                     </p>
                 </td>
             </tr>
@@ -62,11 +62,11 @@
                             <span class="input-group-addon">*Living Room</span>
                             {{ form.living_room(class_="form-control") }}
                         </div>
-                
+
                         {% for error in form.living_room.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                         {% endfor %}
-                
+
                     </p>
                 </td>
                 <td style="width: 40%;" align="center">
@@ -75,11 +75,11 @@
                             <span class="input-group-addon">*Drawing Room</span>
                             {{ form.drawing_room(class_="form-control") }}
                         </div>
-                
+
                         {% for error in form.drawing_room.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                         {% endfor %}
-                
+
                     </p>
                 </td>
             </tr>
@@ -90,11 +90,11 @@
                             <span class="input-group-addon">*Kitchen</span>
                             {{ form.kitchen(class_="form-control") }}
                         </div>
-                
+
                         {% for error in form.kitchen.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                         {% endfor %}
-                
+
                     </p>
                 </td>
                 <td style="width: 40%;" align="center">
@@ -103,11 +103,11 @@
                             <span class="input-group-addon">*Bathroom</span>
                             {{ form.bathroom(class_="form-control") }}
                         </div>
-                
+
                         {% for error in form.bathroom.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                         {% endfor %}
-                
+
                     </p>
                 </td>
             </tr>
@@ -134,21 +134,21 @@
                             <span class="input-group-addon">*District</span>
                             {{ form.district(class_="form-control") }}
                         </div>
-                
+
                         {% for error in form.district.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                         {% endfor %}
-                
+
                     </p>
                 </td>
             </tr>
             <tr>
                 <td align="center" style="padding-top: 20px"><label class="checkbox-inline">
-                    {{ form.elevator() }} Elevator
+                    {{ form.elevator.label }}{{ form.elevator() }}
                     </label>
                 </td>
                 <td align="center" style="padding-top: 20px"><label class="checkbox-inline">
-                    {{ form.subway() }} Subway
+                    {{ form.subway.label }} {{ form.subway() }}
                     </label></td>
             </tr>
         </table>

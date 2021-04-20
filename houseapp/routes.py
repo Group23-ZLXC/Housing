@@ -1,10 +1,10 @@
-from houseapp import app, db
+from houseapp import app, db, model
 from flask import render_template, flash, redirect, url_for, session, request, jsonify
-from houseapp.forms import CommentForm, LoginForm, SignupForm, PredictForm, BuyForm, RecommendationForm, EditRecomForm, ReplyForm
+from houseapp.forms import CommentForm, LoginForm, SignupForm, PredictForm, BuyForm, RecommendationForm, EditRecomForm, ReplyForm, EditHouseForm
 from werkzeug.security import generate_password_hash, check_password_hash
 from houseapp.models import User, House, Comment, Answer, Check, Recommendation, Favorite, Checked
 from houseapp.static import data
-
+import numpy as np
 
 
 @app.route('/')
@@ -181,7 +181,8 @@ def upload_house():
     house_in_db = House.query.filter(House.id == house_id).first()
     house_in_db.status = 2
     db.session.commit()
-    return redirect(url_for('buy'))
+    stored_recomm = Recommendation.query.filter(Recommendation.house_id == house_in_db.id).first()
+    return redirect(url_for('details', house_id=house_id, stored_recomm=stored_recomm))
 
 @app.route('/add_to_favorite')
 def add_to_favorite():
@@ -483,7 +484,18 @@ def predict():
                 district = form.district.data, status = 0)
             db.session.add(house)
             db.session.commit()
-            return redirect(url_for('personal'))
+            # call the ML model
+            features = [house.lng, house.lat, house.square, house.living_room, house.drawing_room, house.kitchen, house.bathroom,
+                house.building_type, house.renovation_con, house.elevator, house.subway, house.district]
+            final_features = [np.array(features)]
+            prediction = model.predict(final_features)
+            output = round(prediction[0], 4)
+            house.total_price = output*10000
+            house.status = 1
+            db.session.commit()
+            #return redirect(url_for('personal'))
+            return redirect(url_for('edit_house', house_id=house.id))
+
         return render_template('predict.html', title='Predict', user=user_in_db, form=form)
     return render_template('predict.html', title='Predict', form=form)
 
@@ -494,6 +506,38 @@ def delete_house():
     db.session.delete(house_in_db)
     db.session.commit()
     return redirect(url_for('personal'))
+
+
+@app.route('/edit_house', methods=['GET','POST'])
+def edit_house():
+    if not session.get("USERNAME") is None:
+        username = session.get("USERNAME")
+        user_in_db = User.query.filter(User.username == username).first()
+    house_id = request.args.get('house_id')
+    house_in_db = House.query.filter(House.id == house_id).first()
+    form = EditHouseForm()
+    recommendation = Recommendation.query.filter(Recommendation.house_id == house_in_db.id).first()
+    if recommendation:
+        if form.validate_on_submit():
+            house_in_db.total_price = form.price.data
+            recommendation.reason = form.reason.data
+            db.session.commit()
+            return redirect(url_for('details', house_id=house_in_db.id, stored_recomm=recommendation, user=user_in_db))
+        else:
+            form.price.data = house_in_db.total_price
+            form.reason.data = recommendation.reason
+    else:
+        if form.validate_on_submit():
+            house_in_db.total_price = form.price.data
+            recommendation = Recommendation(reason = form.reason.data, house_id = house_in_db.id, user_id = house_in_db.user_id)
+            db.session.add(recommendation)
+            db.session.commit()
+            return redirect(url_for('details', house_id=house_in_db.id, stored_recomm=recommendation, user=user_in_db))
+
+        else:
+            form.price.data = house_in_db.total_price
+    return render_template('edit_house.html', title='Edit', form=form, house=house_in_db, user=user_in_db)
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

@@ -35,8 +35,9 @@ class PredictForm(FlaskForm):
         (1,"Tower"), (2, "Bungalow"), (3, "Combination of plate and tower"), (4, "Plate")])
     renovation_con = SelectField('Renovation Condition', choices = [
         (1, 'Other'), (2, 'Rough'),(3, 'Simplicity'), (4, 'Hardcover')])
-    elevator = BooleanField('*Elevator')
-    subway = BooleanField('*Subway')
+    elevator = RadioField('*Elevator', choices=[(0,'Not Available'),(1,'Available')], validators=[DataRequired()])
+    subway = RadioField('*Subway', choices=[(0,'Not Available'),(1,'Available')], validators=[DataRequired()])
+
     district = SelectField('*District', choices = [(1, 'DongCheng'), (2, 'FengTai'),
         (3, 'TongZhou'), (4, 'DaXing'), (5, 'FangShan'), (6, 'ChangPing'), (7, 'ChaoYang'),
         (8, 'HaiDian'), (9, 'ShiJingShan'), (10, "XiCheng"), (11, 'PingGu'), (12, 'MenTouGou'),
@@ -65,6 +66,11 @@ class EditRecomForm(FlaskForm):
     reason = TextAreaField('Recommendation', validators=[DataRequired()])
     edit = SubmitField('Edit')
     #delete = SubmitField('Delete')
+
+class EditHouseForm(FlaskForm):
+    price = StringField('Total Price', validators=[DataRequired()])
+    reason = TextAreaField('Recommendation', validators=[DataRequired()])
+    submit = SubmitField('Save')
 
 # render_kw: https://www.cnblogs.com/FRESHMANS/p/8529992.html
 class SignupForm(FlaskForm):

@@ -24,58 +24,7 @@
         </td>
       </tr>
     </table>
-    <div class="panel panel-warning" style="margin-top:10px">
-      <div class="panel-heading">
-        <h3 class="panel-title"><b>In the Processing</b></h3>
-      </div>
-      <div class="panel-body">
-        <table width="100%" class="table table-hover">
-          <tr>
-            <th style="padding-left: 5px;width:25%">House ID</th>
-            <th style="padding-left: 5px;width:25%">Date</th>
-            <th style="padding-left: 5px;width:25%">View</th>
-            <th style="padding-left: 5px;width:25%">Cancel</th>
-          </tr>
-          {% if houses %}
-          {% for house in houses %}
-          {% if house.status == 0 %}
-          <tr>
-            <td style="padding-left: 5px;"> {{ house.id }}</td>
-            <td style="padding-left: 5px;"> {{ house.date }}</td>
-            <td style="padding-left: 5px;"><a href="{{ url_for('details',house_id=house.id) }}"><button type="button"
-                  name="button" class="btn btn-warning btn-xs">View</button></a></td>
-            <td style="padding-left: 5px;"><a href="{{ url_for('delete_house',house_id=house.id) }}"><button class="btn btn-danger btn-xs" type="button" name="button" data-toggle="modal" data-target="#Cancel">Cancel</button></a>
-            </td>
-          </tr>
-          <!-- <div class="modal fade" id="Cancel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                    &times;
-                  </button>
-                  <h4 class="modal-title" id="myModalLabel">
-                    Are you sure to delete?
-                  </h4>
-                </div>
-                <div class="modal-body">
-                  You will delete id:&nbsp;<b>{{ house.id }}</b>.
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">No
-                  </button>
-                  <a href="{{ url_for('delete_house',house_id=house.id) }}"><button type="button" class="btn btn-success btn-sm">Yes
-                  </button></a>
-                </div>
-              </div>
-            </div>
-          </div> -->
-          {% endif %}
-          {% endfor %}
-          {% endif %}
-        </table>
-      </div>
-    </div>
+
     <div class="panel panel-success">
       <div class="panel-heading">
         <h3 class="panel-title"><b>Completed</b></h3>
@@ -85,7 +34,8 @@
           <tr>
             <th style="padding-left: 5px;width:25%"> House ID</th>
             <th style="padding-left: 5px;width:25%"> Date </th>
-            <th style="padding-left: 5px;width:25%"> View </th>
+            <th style="padding-left: 5px;width:25%"> Preview </th>
+            <th style="padding-left: 5px;width:25%"> Edit </th>
             <th style="padding-left: 5px;width:25%"> Upload</th>
           </tr>
 
@@ -96,7 +46,9 @@
             <td style="padding-left: 5px;"> {{ house.id }}</td>
             <td style="padding-left: 5px;"> {{ house.date }}</td>
             <td style="padding-left: 5px;"><a href="{{ url_for('details',house_id=house.id) }}"><button type="button"
-                  name="button" class="btn btn-success btn-xs">View</button></a></td>
+                  name="button" class="btn btn-success btn-xs">Preview</button></a></td>
+            <td style="padding-left: 5px;"><a href="{{ url_for('edit_house',house_id=house.id) }}"><button type="button"
+                  name="button" class="btn btn-success btn-xs">Edit</button></a></td>
             <td style="padding-left: 5px;"><a href="{{ url_for('upload_house',house_id1=house.id) }}"><button
                   class="btn btn-success btn-xs" type="button" name="button" data-toggle="modal" data-target="#Upload">Upload</button></a></td>
           </tr>
@@ -129,6 +81,7 @@
         </table>
       </div>
     </div>
+
     <div class="panel panel-info">
       <div class="panel-heading">
         <h3 class="panel-title"><b>Uploaded</b></h3>
@@ -138,7 +91,8 @@
           <tr>
             <th style="padding-left: 5px;width:25%"> House ID</th>
             <th style="padding-left: 5px;width:25%"> Date </th>
-            <th style="padding-left: 5px;width:25%"> View </th>
+            <th style="padding-left: 5px;width:25%"> Preview </th>
+            <th style="padding-left: 5px;width:25%"> Edit </th>
             <th style="padding-left: 5px;width:25%"> Delete</th>
           </tr>
 
@@ -149,8 +103,10 @@
             <td style="padding-left: 5px;"> {{ house.id }}</td>
             <td style="padding-left: 5px;"> {{ house.date }}</td>
             <td style="padding-left: 5px;"><a href="{{ url_for('details',house_id=house.id) }}"><button
-                  class="btn btn-info btn-xs" type="button" name="button">View</button></a>
+                  class="btn btn-info btn-xs" type="button" name="button">Preview</button></a>
             </td>
+            <td style="padding-left: 5px;"><a href="{{ url_for('edit_house',house_id=house.id) }}"><button type="button"
+                  name="button" class="btn btn-success btn-xs">Edit</button></a></td>
             <td style="padding-left: 5px;"><a href="{{ url_for('delete_house',house_id=house.id) }}"><button
                   class="btn btn-danger btn-xs" type="button" name="button" data-toggle="modal" data-target="#Delete">Delete</button></a></td>
           </tr>

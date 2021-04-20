@@ -71,7 +71,18 @@
           <a href="{{ url_for('upload_house',house_id1=house.id) }}"><button class="btn btn-defult" type="button"
               name="button"><span class="glyphicon glyphicon-cloud-upload" style="padding-top: 3px;"></span>&nbsp;Upload</button></a>
         </td>
+        <td style="vertical-align: middle;" align="right">
+          <a href="{{ url_for('edit_house',house_id=house.id) }}"><button class="btn btn-defult" type="button"
+              name="button"><span class="glyphicon glyphicon-cloud-upload" style="padding-top: 3px;"></span>&nbsp;Edit</button></a>
+        </td>
         {% endif %}
+        {% elif house.status == 2 %}
+          {% if house.user_id == user.id %}
+            <td style="vertical-align: middle;" align="right">
+              <a href="{{ url_for('edit_house',house_id=house.id) }}"><button class="btn btn-defult" type="button"
+                name="button"><span class="glyphicon glyphicon-cloud-upload" style="padding-top: 3px;"></span>&nbsp;Edit</button></a>
+            </td>
+          {% endif %}
         {% endif %}
         {% if not house.user_id == user.id %}
         {% if favorite %}
@@ -265,52 +276,6 @@
       </div>
     </div>
 
-    {% if user.id == house.user_id %}
-    <div class="panel-group" id="accordion">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h4 class="panel-title">
-            <a data-toggle="collapse" data-parent="#accordion" href="#recommendation">
-              <b style="font-size:3rem;">Recommendation</b>
-            </a>
-          </h4>
-        </div>
-        <div id="recommendation" class="panel-collapse collapse in">
-          <div class="panel-body">
-            {% if not stored_recomm %}
-              <p style="margin: 10px 0 0 15px;">Would you like to write someting to make your house more attractive and
-              competitive?</p>
-              <div class="panel-body">
-              <form action="" method="post" novalidate>
-                {{ form.hidden_tag() }}
-                <!-- <p><b>{{ form1.reason.label }}</b></p> -->
-                <p>{{ form1.reason(rows=8, cols=80, class="form-control") }}</p>
-                {% for error in form1.reason.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-                {% endfor %}
-                <p align="right">{{ form1.submit(class="btn btn-defult") }}
-                <!-- <a href="url_for(delete_recomm, recom_id = stored_recomm.id)"<button type="button" name="button">Delete</button></a> -->
-                </p>
-              </div>
-            {% else %}
-            <div class="panel-body">
-              <form action="" method="post" novalidate>
-                {{ form2.hidden_tag() }}
-                <!-- <p><b>{{ form1.reason.label }}</b></p> -->
-                <p>{{ form2.reason(rows=4, cols=80, class="form-control") }}</p>
-                {% for error in form1.reason.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-                {% endfor %}
-                <p align="right">{{ form2.edit(class="btn btn-defult") }}
-                <!-- <a href="url_for(delete_recomm, recom_id = stored_recomm.id)"<button type="button" name="button">Delete</button></a> -->
-                </p>
-            </div>
-            {% endif %}
-          </div>
-        </div>
-      </div>
-    </div>
-    {% else %}
             <div class="panel-group" id="accordion">
               <div class="panel panel-default">
                 <div class="panel-heading">
@@ -323,9 +288,9 @@
                 <div id="recommendation" class="panel-collapse collapse in">
                   {% if stored_recomm %}
                   <div class="panel-body">
-                   
+
                       <p style="margin-left: 15px;">{{ stored_recomm.reason }}</p>
-                    
+
                   </div>
                   {% else %}
                   <div class="panel-body">
@@ -344,11 +309,11 @@
                       </tr>
                     </table>
                   </div>
-                 
+
                 </div>
               </div>
             </div>
-             {% endif %}
+
             {% if house.status == 2 %}
             <div class="panel-group" id="accordion" style="margin-top: 20px;margin-bottom: 50px;">
               <div class="panel panel-default">
