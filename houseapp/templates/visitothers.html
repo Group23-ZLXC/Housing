@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- user_id != visitor_id -->
+<br><br>
+<h1> {{ user.username }}</h1>
+<hr>
+
+<h2>Houses</h2>
+  {% if user.house %}
+    <ul>
+    {% for h in user.house %}
+      {% if h.status==2 %}
+        <li><a href="{{ url_for('details', house_id=h.id) }} ">{{ h.id }}</a></li>
+      {% endif %}
+    {% endfor %}
+    </ul>
+  {% else %}
+    <p>It seems that he/she has not uploaded any house :( </p>
+  {% endif %}
+
+<h2>Favorites</h2>
+  {% if user.favorite %}
+    <ul>
+    {% for f in user.favorite %}
+      <li><a href="{{ url_for('details', house_id=f.house_id) }} ">{{ f.house_id }}</a></li>
+    {% endfor %}
+    </ul>
+  {% else %}
+    <p>It seems that he/she does not have favorite houses :( </p>
+  {% endif %}
+
+<h2>Comments</h2>
+  {% if user.comment %}
+    <ul>
+    {% for c in user.comment %}
+      <li><a href="{{ url_for('details', house_id=c.house_id)}}">{{ c }}</a></li>
+    {% endfor %}
+    </ul>
+  {% else %}
+    <p>It seems that he/she does not reply anyone :(</p>
+  {% endif %}
+
+{% endblock %}

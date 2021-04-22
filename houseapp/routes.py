@@ -1,10 +1,11 @@
-from houseapp import app, db, model
+from houseapp import app, db, model, Config
 from flask import render_template, flash, redirect, url_for, session, request, jsonify
 from houseapp.forms import CommentForm, LoginForm, SignupForm, PredictForm, BuyForm, RecommendationForm, EditRecomForm, ReplyForm, EditHouseForm
 from werkzeug.security import generate_password_hash, check_password_hash
-from houseapp.models import User, House, Comment, Answer, Check, Recommendation, Favorite, Checked
+from houseapp.models import User, House, Comment, Answer, Check, Recommendation, Favorite, Checked, Image
 from houseapp.static import data
 import numpy as np
+import datetime
 
 
 @app.route('/')
@@ -118,6 +119,11 @@ def details():
     reply = request.args.get('reply')
     house = House.query.filter(House.id == house_id).first()
     owner = User.query.filter(User.id == house.user_id).first()
+    stored_images = Image.query.filter(Image.house_id == house.id).all()
+    image_names = []
+    if stored_images:
+        for i in stored_images:
+            image_names.append(i.filename)
     comments = Comment.query.filter(Comment.house_id == house.id).all()
     answers = {}
     for c in comments:
@@ -142,7 +148,7 @@ def details():
             else:
                 # form3.comment.data = "Reply to "+ comment_id +" : "
                 return render_template('details.html', title='Details', form=form, form1=form1, user=user_in_db, house = house, owner=owner, comments=comments,
-                    stored_recomm=stored_recomm, favorite=favorite, form2=form2,form3=form3, reply=reply, answers=answers)
+                    stored_recomm=stored_recomm, favorite=favorite, form2=form2,form3=form3, reply=reply, answers=answers, stored_images=stored_images, image_names=image_names)
         else:
             if form.validate_on_submit():
                 comment = Comment(body=form.comment.data, user_id = user_in_db.id, house_id = house.id)
@@ -159,7 +165,7 @@ def details():
                 form2.reason.data = stored_recomm.reason
                 return render_template('details.html', title='Details', form=form, form1=form1, user=user_in_db,
                     house = house, owner=owner, comments=comments, stored_recomm=stored_recomm, favorite=favorite,
-                    form2=form2,form3=form3, reply=reply, answers=answers)
+                    form2=form2,form3=form3, reply=reply, answers=answers, stored_images=stored_images, image_names=image_names)
 
         else:
             if form1.validate_on_submit():
@@ -169,10 +175,11 @@ def details():
                 return redirect(url_for('details', house_id=house.id))
             else:
                 return render_template('details.html', title='Details', form=form, form1=form1, user=user_in_db, house = house,
-                    owner=owner, comments=comments, favorite=favorite, form3=form3, reply=reply, answers=answers)
+                    owner=owner, comments=comments, favorite=favorite, form3=form3, reply=reply, answers=answers,
+                    stored_images=stored_images, image_names=image_names)
 
     return render_template('details.html', title='Details', form=form, form1=form1, house=house, owner=owner, commennts=comments,
-        stored_recomm=stored_recomm,form3=form3, reply=reply, answers=answers)
+        stored_recomm=stored_recomm,form3=form3, reply=reply, answers=answers, stored_images=stored_images, image_names=image_names)
 
 
 @app.route('/upload_house')
@@ -499,6 +506,10 @@ def predict():
         return render_template('predict.html', title='Predict', user=user_in_db, form=form)
     return render_template('predict.html', title='Predict', form=form)
 
+@app.route('/map')
+def map():
+    return render_template('map.html', title='Lng and Lat')
+
 @app.route('/delete_house')
 def delete_house():
     house_id = request.args.get('house_id')
@@ -516,13 +527,23 @@ def edit_house():
     house_id = request.args.get('house_id')
     house_in_db = House.query.filter(House.id == house_id).first()
     form = EditHouseForm()
+    path = Config.IMG_DIR
+    stored_images = Image.query.filter(Image.house_id == house_in_db.id).all()
     recommendation = Recommendation.query.filter(Recommendation.house_id == house_in_db.id).first()
     if recommendation:
         if form.validate_on_submit():
             house_in_db.total_price = form.price.data
             recommendation.reason = form.reason.data
+            if form.img.data:
+                nowTime = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+                filename = form.img.data.filename
+                file_path = path+nowTime+filename
+                form.img.data.save(file_path)
+                stored_path = 'static/img/'+nowTime+filename
+                image = Image(filename = filename, filepath=stored_path, house_id=house_in_db.id)
+                db.session.add(image)
             db.session.commit()
-            return redirect(url_for('details', house_id=house_in_db.id, stored_recomm=recommendation, user=user_in_db))
+            return redirect(url_for('details', house_id=house_in_db.id, stored_recomm=recommendation, user=user_in_db, stored_images=stored_images))
         else:
             form.price.data = house_in_db.total_price
             form.reason.data = recommendation.reason
@@ -531,13 +552,35 @@ def edit_house():
             house_in_db.total_price = form.price.data
             recommendation = Recommendation(reason = form.reason.data, house_id = house_in_db.id, user_id = house_in_db.user_id)
             db.session.add(recommendation)
+            if form.img.data:
+                nowTime = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+                filename = form.img.data.filename
+                file_path = path+nowTime+filename
+                form.img.data.save(file_path)
+                stored_path = 'static/img/'+nowTime+filename
+                image = Image(filename = filename, filepath=stored_path, house_id=house_in_db.id)
+                db.session.add(image)
             db.session.commit()
-            return redirect(url_for('details', house_id=house_in_db.id, stored_recomm=recommendation, user=user_in_db))
-
+            return redirect(url_for('details', house_id=house_in_db.id, stored_recomm=recommendation, user=user_in_db, stored_images=stored_images))
         else:
             form.price.data = house_in_db.total_price
-    return render_template('edit_house.html', title='Edit', form=form, house=house_in_db, user=user_in_db)
+    return render_template('edit_house.html', title='Edit', form=form, house=house_in_db, user=user_in_db, stored_images=stored_images)
 
+@app.route('/delete_img')
+def delete_img():
+    img_id = request.args.get('img_id')
+    img = Image.query.filter(Image.id == img_id).first()
+    house_id = img.house_id
+    db.session.delete(img)
+    db.session.commit()
+    return redirect(url_for('details', house_id=house_id))
+
+@app.route('/visitothers')
+def visitothers():
+    user_id = request.args.get('user_id')
+    user = User.query.filter(User.id == user_id).first()
+    #visitor_id = request.args.get('visitor_id')
+    return render_template('visitothers.html', user=user, title=user.username)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

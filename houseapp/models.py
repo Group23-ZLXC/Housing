@@ -69,12 +69,13 @@ class House(db.Model):
     date = db.Column(db.Date, index=True, default = datetime.now)
     comment = db.relationship('Comment', backref='house', lazy='dynamic')
     recommendation = db.relationship('Recommendation', backref='house', lazy='dynamic')
-    favorite = db.relationship('Favorite', backref='house', lazy='dynamic')
+    image = db.relationship('Image', backref='house', lazy='dynamic')
 
 class Favorite(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     house_id = db.Column(db.Integer, db.ForeignKey('house.id'))
+    #private = db.Column(db.Integer)
 
 class Recommendation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -82,6 +83,11 @@ class Recommendation(db.Model):
     house_id = db.Column(db.Integer, db.ForeignKey('house.id'))
     reason = db.Column(db.String)
 
+class Image(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    filename = db.Column(db.String)
+    filepath = db.Column(db.String)
+    house_id = db.Column(db.Integer, db.ForeignKey('house.id'))
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -92,7 +98,7 @@ class Comment(db.Model):
     house_id = db.Column(db.Integer, db.ForeignKey('house.id'))
 
     def __repr__(self):
-        return '<Question asked at {} by {}: {} >'.format(str(self.timestamp)[0:10],self.author.username,self.body)
+        return '<At {} : {} >'.format(str(self.timestamp)[0:10],self.body)
 
 class Answer(db.Model):
     id = db.Column(db.Integer, primary_key=True)

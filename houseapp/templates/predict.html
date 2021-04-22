@@ -2,6 +2,10 @@
 
 {% block content %}
 
+<!-- <script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBeDG1YcS36R7ZjdChq-OuXMj6S7rkxCNI&callback=initMap">
+</script> -->
+
 
 <div style="margin-top: 60px; margin-left: 300px;margin-right:300px;margin-bottom: 60px; background-color: rgb(255, 255, 255);opacity: 0.9;padding: 10px 0 10px 0;border-radius: 20px;box-shadow: 5px 5px 5px rgb(172, 172, 172);" align="center">
     <h2><span class="glyphicon glyphicon-leaf"></span>&nbsp;&nbsp;<b>Predict Your House Price</b>&nbsp;&nbsp;<span
@@ -9,8 +13,11 @@
 
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
+
+
         <table style="width: 90%;">
             <tr>
+                <td>Do not know? <a href="{{ url_for('map') }}">Go and see it!</a></td>
                 <td style="width: 40%;" align="center">
                     <p>
                     <div class="input-group" style="width: 90%; margin-top: 20px;">
@@ -179,6 +186,8 @@
         background-image: url("../static/img/predict.png");
         background-size: 100% 100%;
     }
+
 </style>
+
 {% include 'footer.html' %}
 {% endblock %}

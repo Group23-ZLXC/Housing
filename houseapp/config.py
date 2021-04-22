@@ -8,3 +8,5 @@ class Config(object):
         'sqlite:///' + os.path.join(basedir, 'houseapp.db')
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+    IMG_DIR = os.path.join(basedir, 'static/img/')

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <div style=" margin-top: 100px; margin-left: 50px;">
-<form action="" method="post" novalidate>
+<form action="" method="post" enctype="multipart/form-data" novalidate>
   {{ form.hidden_tag() }}
 
     <table class="table table-condensed" style=" margin-left: 50px;margin-right: 100px; width: 92%;">
@@ -119,6 +119,23 @@
                 </tr>
 
               </table>
+              <!-- images -->
+              <div>
+                <!-- display  -->
+                {% if stored_images %}
+                  <ul>
+                  {% for i in stored_images %}
+                    <li><p>{{ i.filename }} successfully upload!
+                      <img src="{{ i.filepath }}" alt="{{ i.filepath }}" width="10%" class="img-rounded">
+                      <a href="{{ url_for('delete_img', img_id=i.id) }}"><button type="button" name="button">Delete</button></a>
+                    </p></li>
+                  {% endfor %}
+                  </ul>
+                {% endif %}
+                <p>{{ form.img.label }}</p>
+                <p>{{ form.img() }}</p>
+              </div>
+
               <div class="panel-group" id="accordion">
                 <div class="panel panel-default">
                   <div class="panel-heading">

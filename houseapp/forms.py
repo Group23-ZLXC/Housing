@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, IntegerField, RadioField, SelectField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, IntegerField, RadioField, SelectField, FileField
 from wtforms.validators import DataRequired
+from flask_wtf.file import FileField, FileRequired, FileAllowed
 
 class BuyForm(FlaskForm):
     price = SelectField('Price', choices = [(0,'All Price'),(1,'Below ¥1M'),(2,'¥1M - ¥3M'),(3,'¥3M - ¥5M'),(4,'¥5M - ¥10M'),(5,'Over ¥10M')])
@@ -70,7 +71,10 @@ class EditRecomForm(FlaskForm):
 class EditHouseForm(FlaskForm):
     price = StringField('Total Price', validators=[DataRequired()])
     reason = TextAreaField('Recommendation', validators=[DataRequired()])
+    img = FileField('Image')
+    # , validators=[FileAllowed(['jpg', 'png'], 'only .jpg or .png are accepted')]
     submit = SubmitField('Save')
+
 
 # render_kw: https://www.cnblogs.com/FRESHMANS/p/8529992.html
 class SignupForm(FlaskForm):

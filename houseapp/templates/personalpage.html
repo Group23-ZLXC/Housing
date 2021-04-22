@@ -152,15 +152,13 @@
     <table width="100%" class="table table-hover">
       <tr>
         <th style="padding-left: 5px;width:25%"> House ID </th>
-        <th style="padding-left: 5px;width:25%"> Date </th>
         <th style="padding-left: 5px;width:25%"> View </th>
         <th style="padding-left: 5px;width:25%"> Remove</th>
       </tr>
       {% for f in favorites %}
       <tr>
         <td style="padding-left: 5px;">{{ f.house_id }}</td>
-        <td style="padding-left: 5px;"> {{ f.house.date }}</td>
-        <td style="padding-left: 5px;"><a href="{{ url_for('details',house_id=f.house.id) }}"><button
+        <td style="padding-left: 5px;"><a href="{{ url_for('details',house_id=f.house_id) }}"><button
           class="btn btn-primary btn-xs" type="button" name="button">View</button></a>
         </td>
         <td><a href="{{ url_for('remove_favorite',house_id2=f.house_id, user_id2=user.id) }}"><button class="btn btn-danger btn-xs" type="button"
