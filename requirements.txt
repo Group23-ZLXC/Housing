@@ -3,3 +3,4 @@ WTForms==2.3.3
 Flask_WTF==0.14.3
 Flask==1.1.2
 Flask_SQLAlchemy==2.4.4
+sklearn==0.0
