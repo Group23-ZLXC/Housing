@@ -633,7 +633,14 @@ def personal():
         user_in_db = User.query.filter(User.username == username).first()
         houses = House.query.filter(House.user_id == user_in_db.id).all()
         favorites = Favorite.query.filter(Favorite.user_id == user_in_db.id).all()
-        return render_template('personalpage.html', title="Personal Page", user=user_in_db, houses = houses, favorites=favorites)
+        completed = 0
+        uploaded = 0
+        for h in houses:
+            if h.status == 1:
+                completed += 1
+            if h.status == 2:
+                uploaded += 1
+        return render_template('personalpage.html', title="Personal Page", user=user_in_db, houses = houses, favorites=favorites,completed=completed,uploaded=uploaded)
     else:
         flash("User needs to login first")
         return redirect(url_for('login'))

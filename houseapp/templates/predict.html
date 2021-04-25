@@ -17,26 +17,26 @@
 
         <table style="width: 90%;">
             <tr>
-                <td>Do not know? <a href="{{ url_for('map') }}">Go and see it!</a></td>
-                <td style="width: 40%;" align="center">
+                <td style="width: 25%;" align="center">
                     <p>
-                    <div class="input-group" style="width: 90%; margin-top: 20px;">
+                    <div class="input-group" style="width: 80%; margin-top: 20px;">
                         <span class="input-group-addon">Lng</span>
                         {{ form.lng(class_="form-control", placeholder="lng") }}
                     </div>
                     </p>
                 </td>
-                <td style="width: 40%;" align="center">
+                <td style="width: 25%;" align="center">
                     <p>
-                    <div class="input-group" style="width: 90%; margin-top: 20px;">
+                    <div class="input-group" style="width: 80%; margin-top: 20px;">
                         <span class="input-group-addon">Lat</span>
                         {{ form.lat(class_="form-control", placeholder="lat") }}
                     </div>
                     </p>
                 </td>
+                <td colspan="2" align="center" style="padding-top: 10px;">Do not know?&nbsp;<a href="{{ url_for('map') }}"><span class="glyphicon glyphicon-globe"></span>&nbsp;Go and see it!</a></td>
             </tr>
             <tr>
-                <td style="width: 40%;" align="center">
+                <td colspan="2" align="center">
                     <p>
                         <div class="input-group" style="width: 90%; margin-top: 20px;">
                             <span class="input-group-addon">*Square</span>
@@ -48,7 +48,7 @@
                         {% endfor %}
                     </p>
                 </td>
-                <td style="width: 40%;" align="center">
+                <td colspan="2" align="center">
                     <p>
                         <div class="input-group" style="width: 90%; margin-top: 20px;">
                             <span class="input-group-addon">*Floor</span>
@@ -63,7 +63,7 @@
                 </td>
             </tr>
             <tr>
-                <td style="width: 40%;" align="center">
+                <td colspan="2" align="center">
                     <p>
                         <div class="input-group" style="width: 90%; margin-top: 20px;">
                             <span class="input-group-addon">*Living Room</span>
@@ -76,7 +76,7 @@
 
                     </p>
                 </td>
-                <td style="width: 40%;" align="center">
+                <td colspan="2" align="center">
                     <p>
                         <div class="input-group" style="width: 90%; margin-top: 20px;">
                             <span class="input-group-addon">*Drawing Room</span>
@@ -91,7 +91,7 @@
                 </td>
             </tr>
             <tr>
-                <td style="width: 40%;" align="center">
+                <td colspan="2" align="center">
                     <p>
                         <div class="input-group" style="width: 90%; margin-top: 20px;">
                             <span class="input-group-addon">*Kitchen</span>
@@ -104,7 +104,7 @@
 
                     </p>
                 </td>
-                <td style="width: 40%;" align="center">
+                <td colspan="2" align="center">
                     <p>
                         <div class="input-group" style="width: 90%; margin-top: 20px;">
                             <span class="input-group-addon">*Bathroom</span>
@@ -119,14 +119,14 @@
                 </td>
             </tr>
             <tr>
-                <td style="width: 40%;" align="center">
+                <td colspan="2" align="center">
                     <p>
                     <div class="input-group" style="width: 90%; margin-top: 20px;">
                         <span class="input-group-addon">Building Type</span>
                         {{ form.building_type(class_="form-control") }}
                     </div></p>
                 </td>
-                <td style="width: 40%;" align="center">
+                <td colspan="2" align="center">
                     <p>
                     <div class="input-group" style="width: 90%; margin-top: 20px;">
                         <span class="input-group-addon">Renovation Condition</span>
@@ -135,7 +135,23 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="2" align="center" style="width: 80%;">
+                <td colspan="2" align="center">
+                    <p>
+                    <div class="input-group" style="width: 90%; margin-top: 20px;">
+                        <span class="input-group-addon">*Elevator</span>
+                        {{ form.elevator(class_="form-control") }}
+                    </div></p>
+                </td>
+                <td colspan="2" align="center">
+                    <p>
+                    <div class="input-group" style="width: 90%; margin-top: 20px;">
+                        <span class="input-group-addon">*Subway</span>
+                        {{ form.subway(class_="form-control") }}
+                    </div></p>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4" align="center">
                     <p>
                         <div class="input-group" style="width: 95%; margin-top: 20px;">
                             <span class="input-group-addon">*District</span>
@@ -149,15 +165,7 @@
                     </p>
                 </td>
             </tr>
-            <tr>
-                <td align="center" style="padding-top: 20px"><label class="checkbox-inline">
-                    {{ form.elevator.label }}{{ form.elevator() }}
-                    </label>
-                </td>
-                <td align="center" style="padding-top: 20px"><label class="checkbox-inline">
-                    {{ form.subway.label }} {{ form.subway() }}
-                    </label></td>
-            </tr>
+            
         </table>
 
         {% if user %}
