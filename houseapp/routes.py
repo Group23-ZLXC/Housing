@@ -1,4 +1,5 @@
-from houseapp import app, db, model, Config
+from houseapp import app, db, Config
+ # model,
 from flask import render_template, flash, redirect, url_for, session, request, jsonify
 from houseapp.forms import CommentForm, LoginForm, SignupForm, PredictForm, BuyForm, RecommendationForm, EditRecomForm, ReplyForm, EditHouseForm
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -492,15 +493,15 @@ def predict():
             db.session.add(house)
             db.session.commit()
             # call the ML model
-            features = [house.lng, house.lat, house.square, house.living_room, house.drawing_room, house.kitchen, house.bathroom,
-                house.building_type, house.renovation_con, house.elevator, house.subway, house.district]
-            final_features = [np.array(features)]
-            prediction = model.predict(final_features)
-            output = round(prediction[0], 4)
-            house.total_price = output*10000
-            house.status = 1
-            db.session.commit()
-            #return redirect(url_for('personal'))
+            # features = [house.lng, house.lat, house.square, house.living_room, house.drawing_room, house.kitchen, house.bathroom,
+            #     house.building_type, house.renovation_con, house.elevator, house.subway, house.district]
+            # final_features = [np.array(features)]
+            # prediction = model.predict(final_features)
+            # output = round(prediction[0], 4)
+            # house.total_price = output*10000
+            # house.status = 1
+            # db.session.commit()
+            return redirect(url_for('personal'))
             return redirect(url_for('edit_house', house_id=house.id))
 
         return render_template('predict.html', title='Predict', user=user_in_db, form=form)
