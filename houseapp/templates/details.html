@@ -67,11 +67,11 @@
           {% if house.status == 1 %}
             {% if house.user_id == user.id %}
             <span>
-              <h2 style="color: red;"><strong>¥ {{ house.total_price }}</strong></h2>
+              <h2 style="color: red;"><strong>¥ {{ '%.2f' %(house.total_price) }}</strong></h2>
             </span>
             {% endif %}
           {% else %}
-          <h2 style="color: red;"><strong>¥ {{ house.total_price }}</strong></h2>
+          <h2 style="color: red;"><strong>¥ {{ '%.2f' %(house.total_price) }}</strong></h2>
           {% endif %}
         {% else %}
         <h2 style="color: red;"><strong>Pending</strong></h2>

@@ -201,7 +201,7 @@
                     style="background-color: rgb(240, 240, 240);border: 1px solid rgb(240, 240, 240);
                 border-radius: 10px;vertical-align: middle;box-shadow: 5px 5px 5px rgb(172, 172, 172);margin: 45px 50px 0 50px; height:100%;padding-top: 10px;padding-bottom: 10px;">
                     <b> <strong style="color: red;">
-                            ¥{{ house.total_price }}</strong></b>
+                            ¥{{ '%.2f' %(house.total_price) }}</strong></b>
                     <br>
                     <p style="color:grey;font-size: 13px;">¥{{ house.average_price }}/m<sup>2</sup></p>
                 </div>

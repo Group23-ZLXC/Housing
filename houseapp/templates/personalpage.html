@@ -49,7 +49,7 @@
           <tr>
             <td style="padding-left: 5px;"> {{ house.id }}</td>
             <td style="padding-left: 5px;"> {{ house.date }}</td>
-            <td style="padding-left: 5px;">¥ {{ house.total_price }}</td>
+            <td style="padding-left: 5px;">¥ {{ '%.2f' %(house.total_price) }}</td>
             <td style="padding-left: 5px;"> {{ house.square }} m<sup>2</sup></td>
             <td style="padding-left: 5px;">¥ {{ '%.2f' %(house.total_price/house.square) }}</td>
             <td style="padding-left: 5px;"><a href="{{ url_for('details',house_id=house.id) }}"><button type="button"
@@ -101,8 +101,6 @@
         <table width="100%" class="table table-hover">
           {% if houses %}
           {% if uploaded != 0 %}
-          {% for house in houses %}
-          {% if house.status == 2 %}
           <tr>
             <th style="padding-left: 5px;width:10%"> House ID</th>
             <th style="padding-left: 5px;width:15%"> Date </th>
@@ -113,10 +111,12 @@
             <th style="padding-left: 5px;width:10%"> Edit </th>
             <th style="padding-left: 5px;width:10%"> Delete</th>
           </tr>
+          {% for house in houses %}
+          {% if house.status == 2 %}
           <tr>
             <td style="padding-left: 5px;"> {{ house.id }}</td>
             <td style="padding-left: 5px;"> {{ house.date }}</td>
-            <td style="padding-left: 5px;">¥ {{ house.total_price }}</td>
+            <td style="padding-left: 5px;">¥ {{ '%.2f' %(house.total_price) }}</td>
             <td style="padding-left: 5px;"> {{ house.square }} m<sup>2</sup></td>
             <td style="padding-left: 5px;">¥ {{ '%.2f' %(house.total_price/house.square) }}</td>
             <td style="padding-left: 5px;"><a href="{{ url_for('details',house_id=house.id) }}"><button
