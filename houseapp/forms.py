@@ -22,7 +22,7 @@ class PredictForm(FlaskForm):
     lng = StringField('Lng')
     lat = StringField('Lat')
     square = StringField('*Square', validators=[DataRequired()])
-    living_room = SelectField('*Living Room', choices = [
+    living_room = SelectField('*Bedroom', choices = [
         (0,0),(1,1),(2,2),(3,3),(4,4),(5,5),(6,6),(7,7),(8,8),(9,9)]
         , validators=[DataRequired()]) #0-9
     drawing_room = SelectField('*Drawing Room', choices = [

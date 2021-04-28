@@ -434,7 +434,7 @@
               <div id="mapContainer"></div>
             </div>
 
-
+            {% if house.status == 2 %}
             <div>
               <h1> Users who like this house also like...</h1>
               <hr>
@@ -494,7 +494,7 @@
                                 </div>
                         </div>
                 </div>
-
+                {% endif %}
         </body>
 <style>
   .comment {

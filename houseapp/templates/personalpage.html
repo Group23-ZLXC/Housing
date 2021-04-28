@@ -178,7 +178,7 @@
         <th style="padding-left: 5px;width:15%"> Price </th>
         <th style="padding-left: 5px;width:15%"> Square </th>
         <th style="padding-left: 5px;width:15%"> Average Price </th>
-        <th style="padding-left: 5px;width:10%"> Preview </th>
+        <th style="padding-left: 5px;width:10%"> View </th>
         <th style="padding-left: 5px;width:10%"> Mortgage </th>
         <th style="padding-left: 5px;width:10%"> Remove</th>
       </tr>
@@ -186,11 +186,11 @@
       <tr>
         <td style="padding-left: 5px;">{{ h.id }}</td>
         <td style="padding-left: 5px;">{{ h.date }}</td>
-        <td style="padding-left: 5px;">{{ h.total_price }}</td>
-        <td style="padding-left: 5px;">{{ h.square }}</td>
-        <td style="padding-left: 5px;">{{ h.total_price%h.square }}</td>
+        <td style="padding-left: 5px;">¥ {{ h.total_price }}</td>
+        <td style="padding-left: 5px;">{{ h.square }} m<sup>2</sup></td>
+        <td style="padding-left: 5px;">¥ {{ '%.2f' %(h.total_price/h.square) }}</td>
         <td style="padding-left: 5px;"><a href="{{ url_for('details',house_id=h.id) }}"><button
-          class="btn btn-primary btn-xs" type="button" name="button">Preview</button></a>
+          class="btn btn-primary btn-xs" type="button" name="button">View</button></a>
         </td>
         <td style="padding-left: 5px;"><a href=""><button
           class="btn btn-primary btn-xs" type="button" name="button">Calculate</button></a>
