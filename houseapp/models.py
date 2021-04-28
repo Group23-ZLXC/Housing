@@ -70,12 +70,13 @@ class House(db.Model):
     comment = db.relationship('Comment', backref='house', lazy='dynamic')
     recommendation = db.relationship('Recommendation', backref='house', lazy='dynamic')
     image = db.relationship('Image', backref='house', lazy='dynamic')
+    rank = db.Column(db.Integer, default=0) #用户收藏 +1
 
 class Favorite(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     house_id = db.Column(db.Integer, db.ForeignKey('house.id'))
-    #private = db.Column(db.Integer)
+    private = db.Column(db.Integer, default=0)
 
 class Recommendation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -96,6 +97,7 @@ class Comment(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     answers = db.relationship('Answer', backref='question', lazy='dynamic')
     house_id = db.Column(db.Integer, db.ForeignKey('house.id'))
+    private = db.Column(db.Integer, default=0)
 
     def __repr__(self):
         return '<At {} : {} >'.format(str(self.timestamp)[0:10],self.body)
@@ -106,3 +108,4 @@ class Answer(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=datetime.now)
     question_id = db.Column(db.Integer, db.ForeignKey('comment.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    private = db.Column(db.Integer, default=0)

@@ -133,6 +133,16 @@ def details():
     reply = request.args.get('reply')
     house = House.query.filter(House.id == house_id).first()
     owner = User.query.filter(User.id == house.user_id).first()
+    pop_houses = House.query.filter(House.status == 2).order_by(House.rank.desc()).limit(11)
+    favorites = Favorite.query.filter(Favorite.house_id == house.id).all()
+    re_houses = []
+    for f in favorites:
+        fas = Favorite.query.filter(Favorite.user_id == f.user_id).all()
+        for fa in fas:
+            if fa.house_id != house.id:
+                h = House.query.filter(House.id == fa.house_id).first()
+                re_houses.append(h)
+
     stored_images = Image.query.filter(Image.house_id == house.id).all()
     image_names = []
     if stored_images:
@@ -162,7 +172,8 @@ def details():
             else:
                 # form3.comment.data = "Reply to "+ comment_id +" : "
                 return render_template('details.html', title='Details', form=form, form1=form1, user=user_in_db, house = house, owner=owner, comments=comments,
-                    stored_recomm=stored_recomm, favorite=favorite, form2=form2,form3=form3, reply=reply, answers=answers, stored_images=stored_images, image_names=image_names)
+                    stored_recomm=stored_recomm, favorite=favorite, form2=form2,form3=form3, reply=reply, answers=answers, stored_images=stored_images,
+                    image_names=image_names, re_houses=re_houses, pop_houses=pop_houses)
         else:
             if form.validate_on_submit():
                 comment = Comment(body=form.comment.data, user_id = user_in_db.id, house_id = house.id)
@@ -179,7 +190,8 @@ def details():
                 form2.reason.data = stored_recomm.reason
                 return render_template('details.html', title='Details', form=form, form1=form1, user=user_in_db,
                     house = house, owner=owner, comments=comments, stored_recomm=stored_recomm, favorite=favorite,
-                    form2=form2,form3=form3, reply=reply, answers=answers, stored_images=stored_images, image_names=image_names)
+                    form2=form2,form3=form3, reply=reply, answers=answers, stored_images=stored_images,
+                    image_names=image_names, re_houses=re_houses, pop_houses=pop_houses)
 
         else:
             if form1.validate_on_submit():
@@ -190,10 +202,11 @@ def details():
             else:
                 return render_template('details.html', title='Details', form=form, form1=form1, user=user_in_db, house = house,
                     owner=owner, comments=comments, favorite=favorite, form3=form3, reply=reply, answers=answers,
-                    stored_images=stored_images, image_names=image_names)
+                    stored_images=stored_images, image_names=image_names, re_houses=re_houses, pop_houses=pop_houses)
 
     return render_template('details.html', title='Details', form=form, form1=form1, house=house, owner=owner, commennts=comments,
-        stored_recomm=stored_recomm,form3=form3, reply=reply, answers=answers, stored_images=stored_images, image_names=image_names)
+        stored_recomm=stored_recomm,form3=form3, reply=reply, answers=answers, stored_images=stored_images, image_names=image_names
+        , re_houses=re_houses, pop_houses=pop_houses)
 
 
 @app.route('/upload_house')
@@ -209,6 +222,8 @@ def upload_house():
 def add_to_favorite():
     user_id = request.args.get('user_id2')
     house_id = request.args.get('house_id2')
+    house = House.query.filter(House.id == house_id).first()
+    house.rank += 1
     favorite = Favorite(user_id=user_id, house_id=house_id)
     db.session.add(favorite)
     db.session.commit()
@@ -218,6 +233,8 @@ def add_to_favorite():
 def remove_favorite():
     house_id = request.args.get('house_id2')
     user_id = request.args.get('user_id2')
+    house = House.query.filter(House.id == house_id).first()
+    house.rank -= 1
     favorite_in_db = Favorite.query.filter(Favorite.house_id == house_id, Favorite.user_id == user_id).first()
     db.session.delete(favorite_in_db)
     db.session.commit()
@@ -647,6 +664,11 @@ def personal():
         user_in_db = User.query.filter(User.username == username).first()
         houses = House.query.filter(House.user_id == user_in_db.id).all()
         favorites = Favorite.query.filter(Favorite.user_id == user_in_db.id).all()
+        fav_houses = []
+        for f in favorites:
+            h = House.query.filter(House.id == f.house_id).first()
+            fav_houses.append(h)
+
         completed = 0
         uploaded = 0
         for h in houses:
@@ -654,7 +676,7 @@ def personal():
                 completed += 1
             if h.status == 2:
                 uploaded += 1
-        return render_template('personalpage.html', title="Personal Page", user=user_in_db, houses = houses, favorites=favorites,completed=completed,uploaded=uploaded)
+        return render_template('personalpage.html', title="Personal Page", user=user_in_db, houses = houses, fav_houses=fav_houses,completed=completed,uploaded=uploaded)
     else:
         flash("User needs to login first")
         return redirect(url_for('login'))
