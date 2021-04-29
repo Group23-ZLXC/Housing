@@ -201,8 +201,8 @@
         <th style="padding-left: 5px;width:15%"> Price </th>
         <th style="padding-left: 5px;width:15%"> Square </th>
         <th style="padding-left: 5px;width:15%"> Average Price </th>
-        <th style="padding-left: 5px;width:10%"> View </th>
-        <th style="padding-left: 5px;width:10%"> Mortgage </th>
+        <th style="padding-left: 5px;width:10%"> Preview </th>
+        <th style="padding-left: 5px;width:10%"> Seller </th>
         <th style="padding-left: 5px;width:10%"> Remove</th>
       </tr>
       {% for h in fav_houses %}
@@ -213,10 +213,10 @@
         <td style="padding-left: 5px;">{{ h.square }} m<sup>2</sup></td>
         <td style="padding-left: 5px;">¥ {{ '%.2f' %(h.total_price/h.square) }}</td>
         <td style="padding-left: 5px;"><a href="{{ url_for('details',house_id=h.id) }}"><button
-          class="btn btn-primary btn-xs" type="button" name="button">View</button></a>
+          class="btn btn-primary btn-xs" type="button" name="button">Preview</button></a>
         </td>
-        <td style="padding-left: 5px;"><a href=""><button
-          class="btn btn-primary btn-xs" type="button" name="button">Calculate</button></a>
+        <td style="padding-left: 5px;"><a href="{{ url_for('visitothers', user_id=h.user_id) }}"><button
+          class="btn btn-primary btn-xs" type="button" name="button">View</button></a>
         </td>
         <td><button class="btn btn-danger btn-xs" type="button"
               name="button" data-toggle="modal" data-target="#remove{{ h.id }}">Remove</button></td>

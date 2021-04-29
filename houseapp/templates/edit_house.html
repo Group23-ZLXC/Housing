@@ -204,6 +204,20 @@
 
 
 </div>
+<!-- {% for i in range(10) %}
+    <canvas id="{{i}}" width="50" height="50" style="border:1px solid #a0a0a0;border-radius: 5px;"
+        onclick="fill_square({{ i }})">
+    </canvas>
+    {% endfor %} -->
+    <script>
+      function fill_square(a){
+          var c = document.getElementById(a);
+          var ctx=c.getContext("2d");
+          ctx.rect(0,0,100,100);
+          ctx.fillStyle = "green";
+          ctx.fill();
+      }
+  </script>
 
 {% include 'footer.html' %}
 {% endblock %}

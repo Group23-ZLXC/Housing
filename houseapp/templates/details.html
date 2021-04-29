@@ -217,21 +217,25 @@
       {% if not house.user_id == user.id %}
       {% if favorite %}
       <td style="vertical-align: top;" align="right">
-        <a href="{{ url_for('remove_favorite',house_id2=house.id, user_id2=user.id) }}"><button
-            class="btn btn-danger btn-xs" type="button" name="button"><span class="glyphicon glyphicon-star"
+        <a href="{{ url_for('remove_favorite',house_id2=house.id, user_id2=user.id) }}" ><button
+            class="btn btn-danger btn-xs" type="button" name="button" style="margin-top: 5px;"><span class="glyphicon glyphicon-star"
               style="padding-top: 3px;"></span>&nbsp;Remove from Favorite </button></a>
       </td>
       {% else %}
       <td style="vertical-align: top;" align="right">
-        <a href="{{ url_for('add_to_favorite',house_id2=house.id, user_id2=user.id) }}"><button
-            class="btn btn-warning btn-xs" type="button" name="button"><span class="glyphicon glyphicon-star-empty"
+        <a href="{{ url_for('add_to_favorite',house_id2=house.id, user_id2=user.id) }}" ><button
+            class="btn btn-warning btn-xs" type="button" name="button" style="margin-top: 5px;"><span class="glyphicon glyphicon-star-empty"
               style="padding-top: 3px;"></span>&nbsp;Add to Favorite </button></a>
       </td>
       {% endif %}
       {% endif %}
       {% endif %}
     </tr>
-
+    <tr class="active">
+      <td style="padding-left: 20px;vertical-align: middle;">Estimated monthly loan:</td>
+      <td width="20%" style="vertical-align: middle;"><b>¥ {{ '%.2f' %(money_calculate[1]) }}&nbsp;&nbsp;<button class="btn btn-link btn-xs" onclick="calculation()"><span
+        class="glyphicon glyphicon-info-sign"></span>&nbsp;More precise?</button></b></td>
+    </tr>
     <tr>
       <td style="padding-left: 20px;vertical-align: middle;">Building Type:</td>
       {% if house.building_type == 1 %}
@@ -460,6 +464,7 @@
       </div>
     </div>
     {% if house.status == 2 %}
+    <div id="loan_calculation">
     <div class="panel-group" id="accordion">
       <div class="panel panel-default">
         <div class="panel-heading">
@@ -555,6 +560,7 @@
           </form>
         </div>
       </div>
+    </div>
     </div>
 
     <div class="panel-group" id="accordion" style="margin-top: 20px;margin-bottom: 50px;">
@@ -813,6 +819,9 @@
 				}]
 		}]
 });
+ function calculation() {
+     document.querySelector("#loan_calculation").scrollIntoView();
+    }
   !function () {
     var infoWindow, map, level = 11,
       center = {lng:{{house.lng}},lat: {{ house.lat }}},
