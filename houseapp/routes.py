@@ -109,22 +109,22 @@ def tips():
     bat_4 = House.query.filter(House.status == 2).filter(House.bathroom == 4).count()
     bat_5 = House.query.filter(House.status == 2).filter(House.bathroom == 5).count()
 
-    squ_1 = House.query.filter(House.status == 2).filter(House.square < 50).count()
-    squ_2 = House.query.filter(House.status == 2).filter(House.square > 50).filter(House.square < 100).count()
-    squ_3 = House.query.filter(House.status == 2).filter(House.square > 100).filter(House.square < 150).count()
-    squ_4 = House.query.filter(House.status == 2).filter(House.square > 150).filter(House.square < 200).count()
+    squ_1 = House.query.filter(House.status == 2).filter(House.square <= 50).count()
+    squ_2 = House.query.filter(House.status == 2).filter(House.square > 50).filter(House.square <= 100).count()
+    squ_3 = House.query.filter(House.status == 2).filter(House.square > 100).filter(House.square <= 150).count()
+    squ_4 = House.query.filter(House.status == 2).filter(House.square > 150).filter(House.square <= 200).count()
     squ_5 = House.query.filter(House.status == 2).filter(House.square > 200).count()
 
-    tot_1 = House.query.filter(House.status == 2).filter(House.total_price < 1000000).count()
-    tot_2 = House.query.filter(House.status == 2).filter(House.total_price > 1000000).filter(House.total_price < 3000000).count()
-    tot_3 = House.query.filter(House.status == 2).filter(House.total_price > 3000000).filter(House.total_price < 5000000).count()
-    tot_4 = House.query.filter(House.status == 2).filter(House.total_price > 5000000).filter(House.total_price < 10000000).count()
+    tot_1 = House.query.filter(House.status == 2).filter(House.total_price <= 1000000).count()
+    tot_2 = House.query.filter(House.status == 2).filter(House.total_price > 1000000).filter(House.total_price <= 3000000).count()
+    tot_3 = House.query.filter(House.status == 2).filter(House.total_price > 3000000).filter(House.total_price <= 5000000).count()
+    tot_4 = House.query.filter(House.status == 2).filter(House.total_price > 5000000).filter(House.total_price <= 10000000).count()
     tot_5 = House.query.filter(House.status == 2).filter(House.total_price > 10000000).count()
 
-    ave_1 = House.query.filter(House.status == 2).filter(House.total_price/House.square < 10000).count()
-    ave_2 = House.query.filter(House.status == 2).filter(House.total_price/House.square > 10000).filter(House.total_price/House.square < 30000).count()
-    ave_3 = House.query.filter(House.status == 2).filter(House.total_price/House.square > 30000).filter(House.total_price/House.square < 50000).count()
-    ave_4 = House.query.filter(House.status == 2).filter(House.total_price/House.square > 50000).filter(House.total_price/House.square < 100000).count()
+    ave_1 = House.query.filter(House.status == 2).filter(House.total_price/House.square <= 10000).count()
+    ave_2 = House.query.filter(House.status == 2).filter(House.total_price/House.square > 10000).filter(House.total_price/House.square <= 30000).count()
+    ave_3 = House.query.filter(House.status == 2).filter(House.total_price/House.square > 30000).filter(House.total_price/House.square <= 50000).count()
+    ave_4 = House.query.filter(House.status == 2).filter(House.total_price/House.square > 50000).filter(House.total_price/House.square <= 100000).count()
     ave_5 = House.query.filter(House.status == 2).filter(House.total_price/House.square > 100000).count()
 
     data_living=[liv_0,liv_1,liv_2,liv_3,liv_4,liv_5]
@@ -377,108 +377,108 @@ def buy():
                         checked_data_1.remove(checked_data_1[i])
             if check.total_price == 1:
                 for i in range(len(checked_data)-1,-1,-1):
-                    if float(checked_data[i][8]) >= 100:
+                    if float(checked_data[i][8]) > 100:
                         checked_data.remove(checked_data[i])
                 for i in range(len(checked_data_1)-1,-1,-1):
-                    if float(checked_data_1[i][1]) >= 1000000:
+                    if float(checked_data_1[i][1]) > 1000000:
                         checked_data_1.remove(checked_data_1[i])
             if check.total_price == 2:
                 for i in range(len(checked_data)-1,-1,-1):
-                    if (float(checked_data[i][8]) < 100) | (float(checked_data[i][8]) >= 300):
+                    if (float(checked_data[i][8]) <= 100) | (float(checked_data[i][8]) > 300):
                         checked_data.remove(checked_data[i])
                 for i in range(len(checked_data_1)-1,-1,-1):
-                    if (float(checked_data_1[i][1]) < 1000000) | (float(checked_data_1[i][1]) >= 3000000):
+                    if (float(checked_data_1[i][1]) <= 1000000) | (float(checked_data_1[i][1]) > 3000000):
                         checked_data_1.remove(checked_data_1[i])
             if check.total_price == 3:
                 for i in range(len(checked_data)-1,-1,-1):
-                    if (float(checked_data[i][8]) < 300) | (float(checked_data[i][8]) >= 500):
+                    if (float(checked_data[i][8]) <= 300) | (float(checked_data[i][8]) > 500):
                         checked_data.remove(checked_data[i])
                 for i in range(len(checked_data_1)-1,-1,-1):
-                    if (float(checked_data_1[i][1]) < 3000000) | (float(checked_data_1[i][1]) >= 5000000):
+                    if (float(checked_data_1[i][1]) <= 3000000) | (float(checked_data_1[i][1]) > 5000000):
                         checked_data_1.remove(checked_data_1[i])
             if check.total_price == 4:
                 for i in range(len(checked_data)-1,-1,-1):
-                    if (float(checked_data[i][8]) < 500) | (float(checked_data[i][8]) >= 1000):
+                    if (float(checked_data[i][8]) <= 500) | (float(checked_data[i][8]) > 1000):
                         checked_data.remove(checked_data[i])
                 for i in range(len(checked_data_1)-1,-1,-1):
-                    if (float(checked_data_1[i][1]) < 5000000) | (float(checked_data_1[i][1]) >= 10000000):
+                    if (float(checked_data_1[i][1]) <= 5000000) | (float(checked_data_1[i][1]) > 10000000):
                         checked_data_1.remove(checked_data_1[i])
             if check.total_price == 5:
                 for i in range(len(checked_data)-1,-1,-1):
-                    if (float(checked_data[i][8]) < 1000):
+                    if (float(checked_data[i][8]) <= 1000):
                         checked_data.remove(checked_data[i])
                 for i in range(len(checked_data_1)-1,-1,-1):
-                    if (float(checked_data_1[i][1]) < 10000000):
+                    if (float(checked_data_1[i][1]) <= 10000000):
                         checked_data_1.remove(checked_data_1[i])
             if check.average_price == 1:
                 for i in range(len(checked_data)-1,-1,-1):
-                    if float(checked_data[i][9]) >= 10000:
+                    if float(checked_data[i][9]) > 10000:
                         checked_data.remove(checked_data[i])
                 for i in range(len(checked_data_1)-1,-1,-1):
-                    if (float(checked_data_1[i][2]) >= 10000):
+                    if (float(checked_data_1[i][2]) > 10000):
                         checked_data_1.remove(checked_data_1[i])
             if check.average_price == 2:
                 for i in range(len(checked_data)-1,-1,-1):
-                    if (float(checked_data[i][9]) < 10000) | (float(checked_data[i][9]) >= 30000):
+                    if (float(checked_data[i][9]) <= 10000) | (float(checked_data[i][9]) > 30000):
                         checked_data.remove(checked_data[i])
                 for i in range(len(checked_data_1)-1,-1,-1):
-                    if (float(checked_data_1[i][2]) < 10000) | (float(checked_data_1[i][2]) >= 30000):
+                    if (float(checked_data_1[i][2]) <= 10000) | (float(checked_data_1[i][2]) > 30000):
                         checked_data_1.remove(checked_data_1[i])
             if check.average_price == 3:
                 for i in range(len(checked_data)-1,-1,-1):
-                    if (float(checked_data[i][9]) < 30000) | (float(checked_data[i][9]) >= 50000):
+                    if (float(checked_data[i][9]) <= 30000) | (float(checked_data[i][9]) > 50000):
                         checked_data.remove(checked_data[i])
                 for i in range(len(checked_data_1)-1,-1,-1):
-                    if (float(checked_data_1[i][2]) < 30000) | (float(checked_data_1[i][2]) >= 50000):
+                    if (float(checked_data_1[i][2]) <= 30000) | (float(checked_data_1[i][2]) > 50000):
                         checked_data_1.remove(checked_data_1[i])
             if check.average_price == 4:
                 for i in range(len(checked_data)-1,-1,-1):
-                    if (float(checked_data[i][9]) < 50000) | (float(checked_data[i][9]) >= 100000):
+                    if (float(checked_data[i][9]) <= 50000) | (float(checked_data[i][9]) > 100000):
                         checked_data.remove(checked_data[i])
                 for i in range(len(checked_data_1)-1,-1,-1):
-                    if (float(checked_data_1[i][2]) < 50000) | (float(checked_data_1[i][2]) >= 100000):
+                    if (float(checked_data_1[i][2]) <= 50000) | (float(checked_data_1[i][2]) > 100000):
                         checked_data_1.remove(checked_data_1[i])
             if check.average_price == 5:
                 for i in range(len(checked_data)-1,-1,-1):
-                    if (float(checked_data[i][9]) < 100000):
+                    if (float(checked_data[i][9]) <= 100000):
                         checked_data.remove(checked_data[i])
                 for i in range(len(checked_data_1)-1,-1,-1):
-                    if (float(checked_data_1[i][2]) < 100000):
+                    if (float(checked_data_1[i][2]) <= 100000):
                         checked_data_1.remove(checked_data_1[i])
             if check.square == 1:
                 for i in range(len(checked_data)-1,-1,-1):
-                    if (float(checked_data[i][10]) >= 50):
+                    if (float(checked_data[i][10]) > 50):
                         checked_data.remove(checked_data[i])
                 for i in range(len(checked_data_1)-1,-1,-1):
-                    if (float(checked_data_1[i][3]) >= 50):
+                    if (float(checked_data_1[i][3]) > 50):
                         checked_data_1.remove(checked_data_1[i])
             if check.square == 2:
                 for i in range(len(checked_data)-1,-1,-1):
-                    if (float(checked_data[i][10]) < 50) | (float(checked_data[i][10]) >= 100):
+                    if (float(checked_data[i][10]) <= 50) | (float(checked_data[i][10]) > 100):
                         checked_data.remove(checked_data[i])
                 for i in range(len(checked_data_1)-1,-1,-1):
-                    if (float(checked_data_1[i][3]) < 50) | (float(checked_data_1[i][3]) >= 100):
+                    if (float(checked_data_1[i][3]) <= 50) | (float(checked_data_1[i][3]) > 100):
                         checked_data_1.remove(checked_data_1[i])
             if check.square == 3:
                 for i in range(len(checked_data)-1,-1,-1):
-                    if (float(checked_data[i][10]) < 100) | (float(checked_data[i][10]) >= 150):
+                    if (float(checked_data[i][10]) <= 100) | (float(checked_data[i][10]) > 150):
                         checked_data.remove(checked_data[i])
                 for i in range(len(checked_data_1)-1,-1,-1):
-                    if (float(checked_data_1[i][3]) < 100) | (float(checked_data_1[i][3]) >= 150):
+                    if (float(checked_data_1[i][3]) <= 100) | (float(checked_data_1[i][3]) > 150):
                         checked_data_1.remove(checked_data_1[i])
             if check.square == 4:
                 for i in range(len(checked_data)-1,-1,-1):
-                    if (float(checked_data[i][10]) < 150) | (float(checked_data[i][10]) >= 200):
+                    if (float(checked_data[i][10]) <= 150) | (float(checked_data[i][10]) > 200):
                         checked_data.remove(checked_data[i])
                 for i in range(len(checked_data_1)-1,-1,-1):
-                    if (float(checked_data_1[i][3]) < 150) | (float(checked_data_1[i][3]) >= 200):
+                    if (float(checked_data_1[i][3]) <= 150) | (float(checked_data_1[i][3]) > 200):
                         checked_data_1.remove(checked_data_1[i])
             if check.square == 5:
                 for i in range(len(checked_data)-1,-1,-1):
-                    if (float(checked_data[i][10]) < 200):
+                    if (float(checked_data[i][10]) <= 200):
                         checked_data.remove(checked_data[i])
                 for i in range(len(checked_data_1)-1,-1,-1):
-                    if (float(checked_data_1[i][3]) < 200):
+                    if (float(checked_data_1[i][3]) <= 200):
                         checked_data_1.remove(checked_data_1[i])
             if check.floor == 1:
                 for i in range(len(checked_data)-1,-1,-1):
