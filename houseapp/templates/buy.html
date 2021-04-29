@@ -141,7 +141,8 @@
     <table style="width: 100%;">
         <tr>
             <td style="width: 70%;font-size: 3.5rem;"><b>Find {{ paginate.total }} suitable houses for you ^_^</b></td>
-            <td align="right" style="vertical-align: bottom;"><a href="{{ url_for('tips') }}"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;Can't find a house? Tips</a></td>
+            <td align="right" style="vertical-align: bottom;"><a href="{{ url_for('tips') }}"><span
+                        class="glyphicon glyphicon-info-sign"></span>&nbsp;Can't find a house? Tips</a></td>
         </tr>
 
 
@@ -252,7 +253,7 @@
     <tr>
         <td align="center">
             <ul class="pagination">
-                
+
                 {% if paginate.has_prev %}
                 <li><a href="{{ url_for('buy', page = paginate.prev_num ) }}">&laquo;</a></li>
                 {% else %}
@@ -266,8 +267,8 @@
                 {% else %}
                 <li class="next disabled"><a href="{{ url_for('buy', page = paginate.next_num ) }}">&raquo;</a></li>
                 {% endif %}
-                
-            </ul>            
+
+            </ul>
         </td>
     </tr>
 </table>
@@ -361,8 +362,12 @@
                     <tr>
                         {% for h in houses_recent %}
                         <td colspan="2" width="250px" align="center">
-                            <a href="{{ url_for('details', house_id=h.id )}}" id="image"><img src="{{ url_for('static', filename='img/house4.jpg') }}"
-                                    alt="house" width="270px" height="160px" class="img-rounded" /></a>
+                            {% for i in imgs %}
+                            {% if i.house_id == h.id %}
+                            <a href="{{ url_for('details', house_id=h.id )}}" id="image"><img src="{{ i.filepath }}"
+                                    alt="{{ i.filepath }}" width="270px" height="160px" class="img-rounded"></a>
+                            {% endif %}
+                            {% endfor %}
                         </td>
                         {% endfor %}
                     </tr>
@@ -374,7 +379,8 @@
                     <tr style="font-size: 1.4rem;margin-left: 5px;padding-right: 5px;">
                         {% for h in houses_recent %}
                         <td style="padding-left: 20px;padding-top:10px;">Square: {{ h.square }} m<sup>2</sup></td>
-                        <td align="center" style="padding-right: 5px;color: red;padding-top:10px;">Price: ¥ {{ h.total_price }}</td>
+                        <td align="center" style="padding-right: 5px;color: red;padding-top:10px;">Price: ¥ {{
+                            h.total_price }}</td>
                         {% endfor %}
                     </tr>
                 </table>
