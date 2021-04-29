@@ -109,10 +109,10 @@
           {% endif %}
           {% endif %}
           {% endfor %}
+          {% endif %}
           {% else %}
           <p style="margin-top: 20px;">There is no house in the collection yet. Go and add a prediction!&nbsp;<a href="{{ url_for('predict') }}"><span
               class="glyphicon glyphicon-stats"></span>&nbsp;Predict</a></p>
-          {% endif %}
         {% endif %}
         </table>
       </div>
@@ -176,10 +176,10 @@
           </div>
           {% endif %}
           {% endfor %}
+          {% endif %}
           {% else %}
           <p style="margin-top: 20px;">There is no house in the collection yet. Click the <b>' <button
             class="btn btn-warning btn-xs" disabled="disabled" >Upload</button> '</b> button in <b>'Completed'</b> to upload your house!</p>
-          {% endif %}
         {% endif %}
         </table>
       </div>
