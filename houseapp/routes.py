@@ -28,6 +28,17 @@ def homepage():
     owner = User.query.all()
     houses = House.query.filter(House.status == 2).order_by(House.id.desc()).limit(11)
     recommendations = Recommendation.query.all()
+    stored_images = Image.query.all()
+    imgs = []
+    count = [0,0,0,0,0,0,0,0,0,0,0]
+    j = 0
+    for house in houses:
+        for i in stored_images:
+            if i.house_id == house.id:
+                if count[j] < 1:
+                    imgs.append(i)
+                    count[j] += 1
+        j += 1
     # data = []
     # with open(r"houseapp/static/data/total_data.csv", encoding='gbk', errors='ignore') as fin:
     #     is_first_line =True
@@ -67,8 +78,8 @@ def homepage():
     if not session.get("USERNAME") is None:
         username = session.get("USERNAME")
         user_in_db = User.query.filter(User.username == username).first()
-        return render_template('homepage.html', title='Home', user=user_in_db, owner=owner,houses=houses,recommendations=recommendations)
-    return render_template('homepage.html', owner=owner,houses=houses,recommendations=recommendations)
+        return render_template('homepage.html', title='Home', user=user_in_db, owner=owner,houses=houses,recommendations=recommendations,imgs=imgs)
+    return render_template('homepage.html', owner=owner,houses=houses,recommendations=recommendations,imgs=imgs)
 
 @app.route('/tips')
 def tips():
@@ -278,6 +289,17 @@ def buy():
     #     db.session.commit()
     houses = House.query.filter(House.status == 2).all()
     houses_recent = House.query.filter(House.status == 2).order_by(House.id.desc()).limit(4)
+    stored_images = Image.query.all()
+    imgs = []
+    count = [0,0,0,0,0,0,0,0,0,0,0]
+    j = 0
+    for house in houses_recent:
+        for i in stored_images:
+            if i.house_id == house.id:
+                if count[j] < 1:
+                    imgs.append(i)
+                    count[j] += 1
+        j += 1
     if not session.get("USERNAME") is None:
         username = session.get("USERNAME")
         user_in_db = User.query.filter(User.username == username).first()
@@ -502,7 +524,7 @@ def buy():
 
     houses_checked = paginate.items
 
-    return render_template('buy.html',title='Buy', data=data, user=user_in_db, houses=houses, form=form, checked=checked_data, checked_1=checked_data_1, paginate=paginate, houses_checked=houses_checked,houses_recent=houses_recent)
+    return render_template('buy.html',title='Buy', data=data, user=user_in_db, houses=houses, form=form, checked=checked_data, checked_1=checked_data_1, paginate=paginate, houses_checked=houses_checked,houses_recent=houses_recent,imgs=imgs)
 
 @app.route('/predict', methods=['GET','POST'])
 def predict():
@@ -664,7 +686,18 @@ def personal():
         user_in_db = User.query.filter(User.username == username).first()
         houses = House.query.filter(House.user_id == user_in_db.id).all()
         favorites = Favorite.query.filter(Favorite.user_id == user_in_db.id).all()
+        house_to_uplaod = House.query.filter(House.user_id == user_in_db.id).filter(House.status == 1).all()
         fav_houses = []
+        images = Image.query.all()
+        house_picture = []
+        houses_id = []
+        for house in house_to_uplaod:
+            house_picture.append(0)
+            houses_id.append(house.id)
+        for i in range(len(house_to_uplaod)-1):
+            for im in images:
+                if houses_id[i] == im.house_id:
+                    house_picture[i] += 1
         for f in favorites:
             h = House.query.filter(House.id == f.house_id).first()
             fav_houses.append(h)
@@ -676,7 +709,7 @@ def personal():
                 completed += 1
             if h.status == 2:
                 uploaded += 1
-        return render_template('personalpage.html', title="Personal Page", user=user_in_db, houses = houses, fav_houses=fav_houses,completed=completed,uploaded=uploaded)
+        return render_template('personalpage.html', title="Personal Page", user=user_in_db, houses = houses, fav_houses=fav_houses,completed=completed,uploaded=uploaded,house_picture=house_picture,houses_id=houses_id)
     else:
         flash("User needs to login first")
         return redirect(url_for('login'))

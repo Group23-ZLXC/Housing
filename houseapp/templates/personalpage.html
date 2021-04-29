@@ -56,10 +56,34 @@
                   name="button" class="btn btn-success btn-xs">Preview</button></a></td>
             <td style="padding-left: 5px;"><a href="{{ url_for('edit_house',house_id=house.id) }}"><button type="button"
                   name="button" class="btn btn-success btn-xs">Edit</button></a></td>
-            <td style="padding-left: 5px;"><a href="{{ url_for('upload_house',house_id1=house.id) }}"><button
-                  class="btn btn-warning btn-xs" type="button" name="button" data-toggle="modal" data-target="#Upload">Upload</button></a></td>
+            <td style="padding-left: 5px;"><button class="btn btn-warning btn-xs" type="button" name="button" data-toggle="modal" data-target="#upload{{ house.id }}">Upload</button></td>
           </tr>
-          <!-- <div class="modal fade" id="Upload" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          {% if house_picture[houses_id.index(house.id)] == 0 %}
+          <div class="modal fade" id="upload{{ house.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                  </button>
+                  <h4 class="modal-title" id="myModalLabel">
+                    Go to upload your picture!
+                  </h4>
+                </div>
+                <div class="modal-body">
+                  You should upload at least one picture of the house.
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Cancel
+                  </button>
+                  <a href="{{ url_for('edit_house',house_id=house.id) }}"><button type="button" class="btn btn-success btn-sm">Go To Edit
+                  </button></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% else %}
+          <div class="modal fade" id="upload{{ house.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
@@ -71,7 +95,7 @@
                   </h4>
                 </div>
                 <div class="modal-body">
-                  You will upload id:&nbsp;<b>{{ house.id }}</b>.
+                  You will upload the house with id:&nbsp;<b>{{ house.id }}</b>.
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">No
@@ -81,7 +105,8 @@
                 </div>
               </div>
             </div>
-          </div> -->
+          </div>
+          {% endif %}
           {% endif %}
           {% endfor %}
           {% else %}
@@ -124,10 +149,9 @@
             </td>
             <td style="padding-left: 5px;"><a href="{{ url_for('edit_house',house_id=house.id) }}"><button type="button"
                   name="button" class="btn btn-info btn-xs">Edit</button></a></td>
-            <td style="padding-left: 5px;"><a href="{{ url_for('delete_house',house_id=house.id) }}"><button
-                  class="btn btn-danger btn-xs" type="button" name="button" data-toggle="modal" data-target="#Delete">Delete</button></a></td>
+            <td style="padding-left: 5px;"><button class="btn btn-danger btn-xs" type="button" name="button" data-toggle="modal" data-target="#delete{{ house.id }}">Delete</button></td>
           </tr>
-          <!-- <div class="modal fade" id="Delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal fade" id="delete{{ house.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
@@ -139,7 +163,7 @@
                   </h4>
                 </div>
                 <div class="modal-body">
-                  You will delete id:&nbsp;<b>{{ house.id }}</b>.
+                  You will delete the house with id:&nbsp;<b>{{ house.id }}</b>.
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">No
@@ -149,14 +173,13 @@
                 </div>
               </div>
             </div>
-          </div> -->
+          </div>
           {% endif %}
           {% endfor %}
           {% else %}
           <p style="margin-top: 20px;">There is no house in the collection yet. Click the <b>' <button
             class="btn btn-warning btn-xs" disabled="disabled" >Upload</button> '</b> button in <b>'Completed'</b> to upload your house!</p>
           {% endif %}
-
         {% endif %}
         </table>
       </div>
@@ -195,9 +218,32 @@
         <td style="padding-left: 5px;"><a href=""><button
           class="btn btn-primary btn-xs" type="button" name="button">Calculate</button></a>
         </td>
-        <td><a href="{{ url_for('remove_favorite',house_id2=h.id, user_id2=user.id) }}"><button class="btn btn-danger btn-xs" type="button"
-              name="button">Remove</button></a></td>
+        <td><button class="btn btn-danger btn-xs" type="button"
+              name="button" data-toggle="modal" data-target="#remove{{ h.id }}">Remove</button></td>
       </tr>
+      <div class="modal fade" id="remove{{ h.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                &times;
+              </button>
+              <h4 class="modal-title" id="myModalLabel">
+                Are you sure to remove?
+              </h4>
+            </div>
+            <div class="modal-body">
+              You will remove the house from favorite with id:&nbsp;<b>{{ h.id }}</b>.
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">No
+              </button>
+              <a href="{{ url_for('remove_favorite',house_id2=h.id, user_id2=user.id) }}"><button type="button" class="btn btn-success btn-sm">Yes
+              </button></a>
+            </div>
+          </div>
+        </div>
+      </div>
       {% endfor %}
     </table>
     {% else %}

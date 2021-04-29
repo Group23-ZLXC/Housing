@@ -152,14 +152,16 @@
             {% endif %}
             <div class="panel-body">
               <p>{{ form.reason(rows=16, cols=80, class="form-control") }}</p>
-              {% for error in form.reason.errors %}
-              <span style="color: red;">[{{ error }}]</span>
-              {% endfor %}
             </div>
             <p align="right" style="margin-right: 15px;">{{ form.submit(class="btn btn-defult") }}</p>
             </div>
+            
           </div>
-        </td>
+        </td>{% for error in form.reason.errors %}
+              <div id="error" class="alert alert-warning" style="margin-top: 10px;"> 
+                <strong> ！</strong>The input of <b>"House features (reasons for recommendation)"</b> cannot be empty.
+              </div>
+              {% endfor %}
       </tr>
       <tr>
         <td colspan="2" style="padding:5px">
