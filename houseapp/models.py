@@ -109,3 +109,13 @@ class Answer(db.Model):
     question_id = db.Column(db.Integer, db.ForeignKey('comment.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     private = db.Column(db.Integer, default=0)
+
+class Money(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    house_id = db.Column(db.Integer, db.ForeignKey('house.id'))
+    price_percentage = db.Column(db.Integer)
+    month = db.Column(db.Integer)
+    money_type = db.Column(db.Integer) 
+    house_number = db.Column(db.Integer)
+    

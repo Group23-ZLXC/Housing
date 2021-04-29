@@ -75,6 +75,14 @@ class EditHouseForm(FlaskForm):
     # , validators=[FileAllowed(['jpg', 'png'], 'only .jpg or .png are accepted')]
     submit = SubmitField('Save')
 
+class MoneyForm(FlaskForm):
+    money_type = SelectField('Loan Type', choices = [(1,'Commercial Loan'),(2,'Housing Provident Fund Loans')])
+    house_number = SelectField('Number of House', choices = [(1,'First House Loan'), (2,'Second House Loan')])
+    price = SelectField('Loan Percentage', choices = [(1, '10%'), (2, '20%'),
+        (3, '30%'), (4, '40%'), (5, '50%'), (6, '60%'), (7, '70%'),
+        (8, '80%')])
+    month = SelectField('Loan Months', choices = [(1,'1 year (12 months)'),(5,'5 year (60 months)'),(10,'10 year (120 months)'),(15,'15 year (180 months)'),(20,'20 year (240 months)'),(25,'25 year (300 months)'),(30,'30 year (360 months)')])
+    calculate = SubmitField('Calculate')
 
 # render_kw: https://www.cnblogs.com/FRESHMANS/p/8529992.html
 class SignupForm(FlaskForm):

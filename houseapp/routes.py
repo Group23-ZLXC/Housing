@@ -1,8 +1,8 @@
 from houseapp import app, db, Config, model
 from flask import render_template, flash, redirect, url_for, session, request, jsonify
-from houseapp.forms import CommentForm, LoginForm, SignupForm, PredictForm, BuyForm, RecommendationForm, EditRecomForm, ReplyForm, EditHouseForm
+from houseapp.forms import CommentForm, LoginForm, SignupForm, PredictForm, BuyForm, RecommendationForm, EditRecomForm, ReplyForm, EditHouseForm, MoneyForm
 from werkzeug.security import generate_password_hash, check_password_hash
-from houseapp.models import User, House, Comment, Answer, Check, Recommendation, Favorite, Checked, Image
+from houseapp.models import User, House, Comment, Answer, Check, Recommendation, Favorite, Checked, Image, Money
 from houseapp.static import data
 import numpy as np
 import datetime
@@ -147,6 +147,8 @@ def details():
     pop_houses = House.query.filter(House.status == 2).order_by(House.rank.desc()).limit(11)
     favorites = Favorite.query.filter(Favorite.house_id == house.id).all()
     re_houses = []
+    money_calculate=[0.0,0.0,0.0,0.0,0.0]
+    # 首付，月总，总利息，总还款额，总本金 
     for f in favorites:
         fas = Favorite.query.filter(Favorite.user_id == f.user_id).all()
         for fa in fas:
@@ -170,6 +172,7 @@ def details():
     form1 = RecommendationForm()
     form2 = EditRecomForm()
     form3 = ReplyForm()
+    form4 = MoneyForm()
     if not session.get("USERNAME") is None:
         username = session.get("USERNAME")
         user_in_db = User.query.filter(User.username == username).first()
@@ -183,15 +186,36 @@ def details():
             else:
                 # form3.comment.data = "Reply to "+ comment_id +" : "
                 return render_template('details.html', title='Details', form=form, form1=form1, user=user_in_db, house = house, owner=owner, comments=comments,
-                    stored_recomm=stored_recomm, favorite=favorite, form2=form2,form3=form3, reply=reply, answers=answers, stored_images=stored_images,
-                    image_names=image_names, re_houses=re_houses, pop_houses=pop_houses)
+                    stored_recomm=stored_recomm, favorite=favorite, form2=form2,form3=form3,form4=form4, reply=reply, answers=answers, stored_images=stored_images,
+                    image_names=image_names, re_houses=re_houses, pop_houses=pop_houses, money_calculate=money_calculate, money=money)
         else:
             if form.validate_on_submit():
                 comment = Comment(body=form.comment.data, user_id = user_in_db.id, house_id = house.id)
                 db.session.add(comment)
                 db.session.commit()
                 return redirect(url_for('details', house_id=house.id))
-
+        
+        if form4.validate_on_submit():
+                money = Money(user_id=user_in_db.id,house_id=house.id,price_percentage=form4.price.data,month=form4.month.data,money_type=form4.money_type.data,house_number=form4.house_number.data)
+                db.session.add(money)
+                db.session.commit()
+                if money.money_type == 1:
+                    loan = 0.049
+                if money.money_type == 2:
+                    loan = 0.0325
+                money_calculate[0] = house.total_price*(1-money.price_percentage*0.1)
+                money_calculate[1] = house.total_price*(money.price_percentage*0.1)*loan*(1+loan)**(money.month*12)/((1+loan)**(money.month*12)-1)
+                money_calculate[2] = money.month*12*money_calculate[1]-house.total_price*(money.price_percentage*0.1)
+                money_calculate[3] = money_calculate[1]*money.month*12 + house.total_price*(money.price_percentage*0.1)
+                money_calculate[4] = money_calculate[1]*money.month*12
+        else:
+            money = Money(user_id=user_in_db.id,house_id=house.id,price_percentage=1,month=1,money_type=1,house_number=1)
+            loan = 0.049
+            money_calculate[0] = house.total_price*(1-money.price_percentage*0.1)
+            money_calculate[1] = house.total_price*(money.price_percentage*0.1)*loan*(1+loan)**12/((1+loan)**12-1)
+            money_calculate[2] = money.month*12*money_calculate[1]-house.total_price*(money.price_percentage*0.1)
+            money_calculate[3] = money_calculate[1]*money.month*12 + house.total_price*(money.price_percentage*0.1)
+            money_calculate[4] = money_calculate[1]*money.month*12
         if stored_recomm:
             if form2.validate_on_submit():
                 stored_recomm.reason = form2.reason.data
@@ -201,8 +225,8 @@ def details():
                 form2.reason.data = stored_recomm.reason
                 return render_template('details.html', title='Details', form=form, form1=form1, user=user_in_db,
                     house = house, owner=owner, comments=comments, stored_recomm=stored_recomm, favorite=favorite,
-                    form2=form2,form3=form3, reply=reply, answers=answers, stored_images=stored_images,
-                    image_names=image_names, re_houses=re_houses, pop_houses=pop_houses)
+                    form2=form2,form3=form3,form4=form4, reply=reply, answers=answers, stored_images=stored_images,
+                    image_names=image_names, re_houses=re_houses, pop_houses=pop_houses, money_calculate=money_calculate, money=money)
 
         else:
             if form1.validate_on_submit():
@@ -212,12 +236,12 @@ def details():
                 return redirect(url_for('details', house_id=house.id))
             else:
                 return render_template('details.html', title='Details', form=form, form1=form1, user=user_in_db, house = house,
-                    owner=owner, comments=comments, favorite=favorite, form3=form3, reply=reply, answers=answers,
-                    stored_images=stored_images, image_names=image_names, re_houses=re_houses, pop_houses=pop_houses)
+                    owner=owner, comments=comments, favorite=favorite, form3=form3,form4=form4, reply=reply, answers=answers,
+                    stored_images=stored_images, image_names=image_names, re_houses=re_houses, pop_houses=pop_houses, money_calculate=money_calculate, money=money)
 
     return render_template('details.html', title='Details', form=form, form1=form1, house=house, owner=owner, commennts=comments,
-        stored_recomm=stored_recomm,form3=form3, reply=reply, answers=answers, stored_images=stored_images, image_names=image_names
-        , re_houses=re_houses, pop_houses=pop_houses)
+        stored_recomm=stored_recomm,form3=form3,form4=form4, reply=reply, answers=answers, stored_images=stored_images, image_names=image_names
+        , re_houses=re_houses, pop_houses=pop_houses, money_calculate=money_calculate, money=money)
 
 
 @app.route('/upload_house')
@@ -293,7 +317,7 @@ def buy():
     imgs = []
     count = [0,0,0,0,0,0,0,0,0,0,0]
     j = 0
-    for house in houses_recent:
+    for house in houses:
         for i in stored_images:
             if i.house_id == house.id:
                 if count[j] < 1:

@@ -157,9 +157,13 @@
             {% for h in houses %}
             {% if house.house_id == h.id %}
             <td rowspan="3" width="22%">
+                {% for i in imgs %}
+                {% if i.house_id == h.id %}
                 <a href="{{ url_for('details', house_id=h.id, user_id_checked=user.id )}}" id="image"><img
-                        src="{{ url_for('static', filename='img/house.jpg') }}" alt="house" width="100%" height="170px"
-                        class="img-rounded" /></a>
+                        src="{{ i.filepath }}" alt="{{ i.filepath }}" width="100%" height="170px"
+                        class="img-rounded"></a>
+                {% endif %}
+                {% endfor %}
             </td>
             {% endif %}
             {% endfor %}
