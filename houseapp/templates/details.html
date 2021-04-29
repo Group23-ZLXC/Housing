@@ -70,6 +70,7 @@
           </a>
           {% endif %}
         </div>
+        </div>
       </td>
       <td style="vertical-align: top; padding-left: 20px; height: 30%;">
         {% if house.total_price %}
@@ -97,11 +98,61 @@
         <td style="vertical-align: middle;" align="right">
           <a href="{{ url_for('edit_house',house_id=house.id) }}"><button class="btn btn-defult" type="button"
               name="button" style="margin-right: 10px;"><span class="glyphicon glyphicon-edit" style="padding-top: 3px;"></span>&nbsp;Edit</button></a>
-          <a href="{{ url_for('upload_house',house_id1=house.id) }}"><button class="btn btn-defult" type="button"
-              name="button"><span class="glyphicon glyphicon-cloud-upload" style="padding-top: 3px;"></span>&nbsp;Upload</button></a>
-
+          {% if stored_images %}
+          <a><button class="btn btn-defult" type="button"
+              name="button" data-toggle="modal" data-target="#upload"><span class="glyphicon glyphicon-cloud-upload" style="padding-top: 3px;"></span>&nbsp;Upload</button></a>
+          {% else %}
+          <a><button class="btn btn-defult" type="button"
+              name="button" data-toggle="modal" data-target="#need_picture"><span class="glyphicon glyphicon-cloud-upload" style="padding-top: 3px;"></span>&nbsp;Upload</button></a>
+          {% endif %}
 
         </td>
+        <div class="modal fade" id="upload" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                  &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                  Are you sure to upload?
+                </h4>
+              </div>
+              <div class="modal-body">
+                You will upload the house with id:&nbsp;<b>{{ house.id }}</b>.
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">No
+                </button>
+                <a href="{{ url_for('upload_house',house_id1=house.id) }}"><button type="button" class="btn btn-success btn-sm">Yes
+                </button></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal fade" id="need_picture" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                  &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                  Go to upload your picture!
+                </h4>
+              </div>
+              <div class="modal-body">
+                You should upload at least one picture of the house.
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Cancel
+                </button>
+                <a href="{{ url_for('edit_house',house_id=house.id) }}"><button type="button" class="btn btn-success btn-sm">Go To Edit
+                </button></a>
+              </div>
+            </div>
+          </div>
+        </div>
         {% endif %}
         {% elif house.status == 2 %}
           {% if house.user_id == user.id %}
@@ -336,6 +387,23 @@
                 </div>
               </div>
             </div>
+            <div class="panel-group" id="accordion">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#location">
+                      <b style="font-size:3rem;">Location</b>
+                    </a>
+                  </h4>
+                </div>
+                <div id="location" class="panel-collapse collapse in">
+                  <div id="wrap" class="my-map" style="margin: 35px 20px 0px 20px;">
+                    <!-- <h3>Lng: {{ house.lng }}; Lat: {{ house.lat }}</h3> -->
+                    <div id="mapContainer" style="width:140%;height:600px"></div>
+                  </div>
+              </div>
+            </div>
+            </div>
 
             {% if house.status == 2 %}
             <div class="panel-group" id="accordion" style="margin-top: 20px;margin-bottom: 50px;">
@@ -373,6 +441,10 @@
                       </td>
                       </tr>
                       {% endfor %}
+                      {% else %}
+                      <div class="panel-body">
+                        <p style="margin: 10px 0 0 10px;color: gray;">No comment yet.</p>
+                      </div>
                       {% endif %}
                     </table>
                     <hr style="margin-right: 20px;margin-left: 20px;">
@@ -427,12 +499,6 @@
             </div>
             {% endif %}
             </div>
-            <div id="wrap" class="my-map" style="margin: 0px 150px 130px 150px;">
-              <h1> Location</h1>
-              <hr>
-              <h3>Lng: {{ house.lng }}; Lat: {{ house.lat }}</h3>
-              <div id="mapContainer"></div>
-            </div>
 
             {% if house.status == 2 %}
             <div>
@@ -463,6 +529,7 @@
                               {% endfor %}
                               </div>
                       </div>
+              </div>
               </div>
 
               <div>
@@ -521,7 +588,7 @@
 <script>
 !function(){
   var infoWindow, map, level = 11,
-    center = {lng: {{ house.lng }}, lat: {{ house.lat }}},
+    center = {lng: {{ house.lng }}, lat: {{ house.lat }} },
     features = [{"icon":"cir","color":"red","name":"未命名标注","desc":"未命名标注描述","lnglat":{"Q":{{ house.lat }},"R":{{ house.lng }},"lng":{{ house.lng }},"lat":{{ house.lat }}},"offset":{"x":-9,"y":-31},"type":"Marker"}];
 
   function loadFeatures(){
