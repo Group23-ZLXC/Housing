@@ -148,7 +148,21 @@ def details():
     favorites = Favorite.query.filter(Favorite.house_id == house.id).all()
     re_houses = []
     money_calculate=[0.0,0.0,0.0,0.0,0.0]
-    # 首付，月总，总利息，总还款额，总本金 
+    recommendations = Recommendation.query.all()
+    # 首付，月总，总利息，总还款额，总本金
+    stored_images = Image.query.all()
+    imgs = []
+    count = []
+    for h in pop_houses:
+        count.append(0)
+    j = 0
+    for house in pop_houses:
+        for i in stored_images:
+            if i.house_id == house.id:
+                if count[j] < 1:
+                    imgs.append(i)
+                    count[j] += 1
+        j += 1 
     for f in favorites:
         fas = Favorite.query.filter(Favorite.user_id == f.user_id).all()
         for fa in fas:
@@ -187,7 +201,7 @@ def details():
                 # form3.comment.data = "Reply to "+ comment_id +" : "
                 return render_template('details.html', title='Details', form=form, form1=form1, user=user_in_db, house = house, owner=owner, comments=comments,
                     stored_recomm=stored_recomm, favorite=favorite, form2=form2,form3=form3,form4=form4, reply=reply, answers=answers, stored_images=stored_images,
-                    image_names=image_names, re_houses=re_houses, pop_houses=pop_houses, money_calculate=money_calculate, money=money)
+                    image_names=image_names, re_houses=re_houses, pop_houses=pop_houses, money_calculate=money_calculate, money=money, recommendations=recommendations, imgs=imgs)
         else:
             if form.validate_on_submit():
                 comment = Comment(body=form.comment.data, user_id = user_in_db.id, house_id = house.id)
@@ -241,7 +255,7 @@ def details():
                 return render_template('details.html', title='Details', form=form, form1=form1, user=user_in_db,
                     house = house, owner=owner, comments=comments, stored_recomm=stored_recomm, favorite=favorite,
                     form2=form2,form3=form3,form4=form4, reply=reply, answers=answers, stored_images=stored_images,
-                    image_names=image_names, re_houses=re_houses, pop_houses=pop_houses, money_calculate=money_calculate, money=money)
+                    image_names=image_names, re_houses=re_houses, pop_houses=pop_houses, money_calculate=money_calculate, money=money, recommendations=recommendations, imgs=imgs)
 
         else:
             if form1.validate_on_submit():
@@ -252,11 +266,11 @@ def details():
             else:
                 return render_template('details.html', title='Details', form=form, form1=form1, user=user_in_db, house = house,
                     owner=owner, comments=comments, favorite=favorite, form3=form3,form4=form4, reply=reply, answers=answers,
-                    stored_images=stored_images, image_names=image_names, re_houses=re_houses, pop_houses=pop_houses, money_calculate=money_calculate, money=money)
+                    stored_images=stored_images, image_names=image_names, re_houses=re_houses, pop_houses=pop_houses, money_calculate=money_calculate, money=money, recommendations=recommendations, imgs=imgs)
 
     return render_template('details.html', title='Details', form=form, form1=form1, house=house, owner=owner, commennts=comments,
         stored_recomm=stored_recomm,form3=form3,form4=form4, reply=reply, answers=answers, stored_images=stored_images, image_names=image_names
-        , re_houses=re_houses, pop_houses=pop_houses, money_calculate=money_calculate, money=money)
+        , re_houses=re_houses, pop_houses=pop_houses, money_calculate=money_calculate, money=money, recommendations=recommendations, imgs=imgs)
 
 
 @app.route('/upload_house')

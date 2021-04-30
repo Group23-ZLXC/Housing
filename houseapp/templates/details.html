@@ -7,6 +7,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">  
   <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script type="text/javascript" src="../static/js/jquery.min.js"></script>
   <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
   <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <style>
@@ -690,7 +691,7 @@
   </div>
 
   {% if house.status == 2 %}
-  <div>
+  <!-- <div>
     <h1> Users who like this house also like...</h1>
     <hr>
     <div class="lb_gl">
@@ -720,12 +721,10 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
-    <div>
-      <h1> Popular Houses</h1>
-      <hr>
       <div class="lb_gl">
+        <h1 class="title" style="color: rgb(0, 0, 0);"><b><span class="glyphicon glyphicon-align-right"></span>&nbsp;&nbsp;Popular Houses&nbsp;&nbsp;<span class="glyphicon glyphicon-align-left"></span></b></h1>
         <div class="container">
           <div class="pictureSlider poster-main">
             <div class="poster-btn poster-prev-btn"></div>
@@ -734,8 +733,13 @@
               <div class="poster-item  zturn-item">
                 <p class="houseid">House ID: {{ h.id }}</p>
                 <div class="for_btn">
-                  <a href="{{ url_for('details', house_id=h.id )}}" id="image"><img
-                      src="{{ url_for('static', filename='img/house4.jpg') }}" width="100%"></a>
+                  <a href="{{ url_for('details', house_id=h.id )}}" id="image">
+                    {% for i in imgs %}
+                    {% if i.house_id == h.id %}
+                      <img src="{{ i.filepath }}" alt="{{ i.filepath }}" width="100%" height="190px">
+                    {% endif %}
+                    {% endfor %}
+                  </a>
                 </div>
 
                 <div class="property">
@@ -744,13 +748,18 @@
                   <p class="pro"><span>Square：<span class="per">{{ h.square }} m<sup>2</sup></span></span>
                   </p>
                   <div class="recommendation">
-
+                    {% for r in recommendations %}
+                    {% if r.house_id == h.id %}
+                    {{ r.reason }}
+                    {% endif %}
+                    {% endfor %}
                   </div>
                 </div>
               </div>
               {% endfor %}
             </div>
           </div>
+        </div>
         </div>
         {% endif %}
 </body>
@@ -793,12 +802,185 @@
         background-color: #ffffff;
         color: #434348;
     }
+    .lb_gl {
+        margin-top: 30px;
+        background-size: 100% 100%;
+        height: 80%;
+        background-image: linear-gradient(#ffffff, #797979, #ffffff);
+    }
+
+    .container {
+        width: 100%;
+        position: relative;
+    }
+
+    .pictureSlider {
+        height: 80%;
+    }
+
+    .poster-item {
+        background: #fff;
+        margin-top: 20px;
+        height: 80%;
+        width: 336px;
+        border-radius: 10px;
+        padding: 20px 23px 20px 23px;
+        border: 3px dotted #bebebe;
+        transition: all 0.5s;
+        cursor: default;
+        -moz-transition: all 0.5s;
+        cursor: default;
+        -webkit-transition: all 0.5s;
+        cursor: default;
+        -o-transition: all 0.5s;
+        cursor: default;
+    }
+
+    .title {
+        text-align: center;
+        color: #000000;
+        font-weight: 400;
+        font-size: 36px;
+        padding: 40px 10px;
+    }
+
+    .houseid {
+        font-size: 30px;
+        font-weight: 900;
+        padding-left: 10px;
+    }
+
+    .pro {
+        margin-bottom: 20px;
+        color: #999;
+        font-size: 18px;
+        overflow: hidden;
+    }
+
+    .per {
+        color: #000;
+        padding-left: 10px;
+    }
+
+    .recommendation {
+        border-top: 1px solid #d0cddb;
+        line-height: 26px;
+        padding-top: 5px;
+        color: #999;
+        font-size: 12px;
+        max-height: 84px;
+        overflow: hidden;
+    }
+
+    .for_btn {
+        position: relative;
+        height: 214px;
+        overflow: hidden
+    }
+
+    .in_page {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 40px;
+        height: 40px;
+        margin-left: -20px;
+        margin-top: -20px;
+    }
+
+    .in_page>img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .check_more {
+        width: 180px;
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+        color: #fff;
+        background: #bc241d;
+        margin: 0 auto;
+        display: block;
+    }
 </style>
 <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=您申请的key值&plugin=AMap.Geocoder"></script>
 <script src="https://code.highcharts.com.cn/highcharts/highcharts.js"></script>
 <script src="https://code.highcharts.com.cn/highcharts/modules/exporting.js"></script>
 <script src="https://img.hcharts.cn/highcharts-plugins/highcharts-zh_CN.js"></script>
 <script>
+  var zturn = function (turn) {
+        this.turn = turn
+        this.zturn = $("#" + turn.id)
+        this.X = 0
+        this.zturnitem = this.zturn.children(".zturn-item")
+        this.num_li = this.zturnitem.length//轮播元素个数 zturnPy为每个的偏移量
+        this.zturnPy = turn.Awidth / (this.num_li - 1)
+        this.init()
+        this.turn_()
+        return this
+    }
+    zturn.prototype = {
+        constructor: zturn,
+        init: function () {
+            var _self = this;
+            this.zturn.children(".zturn-item").each(function (index, element) {
+                //index是第几个元素 X是选取的中间数 num_li是总数
+                var rt = 1//1:右侧：-1：左侧
+                if ((index - _self.X) > _self.num_li / 2 || (index - _self.X) < 0 && (index - _self.X) > (-_self.num_li / 2)) { rt = -1 }//判断元素左侧还是右侧
+                var i = Math.abs(index - _self.X);//取绝对值
+                if (i > _self.num_li / 2) { i = parseInt(_self.X) + parseInt(_self.num_li) - index; }//i:是左或者右的第几个
+                if ((index - _self.X) < (-_self.num_li / 2)) { i = _self.num_li + index - _self.X }
+                $(this).css({
+                    'position': 'absolute',
+                    'left': '50%',
+                    'margin-left': -_self.turn.width / 2 + 23 + _self.zturnPy * rt * i + "px",
+                    'z-index': _self.num_li - i,
+                    'opacity': Math.pow(_self.turn.opacity, i),
+                    'transform': 'scale(' + Math.pow(_self.turn.scale, i) + ')',
+                    '-webkit-transform': 'scale(' + Math.pow(_self.turn.scale, i) + ')',
+                    '-webkit-transform': 'scale(' + Math.pow(_self.turn.scale, i) + ')',
+                    '-moz-transform': 'scale(' + Math.pow(_self.turn.scale, i) + ')',
+                    '-ms-transform': 'scale(' + Math.pow(_self.turn.scale, i) + ')',
+                    '-o-transform': 'scale(' + Math.pow(_self.turn.scale, i) + ')'
+                })
+                $(this).attr("data_n", index)
+            })
+        },
+        turn_: function () {
+            var _self = this
+            this.zturnitem.click(function () {
+                _self.X = $(this).attr("data_n")
+                _self.init()
+            })
+        },
+        prev_: function () {
+            var _self = this
+            this.X--
+            if (this.X < 0) { this.X = this.num_li - 1 }
+            this.init()
+        },
+        next_: function () {
+            var _self = this
+            this.X++
+            if (this.X >= this.num_li) { this.X = 0 }
+            this.init()
+        }
+    }
+    var aa = new zturn({
+        id: "zturn",
+        opacity: 0.9,
+        width: 382,
+        Awidth: 1024,
+        scale: 0.9
+    })
+    var ab = new zturn({
+        id: "zturn2",
+        opacity: 0.8,
+        width: 382,
+        Awidth: 1024,
+        scale: 0.6
+    })
   Highcharts.chart('container', {
 		chart: {
 				plotBackgroundColor: null,
@@ -849,7 +1031,7 @@
     }
   !function () {
     var infoWindow, map, level = 11,
-      center = {lng:{{house.lng}},lat: {{ house.lat }}},
+      center = {lng: {{ house.lng }},lat: {{ house.lat }}},
   features = [{ "icon": "cir", "color": "red", "name": "未命名标注", "desc": "未命名标注描述", "lnglat": { "Q": {{ house.lat }}, "R": {{ house.lng }}, "lng": {{ house.lng }}, "lat": {{ house.lat }}}, "offset": { "x": -9, "y": -31 }, "type": "Marker"}];
 
   function loadFeatures() {
