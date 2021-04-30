@@ -671,8 +671,37 @@ def delete_img():
 def visitothers():
     user_id = request.args.get('user_id')
     user = User.query.filter(User.id == user_id).first()
+    stored_images = Image.query.all()
+    houses = House.query.filter(House.status == 2).all()
+    imgs = []
+    imgs_upload = []
+    count = []
+    count_upload = []
+    for f in user.favorite:
+        count.append(0)
+    for u in user.house:
+        if u.status == 2:
+            count_upload.append(0)
+    j = 0
+    for f in user.favorite:
+        for i in stored_images:
+            if i.house_id == f.house_id:
+                if count[j] < 1:
+                    imgs.append(i)
+                    count[j] += 1
+        j += 1
+    p = 0
+    for u in user.house:
+        if u.status == 2:
+            for i in stored_images:
+                if i.house_id == u.id:
+                    if count_upload[p] < 1:
+                        imgs_upload.append(i)
+                        count_upload[p] += 1
+            p += 1
+    test = user.favorite
     #visitor_id = request.args.get('visitor_id')
-    return render_template('visitothers.html', user=user, title=user.username)
+    return render_template('visitothers.html', user=user, title=user.username, imgs=imgs, imgs_upload=imgs_upload, houses=houses)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
