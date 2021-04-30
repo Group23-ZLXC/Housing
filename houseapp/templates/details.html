@@ -516,7 +516,7 @@
                     <tr>
                       <td><b>Loan Type</b></td>
                       {% if money.money_type == 1 %}
-                      <td>Commercial Loan</td>
+                      <td>Commercial Loans</td>
                       {% elif money.money_type == 2 %}
                       <td>Housing Provident Fund Loans</td>
                       {% endif %}
@@ -552,6 +552,31 @@
                     <tr>
                       <td><b>Total Repayment</b></td>
                       <td>¥ {{ '%.2f' %(money_calculate[4]) }}</td>
+                    </tr>
+                    <tr>
+                      {% if money.error_type == 0 %}
+                      <td colspan="2" style="font-size: 13px;color: gray;">
+                        <span class="glyphicon glyphicon-ok-sign" style="color: lightgreen;"></span>&nbsp;The loan is under the law :) <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp; See your loan according to the table above!
+                      </td>
+                      {% elif money.error_type == 1 %}
+                      <td colspan="2" style="font-size: 13px;color: gray;">
+                        <span class="glyphicon glyphicon-remove-sign" style="color: lightcoral;"></span>&nbsp;The loan isn't under the law :( <br> &nbsp;&nbsp;&nbsp;&nbsp; Using Commercial Loans to buy the first house can only borrow <b>70%</b> at most. It has been automatically changed for you, please refer to the above table.
+                      </td>
+                      {% elif money.error_type == 2 %}
+                      <td colspan="2" style="font-size: 13px;color: gray;">
+                        <span class="glyphicon glyphicon-remove-sign" style="color: lightcoral;"></span>&nbsp;The loan isn't under the law :( <br> &nbsp;&nbsp;&nbsp;&nbsp; Using Commercial Loans to buy the second house can only borrow <b>30%</b> at most. It has been automatically changed for you, please refer to the above table.
+                      </td>
+                      {% elif money.error_type == 3 %}
+                      <td colspan="2" style="font-size: 13px;color: gray;">
+                        <span class="glyphicon glyphicon-remove-sign" style="color: lightcoral;"></span>&nbsp;The loan isn't under the law :( <br> &nbsp;&nbsp;&nbsp;&nbsp; Using Housing Provident Fund Loans to buy the second house can only borrow <b>40%</b> at most. It has been automatically changed for you, please refer to the above table.
+                      </td>
+                      {% else %}
+                      <td colspan="2" style="font-size: 13px;color: gray;">
+                        <span class="glyphicon glyphicon-ok-sign" style="color: lightgreen;"></span>&nbsp;The loan is under the law :) <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp; See your loan according to the table above!
+                      </td>
+                      {% endif %}
                     </tr>
                   </table>
                 </td>

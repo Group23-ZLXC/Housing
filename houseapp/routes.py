@@ -195,27 +195,42 @@ def details():
                 db.session.commit()
                 return redirect(url_for('details', house_id=house.id))
         
-        if form4.validate_on_submit():
-                money = Money(user_id=user_in_db.id,house_id=house.id,price_percentage=form4.price.data,month=form4.month.data,money_type=form4.money_type.data,house_number=form4.house_number.data)
+            if form4.validate_on_submit():
+                money = Money(user_id=user_in_db.id,house_id=house.id,price_percentage=form4.price.data,month=form4.month.data,money_type=form4.money_type.data,house_number=form4.house_number.data,error_type=0)
+                if form4.house_number.data == '1':
+                    if form4.money_type.data == '1':
+                        if form4.price.data == '8':
+                            money.price_percentage = 7
+                            money.error_type = 1
+                if form4.house_number.data == '2':
+                    if form4.money_type.data == '1':
+                        if form4.price.data == '4' or form4.price.data == '5' or form4.price.data == '6' or form4.price.data == '7' or form4.price.data == '8':
+                            money.price_percentage = 3
+                            money.error_type = 2
+                    if form4.money_type.data == '2':
+                        if form4.price.data == '5' or form4.price.data == '6' or form4.price.data == '7' or form4.price.data == '8':
+                            money.price_percentage = 4
+                            money.error_type = 3
                 db.session.add(money)
                 db.session.commit()
                 if money.money_type == 1:
-                    loan = 0.049
+                    loan = 0.049/12
                 if money.money_type == 2:
-                    loan = 0.0325
+                    loan = 0.0325/12
                 money_calculate[0] = house.total_price*(1-money.price_percentage*0.1)
-                money_calculate[1] = house.total_price*(money.price_percentage*0.1)*loan*(1+loan)**(money.month*12)/((1+loan)**(money.month*12)-1)
+                money_calculate[1] = house.total_price*(money.price_percentage*0.1)*loan*((1+loan)**(money.month*12))/((1+loan)**(money.month*12)-1)
+                money_calculate[2] = money.month*12*money_calculate[1]-house.total_price*(money.price_percentage*0.1)
+                money_calculate[3] = money_calculate[1]*money.month*12 + house.total_price*(money.price_percentage*0.1)                
+                money_calculate[4] = money_calculate[1]*money.month*12
+                
+            else:
+                money = Money(user_id=user_in_db.id,house_id=house.id,price_percentage=1,month=5,money_type=1,house_number=1)
+                loan = 0.049/12
+                money_calculate[0] = house.total_price*(1-money.price_percentage*0.1)
+                money_calculate[1] = house.total_price*(money.price_percentage*0.1)*loan*((1+loan)**(money.month*12))/((1+loan)**(money.month*12)-1)
                 money_calculate[2] = money.month*12*money_calculate[1]-house.total_price*(money.price_percentage*0.1)
                 money_calculate[3] = money_calculate[1]*money.month*12 + house.total_price*(money.price_percentage*0.1)
                 money_calculate[4] = money_calculate[1]*money.month*12
-        else:
-            money = Money(user_id=user_in_db.id,house_id=house.id,price_percentage=1,month=1,money_type=1,house_number=1)
-            loan = 0.049
-            money_calculate[0] = house.total_price*(1-money.price_percentage*0.1)
-            money_calculate[1] = house.total_price*(money.price_percentage*0.1)*loan*(1+loan)**12/((1+loan)**12-1)
-            money_calculate[2] = money.month*12*money_calculate[1]-house.total_price*(money.price_percentage*0.1)
-            money_calculate[3] = money_calculate[1]*money.month*12 + house.total_price*(money.price_percentage*0.1)
-            money_calculate[4] = money_calculate[1]*money.month*12
         if stored_recomm:
             if form2.validate_on_submit():
                 stored_recomm.reason = form2.reason.data

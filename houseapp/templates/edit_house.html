@@ -1,5 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
+<head>    
+  <meta charset="utf-8">  
+  <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">  
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
 <div style=" margin-top: 60px; margin-left: 45px;margin-right: 45px;">
 <table style="width: 100%;">
   <tr>
@@ -187,9 +195,34 @@
                   <tr>
                     <td style="width: 50%;">{{ i.filename }}</td>
                     <td style="width: 30%;" align="center"><img src="{{ i.filepath }}" alt="{{ i.filepath }}" width="150px" height="90px" class="img-rounded"></td>
-                    <td style="width: 20%;" align="center"><a href="{{ url_for('delete_img', img_id=i.id) }}"><button class="btn btn-danger btn-xs" type="button" name="button">Delete</button></a></td>
-                  </tr>
+                    <td style="width: 20%;" align="center"><button class="btn btn-danger btn-xs" type="button" name="button" data-toggle="modal" data-target="#de{{ i.id }}">Delete</button></td>
+                    <!-- <td style="width: 20%;" align="center"><a href="{{ url_for('delete_img', img_id=i.id) }}"><button class="btn btn-danger btn-xs" type="button" name="button" data-toggle="modal" data-target="#delete{{ i.id }}">Delete</button></a></td> -->
+                  </tr> 
+                  <div class="modal fade" id="de{{ i.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                          </button>
+                          <h4 class="modal-title" id="myModalLabel">
+                            Are you sure to delete?
+                          </h4>
+                        </div>
+                        <div class="modal-body">
+                          You will delete the image:&nbsp;<b>{{ i.filename }}</b>.
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">No
+                          </button>
+                          <a href="{{ url_for('delete_img', img_id=i.id) }}"><button type="button" class="btn btn-success btn-sm">Yes
+                          </button></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>            
                 </table>
+            
               </li>
               {% endfor %}
             </ul>
@@ -204,6 +237,7 @@
 
 
 </div>
+</body>
 <!-- {% for i in range(10) %}
     <canvas id="{{i}}" width="50" height="50" style="border:1px solid #a0a0a0;border-radius: 5px;"
         onclick="fill_square({{ i }})">

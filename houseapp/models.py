@@ -118,4 +118,5 @@ class Money(db.Model):
     month = db.Column(db.Integer)
     money_type = db.Column(db.Integer) 
     house_number = db.Column(db.Integer)
+    error_type = db.Column(db.Integer)
     
