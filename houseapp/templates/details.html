@@ -218,15 +218,16 @@
       {% if not house.user_id == user.id %}
       {% if favorite %}
       <td style="vertical-align: top;" align="right">
-        <a href="{{ url_for('remove_favorite',house_id2=house.id, user_id2=user.id) }}" ><button
-            class="btn btn-danger btn-xs" type="button" name="button" style="margin-top: 5px;"><span class="glyphicon glyphicon-star"
-              style="padding-top: 3px;"></span>&nbsp;Remove from Favorite </button></a>
+        <a href="{{ url_for('remove_favorite',house_id2=house.id, user_id2=user.id) }}"><button
+            class="btn btn-danger btn-xs" type="button" name="button" style="margin-top: 5px;"><span
+              class="glyphicon glyphicon-star" style="padding-top: 3px;"></span>&nbsp;Remove from Favorite </button></a>
       </td>
       {% else %}
       <td style="vertical-align: top;" align="right">
-        <a href="{{ url_for('add_to_favorite',house_id2=house.id, user_id2=user.id) }}" ><button
-            class="btn btn-warning btn-xs" type="button" name="button" style="margin-top: 5px;"><span class="glyphicon glyphicon-star-empty"
-              style="padding-top: 3px;"></span>&nbsp;Add to Favorite </button></a>
+        <a href="{{ url_for('add_to_favorite',house_id2=house.id, user_id2=user.id) }}"><button
+            class="btn btn-warning btn-xs" type="button" name="button" style="margin-top: 5px;"><span
+              class="glyphicon glyphicon-star-empty" style="padding-top: 3px;"></span>&nbsp;Add to Favorite
+          </button></a>
       </td>
       {% endif %}
       {% endif %}
@@ -234,8 +235,9 @@
     </tr>
     <tr class="active">
       <td style="padding-left: 20px;vertical-align: middle;">Estimated monthly loan:</td>
-      <td width="20%" style="vertical-align: middle;"><b>¥ {{ '%.2f' %(money_calculate[1]) }}&nbsp;&nbsp;<button class="btn btn-link btn-xs" onclick="calculation()"><span
-        class="glyphicon glyphicon-info-sign"></span>&nbsp;More precise?</button></b></td>
+      <td width="20%" style="vertical-align: middle;"><b>¥ {{ '%.2f' %(money_calculate[1]) }}&nbsp;&nbsp;<button
+            class="btn btn-link btn-xs" onclick="calculation()"><span
+              class="glyphicon glyphicon-info-sign"></span>&nbsp;More precise?</button></b></td>
     </tr>
     <tr>
       <td style="padding-left: 20px;vertical-align: middle;">Building Type:</td>
@@ -466,130 +468,144 @@
     </div>
     {% if house.status == 2 %}
     <div id="loan_calculation">
-    <div class="panel-group" id="accordion">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h4 class="panel-title">
-            <a data-toggle="collapse" data-parent="#accordion" href="#loan">
-              <b style="font-size:3rem;">Loan Calculation</b>
-            </a>
-          </h4>
-        </div>
-        <div id="loan" class="panel-collapse collapse in">
-          <form action="" method="post" novalidate style="margin-left: 10px; margin-right: 10px;margin-bottom: 20px;">
-            {{ form4.hidden_tag() }}
-            <table style="width:100%;">
-              <tr>
-                <td style="width: 45%;">
-                  <div class="input-group" style="margin-top: 20px;padding-left: 10px;padding-right: 10px;">
-                    <span class="input-group-addon">Loan Type</span>
-                    {{ form4.money_type(class="form-control") }}
-                  </div>
-                </td>
-                 <td style="width: 45%;">
-                  <div class="input-group" style="margin-top: 20px;padding-left: 10px;padding-right: 10px;">
-                    <span class="input-group-addon">Number of House</span>
-                    {{ form4.house_number(class="form-control") }}
-                  </div>
-                </td>
-                <td rowspan="2" style="width:10%">{{ form4.calculate(class="button", style="height:85px;margin-top:20px;") }}</td>
+      <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#loan">
+                <b style="font-size:3rem;">Loan Calculation</b>
+              </a>
+            </h4>
+          </div>
+          <div id="loan" class="panel-collapse collapse in">
+            <form action="" method="post" novalidate style="margin-left: 10px; margin-right: 10px;margin-bottom: 20px;">
+              {{ form4.hidden_tag() }}
+              <table style="width:100%;">
+                <tr>
+                  <td style="width: 45%;">
+                    <div class="input-group" style="margin-top: 20px;padding-left: 10px;padding-right: 10px;">
+                      <span class="input-group-addon">Loan Type</span>
+                      {{ form4.money_type(class="form-control") }}
+                    </div>
+                  </td>
+                  <td style="width: 45%;">
+                    <div class="input-group" style="margin-top: 20px;padding-left: 10px;padding-right: 10px;">
+                      <span class="input-group-addon">Number of House</span>
+                      {{ form4.house_number(class="form-control") }}
+                    </div>
+                  </td>
+                  <td rowspan="2" style="width:10%">{{ form4.calculate(class="button",
+                    style="height:85px;margin-top:20px;") }}</td>
 
-              </tr>
-              <tr>
-                <td>
-                  <div class="input-group" style="margin-top: 20px;padding-left: 10px;padding-right: 10px;">
-                    <span class="input-group-addon">Price Percentage</span>
-                    {{ form4.price(class="form-control") }}
-                  </div>
-                </td>
-                 <td>
-                  <div class="input-group" style="margin-top: 20px;padding-left: 10px;padding-right: 10px;">
-                    <span class="input-group-addon">Loan Months</span>
-                    {{ form4.month(class="form-control") }}
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td><div id="container" style="min-width:400px;height:400px;margin-top: 10px;"></div></td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="input-group" style="margin-top: 20px;padding-left: 10px;padding-right: 10px;">
+                      <span class="input-group-addon">Price Percentage</span>
+                      {{ form4.price(class="form-control") }}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="input-group" style="margin-top: 20px;padding-left: 10px;padding-right: 10px;">
+                      <span class="input-group-addon">Loan Months</span>
+                      {{ form4.month(class="form-control") }}
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div id="container" style="min-width:400px;height:400px;margin-top: 10px;"></div>
+                  </td>
 
-                <td colspan="2" >
-                  <table class="table table-hover" style="margin:0 10px 0 10px;width: 95%;">
-                    <tr>
-                      <td><b>Loan Type</b></td>
-                      {% if money.money_type == 1 %}
-                      <td>Commercial Loans</td>
-                      {% elif money.money_type == 2 %}
-                      <td>Housing Provident Fund Loans</td>
-                      {% endif %}
-                    </tr>
-                    <tr>
-                      <td><b>Number of House</b></td>
-                      {% if money.house_number == 1 %}
-                      <td>First House Loan</td>
-                      {% elif money.house_number == 2 %}
-                      <td>Second House Loan</td>
-                      {% endif %}
-                    </tr>
-                    <tr>
-                      <td><b>Price Percentage</b></td>
-                      <td>{{ money.price_percentage }}0%</td>
-                    </tr>
-                    <tr>
-                      <td><b>Loan Months</b></td>
-                      <td>{{ money.month*12 }} months</td>
-                    </tr>
-                    <tr>
-                      <td><b>Down Payment</b></td>
-                      <td>¥ {{ '%.2f' %(money_calculate[0]) }}</td>
-                    </tr>
-                    <tr>
-                      <td><b>Monthly Repayment</b></td>
-                      <td>¥ {{ '%.2f' %(money_calculate[1]) }}</td>
-                    </tr>
-                    <tr>
-                      <td><b>Total Interest</b></td>
-                      <td>¥ {{ '%.2f' %(money_calculate[2]) }}</td>
-                    </tr>
-                    <tr>
-                      <td><b>Total Repayment</b></td>
-                      <td>¥ {{ '%.2f' %(money_calculate[4]) }}</td>
-                    </tr>
-                    <tr>
-                      {% if money.error_type == 0 %}
-                      <td colspan="2" style="font-size: 13px;color: gray;">
-                        <span class="glyphicon glyphicon-ok-sign" style="color: lightgreen;"></span>&nbsp;The loan is under the law :) <br>
-                        &nbsp;&nbsp;&nbsp;&nbsp; See your loan according to the table above!
-                      </td>
-                      {% elif money.error_type == 1 %}
-                      <td colspan="2" style="font-size: 13px;color: gray;">
-                        <span class="glyphicon glyphicon-remove-sign" style="color: lightcoral;"></span>&nbsp;The loan isn't under the law :( <br> &nbsp;&nbsp;&nbsp;&nbsp; Using Commercial Loans to buy the first house can only borrow <b>70%</b> at most. It has been automatically changed for you, please refer to the above table.
-                      </td>
-                      {% elif money.error_type == 2 %}
-                      <td colspan="2" style="font-size: 13px;color: gray;">
-                        <span class="glyphicon glyphicon-remove-sign" style="color: lightcoral;"></span>&nbsp;The loan isn't under the law :( <br> &nbsp;&nbsp;&nbsp;&nbsp; Using Commercial Loans to buy the second house can only borrow <b>30%</b> at most. It has been automatically changed for you, please refer to the above table.
-                      </td>
-                      {% elif money.error_type == 3 %}
-                      <td colspan="2" style="font-size: 13px;color: gray;">
-                        <span class="glyphicon glyphicon-remove-sign" style="color: lightcoral;"></span>&nbsp;The loan isn't under the law :( <br> &nbsp;&nbsp;&nbsp;&nbsp; Using Housing Provident Fund Loans to buy the second house can only borrow <b>40%</b> at most. It has been automatically changed for you, please refer to the above table.
-                      </td>
-                      {% else %}
-                      <td colspan="2" style="font-size: 13px;color: gray;">
-                        <span class="glyphicon glyphicon-ok-sign" style="color: lightgreen;"></span>&nbsp;The loan is under the law :) <br>
-                        &nbsp;&nbsp;&nbsp;&nbsp; See your loan according to the table above!
-                      </td>
-                      {% endif %}
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-            </table>
-          </form>
+                  <td colspan="2">
+                    <table class="table table-hover" style="margin:0 10px 0 10px;width: 95%;">
+                      <tr>
+                        <td><b>Loan Type</b></td>
+                        {% if money.money_type == 1 %}
+                        <td>Commercial Loans</td>
+                        {% elif money.money_type == 2 %}
+                        <td>Housing Provident Fund Loans</td>
+                        {% endif %}
+                      </tr>
+                      <tr>
+                        <td><b>Number of House</b></td>
+                        {% if money.house_number == 1 %}
+                        <td>First House Loan</td>
+                        {% elif money.house_number == 2 %}
+                        <td>Second House Loan</td>
+                        {% endif %}
+                      </tr>
+                      <tr>
+                        <td><b>Price Percentage</b></td>
+                        <td>{{ money.price_percentage }}0%</td>
+                      </tr>
+                      <tr>
+                        <td><b>Loan Months</b></td>
+                        <td>{{ money.month*12 }} months</td>
+                      </tr>
+                      <tr>
+                        <td><b>Down Payment</b></td>
+                        <td>¥ {{ '%.2f' %(money_calculate[0]) }}</td>
+                      </tr>
+                      <tr>
+                        <td><b>Monthly Repayment</b></td>
+                        <td>¥ {{ '%.2f' %(money_calculate[1]) }}</td>
+                      </tr>
+                      <tr>
+                        <td><b>Total Interest</b></td>
+                        <td>¥ {{ '%.2f' %(money_calculate[2]) }}</td>
+                      </tr>
+                      <tr>
+                        <td><b>Total Repayment</b></td>
+                        <td>¥ {{ '%.2f' %(money_calculate[4]) }}</td>
+                      </tr>
+                      <tr>
+                        {% if money.error_type == 0 %}
+                        <td colspan="2" style="font-size: 13px;color: gray;">
+                          <span class="glyphicon glyphicon-ok-sign" style="color: lightgreen;"></span>&nbsp;The loan is
+                          under the law :) <br>
+                          &nbsp;&nbsp;&nbsp;&nbsp; See your loan according to the table above!
+                        </td>
+                        {% elif money.error_type == 1 %}
+                        <td colspan="2" style="font-size: 13px;color: gray;">
+                          <span class="glyphicon glyphicon-remove-sign" style="color: lightcoral;"></span>&nbsp;The loan
+                          isn't under the law :( <br> &nbsp;&nbsp;&nbsp;&nbsp; Using Commercial Loans to buy the first
+                          house can only borrow <b>70%</b> at most. It has been automatically changed for you, please
+                          refer to the above table.
+                        </td>
+                        {% elif money.error_type == 2 %}
+                        <td colspan="2" style="font-size: 13px;color: gray;">
+                          <span class="glyphicon glyphicon-remove-sign" style="color: lightcoral;"></span>&nbsp;The loan
+                          isn't under the law :( <br> &nbsp;&nbsp;&nbsp;&nbsp; Using Commercial Loans to buy the second
+                          house can only borrow <b>30%</b> at most. It has been automatically changed for you, please
+                          refer to the above table.
+                        </td>
+                        {% elif money.error_type == 3 %}
+                        <td colspan="2" style="font-size: 13px;color: gray;">
+                          <span class="glyphicon glyphicon-remove-sign" style="color: lightcoral;"></span>&nbsp;The loan
+                          isn't under the law :( <br> &nbsp;&nbsp;&nbsp;&nbsp; Using Housing Provident Fund Loans to buy
+                          the second house can only borrow <b>40%</b> at most. It has been automatically changed for
+                          you, please refer to the above table.
+                        </td>
+                        {% else %}
+                        <td colspan="2" style="font-size: 13px;color: gray;">
+                          <span class="glyphicon glyphicon-ok-sign" style="color: lightgreen;"></span>&nbsp;The loan is
+                          under the law :) <br>
+                          &nbsp;&nbsp;&nbsp;&nbsp; See your loan according to the table above!
+                        </td>
+                        {% endif %}
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </form>
+          </div>
         </div>
       </div>
     </div>
-    </div>
 
-    <div class="panel-group" id="accordion" style="margin-top: 20px;margin-bottom: 50px;">
+    <div class="panel-group" id="accordion" style="margin-top: 20px;">
       <div class="panel panel-default">
         <div class="panel-heading">
           <h4 class="panel-title">
@@ -688,80 +704,165 @@
       </div>
     </div>
     {% endif %}
-  </div>
 
-  {% if house.status == 2 %}
-  <!-- <div>
-    <h1> Users who like this house also like...</h1>
-    <hr>
-    <div class="lb_gl">
-      <div class="container">
-        <div class="pictureSlider poster-main">
-          <div class="poster-btn poster-prev-btn"></div>
-          <div id="zturn" class="poster-list">
-            {% for h in re_houses %}
-            <div class="poster-item  zturn-item">
-              <p class="houseid">House ID: {{ h.id }}</p>
-              <div class="for_btn">
-                <a href="{{ url_for('details', house_id=h.id )}}" id="image"><img
-                    src="{{ url_for('static', filename='img/house4.jpg') }}" width="100%"></a>
-              </div>
 
-              <div class="property">
-                <p class="pro">Total Price：<span class="per">¥ {{ '%.2f' %(h.total_price) }}</span>
-                </p>
-                <p class="pro"><span>Square：<span class="per">{{ h.square }} m<sup>2</sup></span></span>
-                </p>
-                <div class="recommendation">
-
+    {% if house.status == 2 %}
+    <div class="panel-group" id="accordion" style="margin-top: 20px;margin-bottom: 30px;">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#like">
+              <b style="font-size:3rem;">Users who like this house also like...</b>
+            </a>
+          </h4>
+        </div>
+        <div id="like" class="panel-collapse collapse in">
+          {% if re_houses|length != 0 %}
+          {% for h in re_houses %}
+          <table class="table table-condensed" style="width: 95%;margin:10px 20px 10px 20px">
+            <tr>
+              {% for i in imgs_re %}
+              {% if i.house_id == h.id %}
+              <td rowspan="4" style="width: 22%;">
+                <a href="{{ url_for('details', house_id=h.id, user_id_checked=user.id )}}" id="image"><img
+                    src="{{ i.filepath }}" alt="{{ i.filepath }}" width="230px" height="170px" class="img-rounded"></a>
+              </td>
+              {% endif %}
+              {% endfor %}
+              {% if h.status == 2 %}
+              {% if h.building_type == 1 %}
+              <td colspan="2" class="active"
+                style="vertical-align: middle;padding-left: 25px;width: 26%;font-size: 20px;"><strong>Type:
+                  Tower</strong></td>
+              {% elif h.building_type == 2 %}
+              <td colspan="2" class="active"
+                style="vertical-align: middle;padding-left: 25px;width: 26%;font-size: 20px;"><strong>Type:
+                  Bungalow</strong></td>
+              {% elif h.building_type == 3 %}
+              <td colspan="2" class="active"
+                style="vertical-align: middle;padding-left: 25px;width: 26%;font-size: 20px;"><strong>Type: Plate &
+                  Tower</strong></td>
+              {% elif h.building_type == 4 %}
+              <td colspan="2" class="active"
+                style="vertical-align: middle;padding-left: 25px;width: 26%;font-size: 20px;"><strong>Type:
+                  Plate</strong></td>
+              {% endif %}
+              {% if h.renovation_con == 1 %}
+              <td colspan="2" class="active"
+                style="vertical-align: middle; padding-left: 25px;width: 26%;font-size: 20px;"><b>Renovation: Other</b>
+              </td>
+              {% elif h.renovation_con == 2 %}
+              <td colspan="2" class="active"
+                style="vertical-align: middle; padding-left: 25px;width: 26%;font-size: 20px;"><b>Renovation: Rough</b>
+              </td>
+              {% elif h.renovation_con == 3 %}
+              <td colspan="2" class="active"
+                style="vertical-align: middle; padding-left: 25px;width: 26%;font-size: 20px;"><b>Renovation:
+                  Simplicity</b></td>
+              {% elif h.renovation_con == 4 %}
+              <td colspan="2" class="active"
+                style="vertical-align: middle; padding-left: 25px;width: 26%;font-size: 20px;"><b>Renovation:
+                  Hardcover</b></td>
+              {% endif %}
+              <td rowspan="3" align="center" style="font-size: 25px;width: 26%;">
+                <div
+                  style="background-color: rgb(240, 240, 240);border: 1px solid rgb(240, 240, 240);
+            border-radius: 10px;vertical-align: middle;box-shadow: 5px 5px 5px rgb(172, 172, 172);margin: 45px 50px 0 50px; height:100%;padding-top: 10px;padding-bottom: 10px;">
+                  <b> <strong style="color: red;">
+                      ¥{{ '%.2f' %(h.total_price) }}</strong></b>
+                  <br>
+                  <p style="color:grey;font-size: 13px;">¥{{ '%.2f' %(h.total_price/h.square) }}/m<sup>2</sup></p>
                 </div>
-              </div>
-            </div>
-            {% endfor %}
-          </div>
+
+
+              </td>
+            </tr>
+            <tr>
+              <td style="padding-left: 25px;width: 13%;vertical-align: middle;">
+                <b><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;{{ h.living_room }} Beds</b>
+              </td>
+              <td style="padding-left: 25px;width: 13%;vertical-align: middle;">
+                <b><img src="{{ url_for('static', filename='img/drawingroom.png') }}" alt="drawing_room" width="18%"
+                    style="padding-bottom: 3px;" />&nbsp;{{ h.drawing_room }} Parlour</b>
+              </td>
+              <td style="padding-left: 25px;width: 13%;vertical-align: middle;">
+                <b><span class="glyphicon glyphicon-cutlery"></span>&nbsp;&nbsp;{{ h.kitchen }} Kitchen</b>
+              </td>
+              <td style="padding-left: 25px;width: 13%;vertical-align: middle;">
+                <b><img src="{{ url_for('static', filename='img/bathroom.png') }}" alt="house2" width="18%"
+                    style="padding-bottom: 3px;" />&nbsp;{{ h.bathroom }} Baths</b>
+              </td>
+            </tr>
+            <tr>
+              {% if h.elevator == 1 %}
+              <td style="vertical-align: middle;padding:7px 0 7px 25px"><span class="glyphicon glyphicon-ok-sign"
+                  style="color: rgb(24, 177, 24);"></span>&nbsp;<b>Elevator</b></td>
+              {% elif h.elevator == 0 %}
+              <td style="vertical-align: middle;padding:5px 0 5px 25px"><span class="glyphicon glyphicon-remove-sign"
+                  style="color: rgb(221, 0, 0);"></span>&nbsp;<b>Elevator</b></td>
+              {% endif %}
+              {% if h.subway == 1 %}
+              <td style="vertical-align: middle;padding:5px 0 5px 25px"><span class="glyphicon glyphicon-ok-sign"
+                  style="color: rgb(24, 177, 24);"></span>&nbsp;<b>Subway</b></td>
+              {% elif h.subway == 0 %}
+              <td style="vertical-align: middle;padding:5px 0 5px 25px"><span class="glyphicon glyphicon-remove-sign"
+                  style="color: rgb(221, 0, 0);"></span>&nbsp;<b>Subway</b></td>
+              {% endif %}
+              <td colspan="2" style="vertical-align: middle;padding:5px 0 5px 25px"><b><span
+                    class="glyphicon glyphicon-fullscreen"></span>&nbsp;{{ h.square }}m<sup>2</sup></b></td>
+            </tr>
+            {% endif %}
+          </table>
+          {% endfor %}
+          {% else %}
+          <p style="color: gray;font-size: 13px;margin: 5px;">It seems that he/she has not uploaded any house :(</p>
+          {% endif %}
         </div>
       </div>
-    </div> -->
+    </div>
+  </div>
 
-      <div class="lb_gl">
-        <h1 class="title" style="color: rgb(0, 0, 0);"><b><span class="glyphicon glyphicon-align-right"></span>&nbsp;&nbsp;Popular Houses&nbsp;&nbsp;<span class="glyphicon glyphicon-align-left"></span></b></h1>
-        <div class="container">
-          <div class="pictureSlider poster-main">
-            <div class="poster-btn poster-prev-btn"></div>
-            <div id="zturn" class="poster-list">
-              {% for h in pop_houses %}
-              <div class="poster-item  zturn-item">
-                <p class="houseid">House ID: {{ h.id }}</p>
-                <div class="for_btn">
-                  <a href="{{ url_for('details', house_id=h.id )}}" id="image">
-                    {% for i in imgs %}
-                    {% if i.house_id == h.id %}
-                      <img src="{{ i.filepath }}" alt="{{ i.filepath }}" width="100%" height="190px">
-                    {% endif %}
-                    {% endfor %}
-                  </a>
-                </div>
+  <div class="lb_gl">
+    <h1 class="title" style="color: rgb(0, 0, 0);"><b><span
+          class="glyphicon glyphicon-align-right"></span>&nbsp;&nbsp;Popular Houses&nbsp;&nbsp;<span
+          class="glyphicon glyphicon-align-left"></span></b></h1>
+    <div class="container">
+      <div class="pictureSlider poster-main">
+        <div class="poster-btn poster-prev-btn"></div>
+        <div id="zturn" class="poster-list">
+          {% for h in pop_houses %}
+          <div class="poster-item  zturn-item">
+            <p class="houseid">House ID: {{ h.id }}</p>
+            <div class="for_btn">
+              <a href="{{ url_for('details', house_id=h.id )}}" id="image">
+                {% for i in imgs %}
+                {% if i.house_id == h.id %}
+                <img src="{{ i.filepath }}" alt="{{ i.filepath }}" width="100%" height="190px">
+                {% endif %}
+                {% endfor %}
+              </a>
+            </div>
 
-                <div class="property">
-                  <p class="pro">Total Price：<span class="per">¥ {{ '%.2f' %(h.total_price) }}</span>
-                  </p>
-                  <p class="pro"><span>Square：<span class="per">{{ h.square }} m<sup>2</sup></span></span>
-                  </p>
-                  <div class="recommendation">
-                    {% for r in recommendations %}
-                    {% if r.house_id == h.id %}
-                    {{ r.reason }}
-                    {% endif %}
-                    {% endfor %}
-                  </div>
-                </div>
+            <div class="property">
+              <p class="pro">Total Price：<span class="per">¥ {{ '%.2f' %(h.total_price) }}</span>
+              </p>
+              <p class="pro"><span>Square：<span class="per">{{ h.square }} m<sup>2</sup></span></span>
+              </p>
+              <div class="recommendation">
+                {% for r in recommendations %}
+                {% if r.house_id == h.id %}
+                {{ r.reason }}
+                {% endif %}
+                {% endfor %}
               </div>
-              {% endfor %}
             </div>
           </div>
+          {% endfor %}
         </div>
-        </div>
-        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
 </body>
 <style>
   .comment {
@@ -782,127 +883,129 @@
     top: 6px;
     left: -16px;
   }
+
   .button {
-        border: none;
-        color: white;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 18px;
-        -webkit-transition-duration: 0.4s;
-        /* Safari */
-        transition-duration: 0.4s;
-        cursor: pointer;
-        background-color: #434348;
-        color: #ffffff;
-        border: 2px solid #434348;
-    }
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    -webkit-transition-duration: 0.4s;
+    /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    background-color: #434348;
+    color: #ffffff;
+    border: 2px solid #434348;
+  }
 
-    .button:hover {
-        background-color: #ffffff;
-        color: #434348;
-    }
-    .lb_gl {
-        margin-top: 30px;
-        background-size: 100% 100%;
-        height: 80%;
-        background-image: linear-gradient(#ffffff, #797979, #ffffff);
-    }
+  .button:hover {
+    background-color: #ffffff;
+    color: #434348;
+  }
 
-    .container {
-        width: 100%;
-        position: relative;
-    }
+  .lb_gl {
+    margin-top: 30px;
+    background-size: 100% 100%;
+    height: 80%;
+    background-image: linear-gradient(#ffffff, #797979, #ffffff);
+  }
 
-    .pictureSlider {
-        height: 80%;
-    }
+  .container {
+    width: 100%;
+    position: relative;
+  }
 
-    .poster-item {
-        background: #fff;
-        margin-top: 20px;
-        height: 80%;
-        width: 336px;
-        border-radius: 10px;
-        padding: 20px 23px 20px 23px;
-        border: 3px dotted #bebebe;
-        transition: all 0.5s;
-        cursor: default;
-        -moz-transition: all 0.5s;
-        cursor: default;
-        -webkit-transition: all 0.5s;
-        cursor: default;
-        -o-transition: all 0.5s;
-        cursor: default;
-    }
+  .pictureSlider {
+    height: 80%;
+  }
 
-    .title {
-        text-align: center;
-        color: #000000;
-        font-weight: 400;
-        font-size: 36px;
-        padding: 40px 10px;
-    }
+  .poster-item {
+    background: #fff;
+    margin-top: 20px;
+    height: 80%;
+    width: 336px;
+    border-radius: 10px;
+    padding: 20px 23px 20px 23px;
+    border: 3px dotted #bebebe;
+    transition: all 0.5s;
+    cursor: default;
+    -moz-transition: all 0.5s;
+    cursor: default;
+    -webkit-transition: all 0.5s;
+    cursor: default;
+    -o-transition: all 0.5s;
+    cursor: default;
+  }
 
-    .houseid {
-        font-size: 30px;
-        font-weight: 900;
-        padding-left: 10px;
-    }
+  .title {
+    text-align: center;
+    color: #000000;
+    font-weight: 400;
+    font-size: 36px;
+    padding: 40px 10px;
+  }
 
-    .pro {
-        margin-bottom: 20px;
-        color: #999;
-        font-size: 18px;
-        overflow: hidden;
-    }
+  .houseid {
+    font-size: 30px;
+    font-weight: 900;
+    padding-left: 10px;
+  }
 
-    .per {
-        color: #000;
-        padding-left: 10px;
-    }
+  .pro {
+    margin-bottom: 20px;
+    color: #999;
+    font-size: 18px;
+    overflow: hidden;
+  }
 
-    .recommendation {
-        border-top: 1px solid #d0cddb;
-        line-height: 26px;
-        padding-top: 5px;
-        color: #999;
-        font-size: 12px;
-        max-height: 84px;
-        overflow: hidden;
-    }
+  .per {
+    color: #000;
+    padding-left: 10px;
+  }
 
-    .for_btn {
-        position: relative;
-        height: 214px;
-        overflow: hidden
-    }
+  .recommendation {
+    border-top: 1px solid #d0cddb;
+    line-height: 26px;
+    padding-top: 5px;
+    color: #999;
+    font-size: 12px;
+    max-height: 84px;
+    overflow: hidden;
+  }
 
-    .in_page {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        width: 40px;
-        height: 40px;
-        margin-left: -20px;
-        margin-top: -20px;
-    }
+  .for_btn {
+    position: relative;
+    height: 214px;
+    overflow: hidden
+  }
 
-    .in_page>img {
-        width: 40px;
-        height: 40px;
-    }
+  .in_page {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 40px;
+    height: 40px;
+    margin-left: -20px;
+    margin-top: -20px;
+  }
 
-    .check_more {
-        width: 180px;
-        height: 50px;
-        line-height: 50px;
-        text-align: center;
-        color: #fff;
-        background: #bc241d;
-        margin: 0 auto;
-        display: block;
-    }
+  .in_page>img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .check_more {
+    width: 180px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    color: #fff;
+    background: #bc241d;
+    margin: 0 auto;
+    display: block;
+  }
 </style>
 <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=您申请的key值&plugin=AMap.Geocoder"></script>
 <script src="https://code.highcharts.com.cn/highcharts/highcharts.js"></script>
@@ -910,129 +1013,129 @@
 <script src="https://img.hcharts.cn/highcharts-plugins/highcharts-zh_CN.js"></script>
 <script>
   var zturn = function (turn) {
-        this.turn = turn
-        this.zturn = $("#" + turn.id)
-        this.X = 0
-        this.zturnitem = this.zturn.children(".zturn-item")
-        this.num_li = this.zturnitem.length//轮播元素个数 zturnPy为每个的偏移量
-        this.zturnPy = turn.Awidth / (this.num_li - 1)
-        this.init()
-        this.turn_()
-        return this
+    this.turn = turn
+    this.zturn = $("#" + turn.id)
+    this.X = 0
+    this.zturnitem = this.zturn.children(".zturn-item")
+    this.num_li = this.zturnitem.length//轮播元素个数 zturnPy为每个的偏移量
+    this.zturnPy = turn.Awidth / (this.num_li - 1)
+    this.init()
+    this.turn_()
+    return this
+  }
+  zturn.prototype = {
+    constructor: zturn,
+    init: function () {
+      var _self = this;
+      this.zturn.children(".zturn-item").each(function (index, element) {
+        //index是第几个元素 X是选取的中间数 num_li是总数
+        var rt = 1//1:右侧：-1：左侧
+        if ((index - _self.X) > _self.num_li / 2 || (index - _self.X) < 0 && (index - _self.X) > (-_self.num_li / 2)) { rt = -1 }//判断元素左侧还是右侧
+        var i = Math.abs(index - _self.X);//取绝对值
+        if (i > _self.num_li / 2) { i = parseInt(_self.X) + parseInt(_self.num_li) - index; }//i:是左或者右的第几个
+        if ((index - _self.X) < (-_self.num_li / 2)) { i = _self.num_li + index - _self.X }
+        $(this).css({
+          'position': 'absolute',
+          'left': '50%',
+          'margin-left': -_self.turn.width / 2 + 23 + _self.zturnPy * rt * i + "px",
+          'z-index': _self.num_li - i,
+          'opacity': Math.pow(_self.turn.opacity, i),
+          'transform': 'scale(' + Math.pow(_self.turn.scale, i) + ')',
+          '-webkit-transform': 'scale(' + Math.pow(_self.turn.scale, i) + ')',
+          '-webkit-transform': 'scale(' + Math.pow(_self.turn.scale, i) + ')',
+          '-moz-transform': 'scale(' + Math.pow(_self.turn.scale, i) + ')',
+          '-ms-transform': 'scale(' + Math.pow(_self.turn.scale, i) + ')',
+          '-o-transform': 'scale(' + Math.pow(_self.turn.scale, i) + ')'
+        })
+        $(this).attr("data_n", index)
+      })
+    },
+    turn_: function () {
+      var _self = this
+      this.zturnitem.click(function () {
+        _self.X = $(this).attr("data_n")
+        _self.init()
+      })
+    },
+    prev_: function () {
+      var _self = this
+      this.X--
+      if (this.X < 0) { this.X = this.num_li - 1 }
+      this.init()
+    },
+    next_: function () {
+      var _self = this
+      this.X++
+      if (this.X >= this.num_li) { this.X = 0 }
+      this.init()
     }
-    zturn.prototype = {
-        constructor: zturn,
-        init: function () {
-            var _self = this;
-            this.zturn.children(".zturn-item").each(function (index, element) {
-                //index是第几个元素 X是选取的中间数 num_li是总数
-                var rt = 1//1:右侧：-1：左侧
-                if ((index - _self.X) > _self.num_li / 2 || (index - _self.X) < 0 && (index - _self.X) > (-_self.num_li / 2)) { rt = -1 }//判断元素左侧还是右侧
-                var i = Math.abs(index - _self.X);//取绝对值
-                if (i > _self.num_li / 2) { i = parseInt(_self.X) + parseInt(_self.num_li) - index; }//i:是左或者右的第几个
-                if ((index - _self.X) < (-_self.num_li / 2)) { i = _self.num_li + index - _self.X }
-                $(this).css({
-                    'position': 'absolute',
-                    'left': '50%',
-                    'margin-left': -_self.turn.width / 2 + 23 + _self.zturnPy * rt * i + "px",
-                    'z-index': _self.num_li - i,
-                    'opacity': Math.pow(_self.turn.opacity, i),
-                    'transform': 'scale(' + Math.pow(_self.turn.scale, i) + ')',
-                    '-webkit-transform': 'scale(' + Math.pow(_self.turn.scale, i) + ')',
-                    '-webkit-transform': 'scale(' + Math.pow(_self.turn.scale, i) + ')',
-                    '-moz-transform': 'scale(' + Math.pow(_self.turn.scale, i) + ')',
-                    '-ms-transform': 'scale(' + Math.pow(_self.turn.scale, i) + ')',
-                    '-o-transform': 'scale(' + Math.pow(_self.turn.scale, i) + ')'
-                })
-                $(this).attr("data_n", index)
-            })
-        },
-        turn_: function () {
-            var _self = this
-            this.zturnitem.click(function () {
-                _self.X = $(this).attr("data_n")
-                _self.init()
-            })
-        },
-        prev_: function () {
-            var _self = this
-            this.X--
-            if (this.X < 0) { this.X = this.num_li - 1 }
-            this.init()
-        },
-        next_: function () {
-            var _self = this
-            this.X++
-            if (this.X >= this.num_li) { this.X = 0 }
-            this.init()
-        }
-    }
-    var aa = new zturn({
-        id: "zturn",
-        opacity: 0.9,
-        width: 382,
-        Awidth: 1024,
-        scale: 0.9
-    })
-    var ab = new zturn({
-        id: "zturn2",
-        opacity: 0.8,
-        width: 382,
-        Awidth: 1024,
-        scale: 0.6
-    })
+  }
+  var aa = new zturn({
+    id: "zturn",
+    opacity: 0.9,
+    width: 382,
+    Awidth: 1024,
+    scale: 0.9
+  })
+  var ab = new zturn({
+    id: "zturn2",
+    opacity: 0.8,
+    width: 382,
+    Awidth: 1024,
+    scale: 0.6
+  })
   Highcharts.chart('container', {
-		chart: {
-				plotBackgroundColor: null,
-				plotBorderWidth: null,
-				plotShadow: false,
-				type: 'pie'
-		},
-		title: {
-				text: 'Down payment, Principal, Interest'
-		},
-		tooltip: {
-				pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-		},
+    chart: {
+      plotBackgroundColor: null,
+      plotBorderWidth: null,
+      plotShadow: false,
+      type: 'pie'
+    },
+    title: {
+      text: 'Down payment, Principal, Interest'
+    },
+    tooltip: {
+      pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
     credits: {
-                enabled:false
-            },
+      enabled: false
+    },
 
     exporting: {
-                enabled:false
-            },
-		plotOptions: {
-				pie: {
-						allowPointSelect: true,
-						cursor: 'pointer',
-						dataLabels: {
-								enabled: false
-						},
-						showInLegend: true
-				}
-		},
-		series: [{
-				name: 'Percentage',
-				colorByPoint: true,
-				data: [{
-						name: 'Down payment',
-						y: parseFloat("{{ money_calculate[0]/(money_calculate[0]+money_calculate[4]) }}")
-				}, {
-						name: 'Principal',
-						y: parseFloat("{{ money_calculate[2]/(money_calculate[0]+money_calculate[4]) }}")
-				}, {
-						name: 'Interest',
-						y: parseFloat("{{ (money_calculate[4]-money_calculate[2])/(money_calculate[0]+money_calculate[4]) }}")
-				}]
-		}]
-});
- function calculation() {
-     document.querySelector("#loan_calculation").scrollIntoView();
-    }
+      enabled: false
+    },
+    plotOptions: {
+      pie: {
+        allowPointSelect: true,
+        cursor: 'pointer',
+        dataLabels: {
+          enabled: false
+        },
+        showInLegend: true
+      }
+    },
+    series: [{
+      name: 'Percentage',
+      colorByPoint: true,
+      data: [{
+        name: 'Down payment',
+        y: parseFloat("{{ money_calculate[0]/(money_calculate[0]+money_calculate[4]) }}")
+      }, {
+        name: 'Principal',
+        y: parseFloat("{{ money_calculate[2]/(money_calculate[0]+money_calculate[4]) }}")
+      }, {
+        name: 'Interest',
+        y: parseFloat("{{ (money_calculate[4]-money_calculate[2])/(money_calculate[0]+money_calculate[4]) }}")
+      }]
+    }]
+  });
+  function calculation() {
+    document.querySelector("#loan_calculation").scrollIntoView();
+  }
   !function () {
     var infoWindow, map, level = 11,
-      center = {lng: {{ house.lng }},lat: {{ house.lat }}},
-  features = [{ "icon": "cir", "color": "red", "name": "未命名标注", "desc": "未命名标注描述", "lnglat": { "Q": {{ house.lat }}, "R": {{ house.lng }}, "lng": {{ house.lng }}, "lat": {{ house.lat }}}, "offset": { "x": -9, "y": -31 }, "type": "Marker"}];
+      center = { lng: {{ house.lng }}, lat: {{ house.lat }}},
+      features = [{ "icon": "cir", "color": "red", "name": "未命名标注", "desc": "未命名标注描述", "lnglat": { "Q": {{ house.lat }}, "R": {{ house.lng }}, "lng": {{ house.lng }}, "lat": {{ house.lat }}}, "offset": { "x": -9, "y": -31 }, "type": "Marker"}];
 
   function loadFeatures() {
     for (var feature, data, i = 0, len = features.length, j, jl, path; i < len; i++) {
