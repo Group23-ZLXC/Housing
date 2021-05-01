@@ -780,15 +780,15 @@ def personal():
         user_in_db = User.query.filter(User.username == username).first()
         houses = House.query.filter(House.user_id == user_in_db.id).all()
         favorites = Favorite.query.filter(Favorite.user_id == user_in_db.id).all()
-        house_to_uplaod = House.query.filter(House.user_id == user_in_db.id).filter(House.status == 1).all()
+        house_to_upload = House.query.filter(House.user_id == user_in_db.id).filter(House.status == 1).all()
         fav_houses = []
         images = Image.query.all()
         house_picture = []
         houses_id = []
-        for house in house_to_uplaod:
+        for house in house_to_upload:
             house_picture.append(0)
             houses_id.append(house.id)
-        for i in range(len(house_to_uplaod)-1):
+        for i in range(len(house_to_upload)):
             for im in images:
                 if houses_id[i] == im.house_id:
                     house_picture[i] += 1

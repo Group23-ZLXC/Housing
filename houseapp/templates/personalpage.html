@@ -67,7 +67,7 @@
                     &times;
                   </button>
                   <h4 class="modal-title" id="myModalLabel">
-                    Go to upload your picture!
+                    Go to upload your picture!{{house_picture[houses_id.index(house.id)]}}
                   </h4>
                 </div>
                 <div class="modal-body">
@@ -109,8 +109,11 @@
           {% endif %}
           {% endif %}
           {% endfor %}
+          {% elif completed == 0 %}
+          <p style="margin-top: 20px;">There is no house in the collection yet. Go and add a prediction!&nbsp;<a href="{{ url_for('predict') }}"><span
+              class="glyphicon glyphicon-stats"></span>&nbsp;Predict</a></p>
           {% endif %}
-          {% else %}
+        {% elif completed == 0 %}
           <p style="margin-top: 20px;">There is no house in the collection yet. Go and add a prediction!&nbsp;<a href="{{ url_for('predict') }}"><span
               class="glyphicon glyphicon-stats"></span>&nbsp;Predict</a></p>
         {% endif %}
@@ -176,8 +179,11 @@
           </div>
           {% endif %}
           {% endfor %}
+          {% elif uploaded == 0 %}
+          <p style="margin-top: 20px;">There is no house in the collection yet. Click the <b>' <button
+            class="btn btn-warning btn-xs" disabled="disabled" >Upload</button> '</b> button in <b>'Completed'</b> to upload your house!</p>
           {% endif %}
-          {% else %}
+          {% elif uploaded == 0 %}
           <p style="margin-top: 20px;">There is no house in the collection yet. Click the <b>' <button
             class="btn btn-warning btn-xs" disabled="disabled" >Upload</button> '</b> button in <b>'Completed'</b> to upload your house!</p>
         {% endif %}
