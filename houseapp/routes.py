@@ -171,6 +171,7 @@ def details():
             if fa.house_id != house.id:
                 h = House.query.filter(House.id == fa.house_id).first()
                 re_houses.append(h)
+    re_houses = list(set(re_houses))
     for h in re_houses:
         count_re.append(0)
     n = 0
