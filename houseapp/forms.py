@@ -97,3 +97,7 @@ class SignupForm(FlaskForm):
                                          "required": 'required'})
 
     submit = SubmitField('Sign Up')
+
+class LocationForm(FlaskForm):
+    lat = StringField()
+    lng = StringField()

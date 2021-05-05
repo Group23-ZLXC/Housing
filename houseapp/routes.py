@@ -1,6 +1,6 @@
 from houseapp import app, db, Config, model
 from flask import render_template, flash, redirect, url_for, session, request, jsonify
-from houseapp.forms import CommentForm, LoginForm, SignupForm, PredictForm, BuyForm, RecommendationForm, EditRecomForm, ReplyForm, EditHouseForm, MoneyForm
+from houseapp.forms import CommentForm, LoginForm, SignupForm, PredictForm, BuyForm, RecommendationForm, EditRecomForm, ReplyForm, EditHouseForm, MoneyForm, LocationForm
 from werkzeug.security import generate_password_hash, check_password_hash
 from houseapp.models import User, House, Comment, Answer, Check, Recommendation, Favorite, Checked, Image, Money
 from houseapp.static import data
@@ -164,7 +164,7 @@ def details():
                 if count[j] < 1:
                     imgs.append(i)
                     count[j] += 1
-        j += 1 
+        j += 1
     for f in favorites:
         fas = Favorite.query.filter(Favorite.user_id == f.user_id).all()
         for fa in fas:
@@ -181,7 +181,7 @@ def details():
                 if count_re[n] < 1:
                     imgs_re.append(i)
                     count_re[n] += 1
-        n += 1 
+        n += 1
 
     stored_images = Image.query.filter(Image.house_id == house.id).all()
     image_names = []
@@ -221,7 +221,7 @@ def details():
                 db.session.add(comment)
                 db.session.commit()
                 return redirect(url_for('details', house_id=house.id))
-        
+
             if form4.validate_on_submit():
                 money = Money(user_id=user_in_db.id,house_id=house.id,price_percentage=form4.price.data,month=form4.month.data,money_type=form4.money_type.data,house_number=form4.house_number.data,error_type=0)
                 if form4.house_number.data == '1':
@@ -247,9 +247,9 @@ def details():
                 money_calculate[0] = house.total_price*(1-money.price_percentage*0.1)
                 money_calculate[1] = house.total_price*(money.price_percentage*0.1)*loan*((1+loan)**(money.month*12))/((1+loan)**(money.month*12)-1)
                 money_calculate[2] = money.month*12*money_calculate[1]-house.total_price*(money.price_percentage*0.1)
-                money_calculate[3] = money_calculate[1]*money.month*12 + house.total_price*(money.price_percentage*0.1)                
+                money_calculate[3] = money_calculate[1]*money.month*12 + house.total_price*(money.price_percentage*0.1)
                 money_calculate[4] = money_calculate[1]*money.month*12
-                
+
             else:
                 money = Money(user_id=user_in_db.id,house_id=house.id,price_percentage=1,month=5,money_type=1,house_number=1)
                 loan = 0.049/12
@@ -324,6 +324,7 @@ def remove_favorite():
 @app.route('/buy', methods=['GET','POST'])
 def buy():
     form = BuyForm()
+    form1 = LocationForm()
     data = []
     with open(r"houseapp/static/data/data.csv", encoding='gbk', errors='ignore') as fin:
         is_first_line =True
@@ -590,7 +591,7 @@ def buy():
 
     houses_checked = paginate.items
 
-    return render_template('buy.html',title='Buy', data=data, user=user_in_db, houses=houses, form=form, checked=checked_data, checked_1=checked_data_1, paginate=paginate, houses_checked=houses_checked,houses_recent=houses_recent,imgs=imgs)
+    return render_template('buy.html',title='Buy', data=data, user=user_in_db, houses=houses, form=form, form1 = form1, checked=checked_data, checked_1=checked_data_1, paginate=paginate, houses_checked=houses_checked,houses_recent=houses_recent,imgs=imgs)
 
 @app.route('/predict', methods=['GET','POST'])
 def predict():
@@ -696,6 +697,9 @@ def delete_img():
 
 @app.route('/visitothers')
 def visitothers():
+    if not session.get("USERNAME") is None:
+        username = session.get("USERNAME")
+        visitor = User.query.filter(User.username == username).first()
     user_id = request.args.get('user_id')
     user = User.query.filter(User.id == user_id).first()
     stored_images = Image.query.all()
@@ -728,7 +732,28 @@ def visitothers():
             p += 1
     test = user.favorite
     #visitor_id = request.args.get('visitor_id')
-    return render_template('visitothers.html', user=user, title=user.username, imgs=imgs, imgs_upload=imgs_upload, houses=houses)
+    return render_template('visitothers.html', user=user, visitor=visitor, title=user.username, imgs=imgs, imgs_upload=imgs_upload, houses=houses)
+
+@app.route('/pri_pub')
+def pri_pub():
+    privacy = request.args.get('p')
+    print(privacy)
+    type = request.args.get('t')
+    user_id = request.args.get('user_id1')
+    user = User.query.filter(User.id == user_id).first()
+    if privacy == '0':
+        if type == '0':
+            print('hello')
+            user.private_fav = 1
+        else:
+            user.private_com = 1
+    else:
+        if type == '0':
+            user.private_fav = 0
+        else:
+            user.private_com = 0
+    db.session.commit()
+    return redirect(url_for('visitothers', user=user, user_id=user.id, visitor=user))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

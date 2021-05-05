@@ -11,6 +11,8 @@ class User(db.Model):
     house = db.relationship('House', backref='owner', lazy='dynamic')
     recommendation = db.relationship('Recommendation', backref='author', lazy='dynamic')
     favorite = db.relationship('Favorite', backref='user', lazy='dynamic')
+    private_com = db.Column(db.Integer, default=0)
+    private_fav = db.Column(db.Integer, default=0)
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
@@ -97,7 +99,6 @@ class Comment(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     answers = db.relationship('Answer', backref='question', lazy='dynamic')
     house_id = db.Column(db.Integer, db.ForeignKey('house.id'))
-    private = db.Column(db.Integer, default=0)
 
     def __repr__(self):
         return '<At {} : {} >'.format(str(self.timestamp)[0:10],self.body)
@@ -108,7 +109,6 @@ class Answer(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=datetime.now)
     question_id = db.Column(db.Integer, db.ForeignKey('comment.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    private = db.Column(db.Integer, default=0)
 
 class Money(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -116,7 +116,6 @@ class Money(db.Model):
     house_id = db.Column(db.Integer, db.ForeignKey('house.id'))
     price_percentage = db.Column(db.Integer)
     month = db.Column(db.Integer)
-    money_type = db.Column(db.Integer) 
+    money_type = db.Column(db.Integer)
     house_number = db.Column(db.Integer)
     error_type = db.Column(db.Integer)
-    
