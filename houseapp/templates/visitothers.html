@@ -145,14 +145,19 @@
   <tr>
     <td style="width: 100%;padding: 5px;">
       <div class="panel panel-default">
-        <div class="panel-heading"><b style="font-size: 20px;">Favorites</b></div>
+        <div class="panel-heading"><b style="font-size: 20px;">Favorites</b> 
+          <p class="pull-right">
+          {% if user.id == visitor.id %}
+          {% if user.private_fav == 0 %}
+            <a href="{{ url_for('pri_pub', user_id1=user.id, p=0, t=0) }}"><button type="button" class="btn btn-success btn-xs">Set to Privite</button></a>
+          {% elif user.private_fav == 1 %}
+            <a href="{{ url_for('pri_pub', user_id1=user.id, p=1, t=0) }}"><button type="button" class="btn btn-warning btn-xs">Set to Public </button></a>
+          {% endif %}
+          {% endif %}
+          </p>
+        </div>
         <div class="panel-body">
           {% if user.id == visitor.id %}
-            {% if user.private_fav == 0 %}
-              <a href="{{ url_for('pri_pub', user_id1=user.id, p=0, t=0) }}"><button>Set to Privite</button></a>
-            {% elif user.private_fav == 1 %}
-              <a href="{{ url_for('pri_pub', user_id1=user.id, p=1, t=0) }}"><button>Set to Public </button></a>
-            {% endif %}
             {% if user.favorite.count() != 0 %}
             {% for h in user.favorite %}
             {% for house in houses %}
@@ -369,20 +374,25 @@
 </td>
 </tr>
 {% else %}
-<h2> The user has made this content private</h2>
+<p style="color: gray;font-size: 13px;margin: 5px;"> The user has made this content private. </p>
 {% endif %}
 {% endif %}
 <tr>
   <td style="width: 33%;padding: 5px;">
     <div class="panel panel-default">
-      <div class="panel-heading"><b style="font-size: 20px;">Comments</b></div>
-      <ul class="list-group">
+      <div class="panel-heading"><b style="font-size: 20px;">Comments</b>
+      <p class="pull-right">
         {% if user.id == visitor.id %}
           {% if user.private_com == 0 %}
-            <a href="{{ url_for('pri_pub', user_id1=user.id, p=0, t=1) }}"><button>Set to Privite</button></a>
+            <a href="{{ url_for('pri_pub', user_id1=user.id, p=0, t=1) }}"><button type="button" class="btn btn-success btn-xs">Set to Privite</button></a>
           {% elif user.private_com == 1 %}
-            <a href="{{ url_for('pri_pub', user_id1=user.id, p=1, t=1) }}"><button>Set to Public </button></a>
+            <a href="{{ url_for('pri_pub', user_id1=user.id, p=1, t=1) }}"><button type="button" class="btn btn-warning btn-xs">Set to Public </button></a>
           {% endif %}
+        {% endif %}
+      </p>
+      </div>
+      <ul class="list-group">
+        {% if user.id == visitor.id %}
           {% if user.comment.count() != 0 %}
           {% for c in user.comment %}
           <li class="list-group-item"><a href="{{ url_for('details', house_id=c.house_id)}}">{{ c }}</a></li>
@@ -407,7 +417,7 @@
         </li>
         {% endif %}
         {% else %}
-  <h2> The user has made this content private</h2>
+        <p style="color: gray;font-size: 13px;margin: 5px;"> The user has made this content private. </p>
   {% endif %}
   {% endif %}
     </ul>

@@ -326,8 +326,27 @@
                 {% else %}
                 <td width="20%" style="vertical-align: middle;"><b>Pending</b></td>
                 {% endif %}
-                <td rowspan="12" width="50%" align="center" style="border: 0rem;vertical-align: middle;"><img
-                    src="{{ url_for('static', filename='img/house_inside.png') }}" alt="house_inside" width="80%"></td>
+                <td rowspan="12" width="50%" align="center" style="border: 0rem;vertical-align: middle;">
+                  {% if house.square < 100 %}
+                  <img src="{{ url_for('static', filename='img/house-inside/4.png') }}" alt="house_inside" width="80%">
+                  {% elif house.square >= 100 and house.square < 110 %}
+                  <img src="{{ url_for('static', filename='img/house-inside/1.png') }}" alt="house_inside" width="80%">
+                  {% elif house.square >= 110 and house.square < 120 %}
+                  <img src="{{ url_for('static', filename='img/house-inside/2.png') }}" alt="house_inside" width="80%">
+                  {% elif house.square >= 120 and house.square < 130 %}
+                  <img src="{{ url_for('static', filename='img/house-inside/3.png') }}" alt="house_inside" width="80%">
+                  {% elif house.square >= 130 and house.square < 150 %}
+                  <img src="{{ url_for('static', filename='img/house-inside/5.png') }}" alt="house_inside" width="80%">
+                  {% elif house.square >= 150 and house.square < 170 %}
+                  <img src="{{ url_for('static', filename='img/house-inside/6.png') }}" alt="house_inside" width="80%">
+                  {% elif house.square >= 170 and house.square < 200 %}
+                  <img src="{{ url_for('static', filename='img/house-inside/7.png') }}" alt="house_inside" width="80%">
+                  {% elif house.square >= 200 and house.square < 230 %}
+                  <img src="{{ url_for('static', filename='img/house-inside/8.png') }}" alt="house_inside" width="80%">
+                  {% elif house.square >= 230%}
+                  <img src="{{ url_for('static', filename='img/house-inside/9.png') }}" alt="house_inside" width="80%">
+                  {% endif %}
+                </td>
               </tr>
               <tr class="active">
                 <td style="padding-left: 20px;vertical-align: middle;">Price:</td>
