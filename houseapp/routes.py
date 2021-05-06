@@ -326,7 +326,7 @@ def buy():
     form = BuyForm()
     form1 = LocationForm()
     data = []
-    with open(r"houseapp/static/data/data.csv", encoding='gbk', errors='ignore') as fin:
+    with open(r"houseapp/static/data/data1.csv", encoding='gbk', errors='ignore') as fin:
         is_first_line =True
         for f in fin.readlines():
             if is_first_line:
@@ -347,11 +347,11 @@ def buy():
     #         sub = True
     #     if d[23] == '0':
     #         sub = False
-    #     house = House(user_id = 4, lng=d[2], lat = d[3],total_price=round(float(d[8])*10000), square = d[10],
+    #     house = House(user_id = 9, lng=d[2], lat = d[3],total_price=round(float(d[8])*10000), square = d[10],
     #     living_room=d[11], drawing_room=d[12], kitchen=d[13],
     #     bathroom = d[14], floor=d[15], building_type = d[16],
     #     renovation_con = d[18], elevator=ele, subway=sub,
-    #     district = d[24], status = 2)
+    #     district = d[24], status = 1)
     #     db.session.add(house)
     #     db.session.commit()
     houses = House.query.filter(House.status == 2).all()
@@ -584,14 +584,24 @@ def buy():
                 db.session.add(checked_finally)
                 db.session.commit()
 
+    checks = Check.query.all()
+    check_user = []
+    for c in checks:
+        check_user.append(c.user_id)
+    check_user = list(set(check_user))
+    check_owner = Check.query.order_by(Check.id.desc()).filter(Check.user_id == user_in_db.id).first()
     page = int(request.args.get('page', 1))
     per_page = int(request.args.get('per_page', 5))
 
+    page_total = int(request.args.get('page_total', 1))
+    per_page_total = int(request.args.get('per_page_total', 5))
+
     paginate = Checked.query.order_by(Checked.id).filter(Checked.user_id == user_in_db.id).paginate(page, per_page, error_out=False)
-
+    paginate_total = House.query.order_by(House.id).filter(House.status == 2).paginate(page_total, per_page_total, error_out=False)
     houses_checked = paginate.items
+    houses_total = paginate_total.items
 
-    return render_template('buy.html',title='Buy', data=data, user=user_in_db, houses=houses, form=form, form1 = form1, checked=checked_data, checked_1=checked_data_1, paginate=paginate, houses_checked=houses_checked,houses_recent=houses_recent,imgs=imgs)
+    return render_template('buy.html',title='Buy', data=data, user=user_in_db, houses=houses, form=form, form1 = form1, checked=checked_data, checked_1=checked_data_1, paginate=paginate,paginate_total=paginate_total, houses_checked=houses_checked,houses_recent=houses_recent,imgs=imgs,check_user=check_user,houses_total=houses_total,check_owner=check_owner)
 
 @app.route('/predict', methods=['GET','POST'])
 def predict():
@@ -797,6 +807,7 @@ def signup():
 def logout():
     # session.pop("USERNAME", None)
     # return redirect(url_for('login'))
+    session.clear()
     return render_template('logout.html', title='Log Out')
 
 @app.route('/personal')
