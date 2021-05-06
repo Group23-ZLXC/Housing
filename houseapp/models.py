@@ -13,6 +13,7 @@ class User(db.Model):
     favorite = db.relationship('Favorite', backref='user', lazy='dynamic')
     private_com = db.Column(db.Integer, default=0)
     private_fav = db.Column(db.Integer, default=0)
+    order = db.Column(db.Integer, default=0)
 
     def __repr__(self):
         return '<User {}>'.format(self.username)

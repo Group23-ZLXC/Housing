@@ -326,15 +326,15 @@ def buy():
     form = BuyForm()
     form1 = LocationForm()
     data = []
-    with open(r"houseapp/static/data/data1.csv", encoding='gbk', errors='ignore') as fin:
-        is_first_line =True
-        for f in fin.readlines():
-            if is_first_line:
-                is_first_line = False
-                continue
-            f = f[:-1]
-            a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z = f.split(",")
-            data.append((a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z))
+    # with open(r"houseapp/static/data/data.csv", encoding='gbk', errors='ignore') as fin:
+    #     is_first_line =True
+    #     for f in fin.readlines():
+    #         if is_first_line:
+    #             is_first_line = False
+    #             continue
+    #         f = f[:-1]
+    #         a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z = f.split(",")
+    #         data.append((a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z))
     # read file
     checked_data = []
     checked_data_1 = []
@@ -584,24 +584,56 @@ def buy():
                 db.session.add(checked_finally)
                 db.session.commit()
 
-    checks = Check.query.all()
-    check_user = []
-    for c in checks:
-        check_user.append(c.user_id)
-    check_user = list(set(check_user))
-    check_owner = Check.query.order_by(Check.id.desc()).filter(Check.user_id == user_in_db.id).first()
-    page = int(request.args.get('page', 1))
-    per_page = int(request.args.get('per_page', 5))
+        checks = Check.query.all()
+        check_user = []
+        for c in checks:
+            check_user.append(c.user_id)
+        check_user = list(set(check_user))
+        check_owner = Check.query.order_by(Check.id.desc()).filter(Check.user_id == user_in_db.id).first()
+        page = int(request.args.get('page', 1))
+        per_page = int(request.args.get('per_page', 5))
 
-    page_total = int(request.args.get('page_total', 1))
-    per_page_total = int(request.args.get('per_page_total', 5))
+        page_total = int(request.args.get('page_total', 1))
+        per_page_total = int(request.args.get('per_page_total', 5))
 
-    paginate = Checked.query.order_by(Checked.id).filter(Checked.user_id == user_in_db.id).paginate(page, per_page, error_out=False)
-    paginate_total = House.query.order_by(House.id).filter(House.status == 2).paginate(page_total, per_page_total, error_out=False)
-    houses_checked = paginate.items
-    houses_total = paginate_total.items
+        if user_in_db.order == 0:
+            paginate = Checked.query.order_by(Checked.id).filter(Checked.user_id == user_in_db.id).paginate(page, per_page, error_out=False)
+            paginate_total = House.query.order_by(House.id).filter(House.status == 2).paginate(page_total, per_page_total, error_out=False)
+        if user_in_db.order == 1:
+            paginate = Checked.query.order_by(Checked.square).filter(Checked.user_id == user_in_db.id).paginate(page, per_page, error_out=False)
+            paginate_total = House.query.order_by(House.square).filter(House.status == 2).paginate(page_total, per_page_total, error_out=False)
+        if user_in_db.order == 2:
+            paginate = Checked.query.order_by(Checked.square.desc()).filter(Checked.user_id == user_in_db.id).paginate(page, per_page, error_out=False)
+            paginate_total = House.query.order_by(House.square.desc()).filter(House.status == 2).paginate(page_total, per_page_total, error_out=False)
+        if user_in_db.order == 3:
+            paginate = Checked.query.order_by(Checked.total_price).filter(Checked.user_id == user_in_db.id).paginate(page, per_page, error_out=False)
+            paginate_total = House.query.order_by(House.total_price).filter(House.status == 2).paginate(page_total, per_page_total, error_out=False)
+        if user_in_db.order == 4:
+            paginate = Checked.query.order_by(Checked.total_price.desc()).filter(Checked.user_id == user_in_db.id).paginate(page, per_page, error_out=False)
+            paginate_total = House.query.order_by(House.total_price.desc()).filter(House.status == 2).paginate(page_total, per_page_total, error_out=False)
+        houses_checked = paginate.items
+        houses_total = paginate_total.items
+
 
     return render_template('buy.html',title='Buy', data=data, user=user_in_db, houses=houses, form=form, form1 = form1, checked=checked_data, checked_1=checked_data_1, paginate=paginate,paginate_total=paginate_total, houses_checked=houses_checked,houses_recent=houses_recent,imgs=imgs,check_user=check_user,houses_total=houses_total,check_owner=check_owner)
+
+@app.route('/order')
+def order():
+    order = request.args.get('order')
+    user_id = request.args.get('user_id1')
+    user = User.query.filter(User.id == user_id).first()
+    if order == '0':
+        user.order = 0
+    if order == '1':
+        user.order = 1
+    if order == '2':
+        user.order = 2
+    if order == '3':
+        user.order = 3
+    if order == '4':
+        user.order = 4     
+    db.session.commit()
+    return redirect(url_for('buy', user=user, user_id=user.id))
 
 @app.route('/predict', methods=['GET','POST'])
 def predict():
@@ -747,13 +779,11 @@ def visitothers():
 @app.route('/pri_pub')
 def pri_pub():
     privacy = request.args.get('p')
-    print(privacy)
     type = request.args.get('t')
     user_id = request.args.get('user_id1')
     user = User.query.filter(User.id == user_id).first()
     if privacy == '0':
         if type == '0':
-            print('hello')
             user.private_fav = 1
         else:
             user.private_com = 1
