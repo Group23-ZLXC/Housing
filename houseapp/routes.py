@@ -1,6 +1,6 @@
 from houseapp import app, db, Config, model
 from flask import render_template, flash, redirect, url_for, session, request, jsonify
-from houseapp.forms import CommentForm, LoginForm, SignupForm, PredictForm, BuyForm, RecommendationForm, EditRecomForm, ReplyForm, EditHouseForm, MoneyForm, LocationForm,ImgForm
+from houseapp.forms import CommentForm, LoginForm, SignupForm, PredictForm, BuyForm, RecommendationForm, EditRecomForm, ReplyForm,EditHouseForm, MoneyForm, LocationForm,ImgForm, ImgForm1
 from werkzeug.security import generate_password_hash, check_password_hash
 from houseapp.models import User, House, Comment, Answer, Check, Recommendation, Favorite, Checked, Image, Money, Background
 from houseapp.static import data
@@ -745,7 +745,7 @@ def delete_img():
 @app.route('/visitothers', methods=['GET','POST'])
 def visitothers():
     form = ImgForm()
-    form1 = ImgForm()
+    form1 = ImgForm1()
     if not session.get("USERNAME") is None:
         username = session.get("USERNAME")
         visitor = User.query.filter(User.username == username).first()
@@ -807,22 +807,22 @@ def visitothers():
     if form1.validate_on_submit():
         nowTime = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
         if back_img:
-            filename = form.img.data.filename
+            filename = form1.img.data.filename
             back_img.filename = filename
             file_path = path+nowTime+filename
-            form.img.data.save(file_path)
+            form1.img.data.save(file_path)
             stored_path = 'static/img/'+nowTime+filename
             back_img.filepath = stored_path
         else:
-            filename = form.img.data.filename
+            filename = form1.img.data.filename
             file_path = path+nowTime+filename
-            form.img.data.save(file_path)
+            form1.img.data.save(file_path)
             stored_path = 'static/img/'+nowTime+filename
             image = Background(filename = filename, filepath=stored_path, user_id=user.id,type=1)
             db.session.add(image)
         db.session.commit()
-        return redirect(url_for('visitothers',user=user, user_id=user.id, visitor=user))
-
+        # return redirect(url_for('visitothers',user=user, user_id=user.id, visitor=user))
+        return redirect(url_for('buy'))
 
     #visitor_id = request.args.get('visitor_id')
     return render_template('visitothers.html', user=user, visitor=visitor, title=user.username, imgs=imgs,

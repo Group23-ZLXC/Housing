@@ -79,6 +79,10 @@ class ImgForm(FlaskForm):
     img = FileField('Image')
     submit = SubmitField('Save')
 
+class ImgForm1(FlaskForm):
+    img = FileField('Image')
+    submit = SubmitField('Save')
+
 class MoneyForm(FlaskForm):
     money_type = SelectField('Loan Type', choices = [(1,'Commercial Loans'),(2,'Housing Provident Fund Loans')])
     house_number = SelectField('Number of House', choices = [(1,'First House Loan'), (2,'Second House Loan')])
