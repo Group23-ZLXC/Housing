@@ -6,6 +6,8 @@ from houseapp.models import User, House, Comment, Answer, Check, Recommendation,
 from houseapp.static import data
 import numpy as np
 import datetime
+from operator import and_
+
 
 # from flask_script import Manager, Shell
 # from flask_migrate import Migrate, MigrateCommand
@@ -749,8 +751,8 @@ def visitothers():
         visitor = User.query.filter(User.username == username).first()
     user_id = request.args.get('user_id')
     user = User.query.filter(User.id == user_id).first()
-    profile = Background.query.filter(Background.user_id == user.id and Background.type == 0).first()
-    back_img = Background.query.filter(Background.user_id == user.id and Background.type == 1).first()
+    profile = Background.query.filter(and_(Background.user_id == user.id, Background.type == 0)).first()
+    back_img = Background.query.filter(and_(Background.user_id == user.id, Background.type == 1)).first()
 
     stored_images = Image.query.all()
     houses = House.query.filter(House.status == 2).all()
@@ -784,26 +786,40 @@ def visitothers():
 
     path = Config.IMG_DIR
     if form.validate_on_submit():
-        print('helloworld')
         nowTime = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
-        filename = form.img.data.filename
-        file_path = path+nowTime+filename
-        form.img.data.save(file_path)
-        stored_path = 'static/img/'+nowTime+filename
-        image = Background(filename = filename, filepath=stored_path, user_id=user.id,type=0)
-        db.session.add(image)
+        if profile:
+            filename = form.img.data.filename
+            profile.filename = filename
+            file_path = path+nowTime+filename
+            form.img.data.save(file_path)
+            stored_path = 'static/img/'+nowTime+filename
+            profile.filepath = stored_path
+        else:
+            filename = form.img.data.filename
+            file_path = path+nowTime+filename
+            form.img.data.save(file_path)
+            stored_path = 'static/img/'+nowTime+filename
+            image = Background(filename = filename, filepath=stored_path, user_id=user.id,type=0)
+            db.session.add(image)
         db.session.commit()
-        # return redirect(url_for('visitothers',user=user, user_id=user.id, visitor=user))
-        return redirect(url_for('predict'))
+        return redirect(url_for('visitothers',user=user, user_id=user.id, visitor=user))
 
     if form1.validate_on_submit():
         nowTime = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
-        filename = form1.img.data.filename
-        file_path = path+nowTime+filename
-        form1.img.data.save(file_path)
-        stored_path = 'static/img/'+nowTime+filename
-        image = Background(filename = filename, filepath=stored_path, user_id=user.id,type=0)
-        db.session.add(image)
+        if back_img:
+            filename = form.img.data.filename
+            back_img.filename = filename
+            file_path = path+nowTime+filename
+            form.img.data.save(file_path)
+            stored_path = 'static/img/'+nowTime+filename
+            back_img.filepath = stored_path
+        else:
+            filename = form.img.data.filename
+            file_path = path+nowTime+filename
+            form.img.data.save(file_path)
+            stored_path = 'static/img/'+nowTime+filename
+            image = Background(filename = filename, filepath=stored_path, user_id=user.id,type=1)
+            db.session.add(image)
         db.session.commit()
         return redirect(url_for('visitothers',user=user, user_id=user.id, visitor=user))
 

@@ -9,9 +9,15 @@
   <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <!-- user_id != visitor_id -->
+{% if back_img %}
+<div
+  style="margin-top: 30px;background-image: url({{ back_img.filepath }});height: 300px;width: 100%;background-size: cover;opacity: 0.6;position:relative;">
+</div>
+{% else %}
 <div
   style="margin-top: 30px;background-image: url(../static/img/banner.jpg);height: 300px;width: 100%;background-size: cover;opacity: 0.6;position:relative;">
 </div>
+{% endif %}
 <div style="position:absolute; width:100%; height:200px;top:60px;text-align: center;">
   <table style="width: 100%;margin-top: 35px;" align="center">
 
@@ -43,15 +49,15 @@
     </tr>
     {% if user.id == visitor.id %}
     <tr>
-      <td align="right" style="padding-right: 20px;">
+      <!-- <td align="right" style="padding-right: 20px;">
         <button class="btn btn-link btn-xs"><span class="glyphicon glyphicon-picture"></span>&nbsp;Edit
           background</button>
-      </td>
+      </td> -->
       <td>
         <form action="" method="post" enctype="multipart/form-data" novalidate>
           {{ form.hidden_tag() }}
-          <p>{{ form.img() }}</p>
-          <p>{{ form.submit() }}</p>
+          <p>{{ form1.img() }}</p>
+          <p>{{ form1.submit() }}</p>
         </form>
       </td>
     </tr>
