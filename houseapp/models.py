@@ -14,6 +14,7 @@ class User(db.Model):
     private_com = db.Column(db.Integer, default=0)
     private_fav = db.Column(db.Integer, default=0)
     order = db.Column(db.Integer, default=0)
+    background = db.relationship('Background', backref='owner', lazy='dynamic')
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
@@ -79,7 +80,6 @@ class Favorite(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     house_id = db.Column(db.Integer, db.ForeignKey('house.id'))
-    private = db.Column(db.Integer, default=0)
 
 class Recommendation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -93,6 +93,14 @@ class Image(db.Model):
     filepath = db.Column(db.String)
     house_id = db.Column(db.Integer, db.ForeignKey('house.id'))
 
+class Background(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    filename = db.Column(db.String)
+    filepath = db.Column(db.String)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    type = db.Column(db.Integer) #0:头像；1:背景图
+
+    
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String)

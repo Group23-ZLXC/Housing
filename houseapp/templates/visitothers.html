@@ -14,9 +14,28 @@
 </div>
 <div style="position:absolute; width:100%; height:200px;top:60px;text-align: center;">
   <table style="width: 100%;margin-top: 35px;" align="center">
+
     <tr>
-      <td align="center"><img src="../static/img/user.png" class="img-circle" style="width: 150px;height: 150px;"></td>
+      {% if user.id == visitor.id %}
+      <form action="" method="post" enctype="multipart/form-data" novalidate>
+        {{ form.hidden_tag() }}
+        <p>{{ form.img() }}</p>
+        <p>{{ form.submit() }}</p>
+      </form>
+        {% if profile %}
+          <td align="center"><img src="{{ profile.filepath }}" alt="{{ profile.filepath }}" class="img-circle" style="width: 150px;height: 150px;"></td>
+        {% else %}
+          <td align="center"><img src="../static/img/user.png" class="img-circle" style="width: 150px;height: 150px;"></td>
+        {% endif %}
+      {% else %}
+        {% if profile %}
+          <td align="center"><img src="{{ profile.filepath }}" alt="{{ profile.filepath }}" class="img-circle" style="width: 150px;height: 150px;"></td>
+          {% else %}
+          <td align="center"><img src="../static/img/user.png" class="img-circle" style="width: 150px;height: 150px;"></td>
+          {% endif %}
+      {% endif %}
     </tr>
+
     <tr>
       <td align="center">
         <h1> {{ user.username }}</h1>
@@ -27,6 +46,13 @@
       <td align="right" style="padding-right: 20px;">
         <button class="btn btn-link btn-xs"><span class="glyphicon glyphicon-picture"></span>&nbsp;Edit
           background</button>
+      </td>
+      <td>
+        <form action="" method="post" enctype="multipart/form-data" novalidate>
+          {{ form.hidden_tag() }}
+          <p>{{ form.img() }}</p>
+          <p>{{ form.submit() }}</p>
+        </form>
       </td>
     </tr>
     {% endif %}
@@ -145,7 +171,7 @@
   <tr>
     <td style="width: 100%;padding: 5px;">
       <div class="panel panel-default">
-        <div class="panel-heading"><b style="font-size: 20px;">Favorites</b> 
+        <div class="panel-heading"><b style="font-size: 20px;">Favorites</b>
           <p class="pull-right">
           {% if user.id == visitor.id %}
           {% if user.private_fav == 0 %}

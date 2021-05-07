@@ -642,12 +642,12 @@
                 {% if c.user_id == owner.id %}
                 <td width="9%" style="vertical-align: top;padding-top: 13px;"><span
                     class="glyphicon glyphicon-user"></span><a
-                    href="{{ url_for('visitothers', user_id=c.user_id) }}"><b>&nbsp;&nbsp;{{ c.user_id }}</b><span
+                    href="{{ url_for('visitothers', user_id=c.user_id) }}"><b>&nbsp;&nbsp;{{ authors[c.id].username }}</b><span
                       class="label label-warning" style="margin-left: 7px;vertical-align: middle;">owner</span></a></td>
                 {% else %}
                 <td width="9%" style="vertical-align: top;padding-top: 13px;"><span
                     class="glyphicon glyphicon-user"></span><a href="{{ url_for('visitothers', user_id=c.user_id) }}"
-                    <b>&nbsp;&nbsp;{{ c.user_id }}</b><span class="label label-info"
+                    <b>&nbsp;&nbsp;{{ authors[c.id].username }}</b><span class="label label-info"
                       style="margin-left: 7px;vertical-align: middle;">user</a></span>
                 </td>
                 {% endif %}
@@ -724,7 +724,7 @@
     </div>
     {% endif %}
 
-    
+
     {% if house.status == 2 %}
     <div class="panel-group" id="accordion" style="margin-top: 20px;margin-bottom: 30px;">
       <div class="panel panel-default">

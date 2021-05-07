@@ -1,8 +1,8 @@
 from houseapp import app, db, Config, model
 from flask import render_template, flash, redirect, url_for, session, request, jsonify
-from houseapp.forms import CommentForm, LoginForm, SignupForm, PredictForm, BuyForm, RecommendationForm, EditRecomForm, ReplyForm, EditHouseForm, MoneyForm, LocationForm
+from houseapp.forms import CommentForm, LoginForm, SignupForm, PredictForm, BuyForm, RecommendationForm, EditRecomForm, ReplyForm, EditHouseForm, MoneyForm, LocationForm,ImgForm
 from werkzeug.security import generate_password_hash, check_password_hash
-from houseapp.models import User, House, Comment, Answer, Check, Recommendation, Favorite, Checked, Image, Money
+from houseapp.models import User, House, Comment, Answer, Check, Recommendation, Favorite, Checked, Image, Money, Background
 from houseapp.static import data
 import numpy as np
 import datetime
@@ -190,8 +190,10 @@ def details():
             image_names.append(i.filename)
     comments = Comment.query.filter(Comment.house_id == house.id).all()
     answers = {}
+    authors = {}
     for c in comments:
         answers[c.id] = Answer.query.filter(Answer.question_id == c.id).all()
+        authors[c.id] = User.query.filter(User.id == c.user_id).first()
 
     stored_recomm = Recommendation.query.filter(Recommendation.house_id == house.id).first()
     # recom_id = request.args.get('recom_id')
@@ -212,7 +214,7 @@ def details():
                 return redirect(url_for('details', house_id=house.id))
             else:
                 # form3.comment.data = "Reply to "+ comment_id +" : "
-                return render_template('details.html', title='Details', form=form, form1=form1, user=user_in_db, house = house, owner=owner, comments=comments,
+                return render_template('details.html', title='Details', form=form, form1=form1, user=user_in_db, house = house, owner=owner, comments=comments, authors=authors,
                     stored_recomm=stored_recomm, favorite=favorite, form2=form2,form3=form3,form4=form4, reply=reply, answers=answers, stored_images=stored_images,
                     image_names=image_names, re_houses=re_houses, pop_houses=pop_houses, money_calculate=money_calculate, money=money, recommendations=recommendations, imgs=imgs, imgs_re=imgs_re)
         else:
@@ -268,7 +270,8 @@ def details():
                 return render_template('details.html', title='Details', form=form, form1=form1, user=user_in_db,
                     house = house, owner=owner, comments=comments, stored_recomm=stored_recomm, favorite=favorite,
                     form2=form2,form3=form3,form4=form4, reply=reply, answers=answers, stored_images=stored_images,
-                    image_names=image_names, re_houses=re_houses, pop_houses=pop_houses, money_calculate=money_calculate, money=money, recommendations=recommendations, imgs=imgs, imgs_re=imgs_re)
+                    image_names=image_names, re_houses=re_houses, pop_houses=pop_houses, money_calculate=money_calculate,
+                    money=money, recommendations=recommendations, imgs=imgs, imgs_re=imgs_re, authors=authors)
 
         else:
             if form1.validate_on_submit():
@@ -279,9 +282,10 @@ def details():
             else:
                 return render_template('details.html', title='Details', form=form, form1=form1, user=user_in_db, house = house,
                     owner=owner, comments=comments, favorite=favorite, form3=form3,form4=form4, reply=reply, answers=answers,
-                    stored_images=stored_images, image_names=image_names, re_houses=re_houses, pop_houses=pop_houses, money_calculate=money_calculate, money=money, recommendations=recommendations, imgs=imgs, imgs_re=imgs_re)
+                    stored_images=stored_images, image_names=image_names, re_houses=re_houses, pop_houses=pop_houses, authors= authors,
+                    money_calculate=money_calculate, money=money, recommendations=recommendations, imgs=imgs, imgs_re=imgs_re)
 
-    return render_template('details.html', title='Details', form=form, form1=form1, house=house, owner=owner, commennts=comments,
+    return render_template('details.html', title='Details', form=form, form1=form1, house=house, owner=owner, commennts=comments, authors=authors,
         stored_recomm=stored_recomm,form3=form3,form4=form4, reply=reply, answers=answers, stored_images=stored_images, image_names=image_names
         , re_houses=re_houses, pop_houses=pop_houses, money_calculate=money_calculate, money=money, recommendations=recommendations, imgs=imgs, imgs_re=imgs_re)
 
@@ -631,7 +635,7 @@ def order():
     if order == '3':
         user.order = 3
     if order == '4':
-        user.order = 4     
+        user.order = 4
     db.session.commit()
     return redirect(url_for('buy', user=user, user_id=user.id))
 
@@ -737,13 +741,18 @@ def delete_img():
     db.session.commit()
     return redirect(url_for('details', house_id=house_id))
 
-@app.route('/visitothers')
+@app.route('/visitothers', methods=['GET','POST'])
 def visitothers():
+    form = ImgForm()
+    form1 = ImgForm()
     if not session.get("USERNAME") is None:
         username = session.get("USERNAME")
         visitor = User.query.filter(User.username == username).first()
     user_id = request.args.get('user_id')
     user = User.query.filter(User.id == user_id).first()
+    profile = Background.query.filter(Background.user_id == user.id and Background.type == 0).first()
+    back_img = Background.query.filter(Background.user_id == user.id and Background.type == 1).first()
+
     stored_images = Image.query.all()
     houses = House.query.filter(House.status == 2).all()
     imgs = []
@@ -773,8 +782,36 @@ def visitothers():
                         count_upload[p] += 1
             p += 1
     test = user.favorite
+
+    path = Config.IMG_DIR
+    if form.validate_on_submit():
+        print('helloworld')
+        nowTime = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+        filename = form.img.data.filename
+        file_path = path+nowTime+filename
+        form.img.data.save(file_path)
+        stored_path = 'static/img/'+nowTime+filename
+        image = Background(filename = filename, filepath=stored_path, user_id=user.id,type=0)
+        db.session.add(image)
+        db.session.commit()
+        # return redirect(url_for('visitothers',user=user, user_id=user.id, visitor=user))
+        return redirect(url_for('predict'))
+
+    if form1.validate_on_submit():
+        nowTime = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+        filename = form1.img.data.filename
+        file_path = path+nowTime+filename
+        form1.img.data.save(file_path)
+        stored_path = 'static/img/'+nowTime+filename
+        image = Background(filename = filename, filepath=stored_path, user_id=user.id,type=0)
+        db.session.add(image)
+        db.session.commit()
+        return redirect(url_for('visitothers',user=user, user_id=user.id, visitor=user))
+
+
     #visitor_id = request.args.get('visitor_id')
-    return render_template('visitothers.html', user=user, visitor=visitor, title=user.username, imgs=imgs, imgs_upload=imgs_upload, houses=houses)
+    return render_template('visitothers.html', user=user, visitor=visitor, title=user.username, imgs=imgs,
+    imgs_upload=imgs_upload, houses=houses, form=form, form1=form1, profile=profile, back_img=back_img)
 
 @app.route('/pri_pub')
 def pri_pub():
