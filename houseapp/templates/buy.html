@@ -139,59 +139,63 @@
 <!-- {% for house in houses %}
 <a href=" {{ url_for('details', house_id=house.id )}}">{{ house.id }}</a>
 {% endfor %} -->
-<div style="margin: 40px 30px 10px 30px;">
+<div style="margin: 40px 30px 0px 30px;">
     <hr>
-    <table style="width: 100%;">
+    <table style="width: 100%;" border="1">
         <tr>
             {% if user.id in check_user %}
-            <td style="width: 70%;font-size: 3.5rem;">
+            <td rowspan="2" style="width: 50%;font-size: 3rem;">
                 <b>Find {{ paginate.total }} suitable houses for you ^_^ <p style="color: gray;font-size: 1rem;margin-top: 3px;">*According to your last query data</p></b>
             </td>
             <td align="right" style="vertical-align: bottom;"><a href="{{ url_for('tips') }}"><span
                 class="glyphicon glyphicon-info-sign"></span>&nbsp;Can't find a house? Tips</a></td>
             {% else%}
-            <td style="width: 70%;font-size: 3.5rem;"><b>Have a quick look at our houses!</b></td>
+            <td style="width: 50%;font-size: 3rem;"><b>Have a quick look at our houses!</b></td>
             {% endif %}
+        
+        </tr>
+        <tr>
+            <td style="vertical-align:text-bottom;">
+                <p class="pull-right">
+                    Order By:
+                <!-- <a id="href_order" href=""> -->
+                {% if user.order == 0 %}
+                <a href="{{ url_for('order', user_id1=user.id, order=0) }}"><button type="button" class="btn btn-xs active">Default</button></a>
+                <a href="{{ url_for('order', user_id1=user.id, order=1) }}"><button type="button" class="btn btn-xs">Square(Ascending)</button></a>
+                <a href="{{ url_for('order', user_id1=user.id, order=2) }}"><button type="button" class="btn btn-xs">Sqaure(Descending)</button></a>
+                <a href="{{ url_for('order', user_id1=user.id, order=3) }}"><button type="button" class="btn btn-xs">Price(Ascending)</button></a>
+                <a href="{{ url_for('order', user_id1=user.id, order=4) }}"><button type="button" class="btn btn-xs">Price(Descending)</button></a>
+                {% elif user.order == 1 %}   
+                <a href="{{ url_for('order', user_id1=user.id, order=0) }}"><button type="button" class="btn btn-xs">Default</button></a>
+                <a href="{{ url_for('order', user_id1=user.id, order=1) }}"><button type="button" class="btn btn-xs active">Square(Ascending)</button></a>
+                <a href="{{ url_for('order', user_id1=user.id, order=2) }}"><button type="button" class="btn btn-xs">Sqaure(Descending)</button></a>
+                <a href="{{ url_for('order', user_id1=user.id, order=3) }}"><button type="button" class="btn btn-xs">Price(Ascending)</button></a>
+                <a href="{{ url_for('order', user_id1=user.id, order=4) }}"><button type="button" class="btn btn-xs">Price(Descending)</button></a>
+                {% elif user.order == 2 %}   
+                <a href="{{ url_for('order', user_id1=user.id, order=0) }}"><button type="button" class="btn btn-xs">Default</button></a>
+                <a href="{{ url_for('order', user_id1=user.id, order=1) }}"><button type="button" class="btn btn-xs">Square(Ascending)</button></a>
+                <a href="{{ url_for('order', user_id1=user.id, order=2) }}"><button type="button" class="btn btn-xs active">Sqaure(Descending)</button></a>
+                <a href="{{ url_for('order', user_id1=user.id, order=3) }}"><button type="button" class="btn btn-xs">Price(Ascending)</button></a>
+                <a href="{{ url_for('order', user_id1=user.id, order=4) }}"><button type="button" class="btn btn-xs">Price(Descending)</button></a>
+                {% elif user.order == 3 %}   
+                <a href="{{ url_for('order', user_id1=user.id, order=0) }}"><button type="button" class="btn btn-xs">Default</button></a>
+                <a href="{{ url_for('order', user_id1=user.id, order=1) }}"><button type="button" class="btn btn-xs">Square(Ascending)</button></a>
+                <a href="{{ url_for('order', user_id1=user.id, order=2) }}"><button type="button" class="btn btn-xs">Sqaure(Descending)</button></a>
+                <a href="{{ url_for('order', user_id1=user.id, order=3) }}"><button type="button" class="btn btn-xs active">Price(Ascending)</button></a>
+                <a href="{{ url_for('order', user_id1=user.id, order=4) }}"><button type="button" class="btn btn-xs">Price(Descending)</button></a>
+                {% elif user.order == 4 %}  
+                <a href="{{ url_for('order', user_id1=user.id, order=0) }}"><button type="button" class="btn btn-xs">Default</button></a>
+                <a href="{{ url_for('order', user_id1=user.id, order=1) }}"><button type="button" class="btn btn-xs">Square(Ascending)</button></a>
+                <a href="{{ url_for('order', user_id1=user.id, order=2) }}"><button type="button" class="btn btn-xs">Sqaure(Descending)</button></a>
+                <a href="{{ url_for('order', user_id1=user.id, order=3) }}"><button type="button" class="btn btn-xs">Price(Ascending)</button></a>
+                <a href="{{ url_for('order', user_id1=user.id, order=4) }}"><button type="button" class="btn btn-xs active">Price(Descending)</button></a>
+                {% endif %} 
+                </p>
+            </td>
         </tr>
 
 
     </table>
-    <hr>
-    <p class="pull-right" style="margin-bottom: 20px;">
-        Order By:
-    <!-- <a id="href_order" href=""> -->
-    {% if user.order == 0 %}
-    <a href="{{ url_for('order', user_id1=user.id, order=0) }}"><button type="button" class="btn btn-xs active">Default</button></a>
-    <a href="{{ url_for('order', user_id1=user.id, order=1) }}"><button type="button" class="btn btn-xs">Square(Ascending)</button></a>
-    <a href="{{ url_for('order', user_id1=user.id, order=2) }}"><button type="button" class="btn btn-xs">Sqaure(Descending)</button></a>
-    <a href="{{ url_for('order', user_id1=user.id, order=3) }}"><button type="button" class="btn btn-xs">Price(Ascending)</button></a>
-    <a href="{{ url_for('order', user_id1=user.id, order=4) }}"><button type="button" class="btn btn-xs">Price(Descending)</button></a>
-    {% elif user.order == 1 %}   
-    <a href="{{ url_for('order', user_id1=user.id, order=0) }}"><button type="button" class="btn btn-xs">Default</button></a>
-    <a href="{{ url_for('order', user_id1=user.id, order=1) }}"><button type="button" class="btn btn-xs active">Square(Ascending)</button></a>
-    <a href="{{ url_for('order', user_id1=user.id, order=2) }}"><button type="button" class="btn btn-xs">Sqaure(Descending)</button></a>
-    <a href="{{ url_for('order', user_id1=user.id, order=3) }}"><button type="button" class="btn btn-xs">Price(Ascending)</button></a>
-    <a href="{{ url_for('order', user_id1=user.id, order=4) }}"><button type="button" class="btn btn-xs">Price(Descending)</button></a>
-    {% elif user.order == 2 %}   
-    <a href="{{ url_for('order', user_id1=user.id, order=0) }}"><button type="button" class="btn btn-xs">Default</button></a>
-    <a href="{{ url_for('order', user_id1=user.id, order=1) }}"><button type="button" class="btn btn-xs">Square(Ascending)</button></a>
-    <a href="{{ url_for('order', user_id1=user.id, order=2) }}"><button type="button" class="btn btn-xs active">Sqaure(Descending)</button></a>
-    <a href="{{ url_for('order', user_id1=user.id, order=3) }}"><button type="button" class="btn btn-xs">Price(Ascending)</button></a>
-    <a href="{{ url_for('order', user_id1=user.id, order=4) }}"><button type="button" class="btn btn-xs">Price(Descending)</button></a>
-    {% elif user.order == 3 %}   
-    <a href="{{ url_for('order', user_id1=user.id, order=0) }}"><button type="button" class="btn btn-xs">Default</button></a>
-    <a href="{{ url_for('order', user_id1=user.id, order=1) }}"><button type="button" class="btn btn-xs">Square(Ascending)</button></a>
-    <a href="{{ url_for('order', user_id1=user.id, order=2) }}"><button type="button" class="btn btn-xs">Sqaure(Descending)</button></a>
-    <a href="{{ url_for('order', user_id1=user.id, order=3) }}"><button type="button" class="btn btn-xs active">Price(Ascending)</button></a>
-    <a href="{{ url_for('order', user_id1=user.id, order=4) }}"><button type="button" class="btn btn-xs">Price(Descending)</button></a>
-    {% elif user.order == 4 %}  
-    <a href="{{ url_for('order', user_id1=user.id, order=0) }}"><button type="button" class="btn btn-xs">Default</button></a>
-    <a href="{{ url_for('order', user_id1=user.id, order=1) }}"><button type="button" class="btn btn-xs">Square(Ascending)</button></a>
-    <a href="{{ url_for('order', user_id1=user.id, order=2) }}"><button type="button" class="btn btn-xs">Sqaure(Descending)</button></a>
-    <a href="{{ url_for('order', user_id1=user.id, order=3) }}"><button type="button" class="btn btn-xs">Price(Ascending)</button></a>
-    <a href="{{ url_for('order', user_id1=user.id, order=4) }}"><button type="button" class="btn btn-xs active">Price(Descending)</button></a>
-    {% endif %} 
-    </p>
 </div>
 
 {% if user.id in check_user %}
