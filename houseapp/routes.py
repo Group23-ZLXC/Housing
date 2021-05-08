@@ -244,7 +244,7 @@ def details():
             money_calculate[2] = money.month*12*money_calculate[1]-house.total_price*(money.price_percentage*0.1)
             money_calculate[3] = money_calculate[1]*money.month*12 + house.total_price*(money.price_percentage*0.1)
             money_calculate[4] = money_calculate[1]*money.month*12
-           
+
         if not reply is None:
             if form3.validate_on_submit():
                 answer = Answer(body=form3.comment.data,question_id=comment_id, user_id=user_in_db.id)
@@ -262,7 +262,7 @@ def details():
                 db.session.add(comment)
                 db.session.commit()
                 return redirect(url_for('details', house_id=house.id))
-           
+
         if stored_recomm:
             if form2.validate_on_submit():
                 stored_recomm.reason = form2.reason.data
@@ -664,7 +664,7 @@ def predict():
             db.session.commit()
             # call the ML model
             features = [house.lng, house.lat, house.square, house.living_room, house.drawing_room, house.kitchen, house.bathroom,
-                house.building_type, house.renovation_con, house.elevator, house.subway, house.district]
+                house.building_type, house.renovation_con, house.elevator, house.subway, house.district, house.floor]
             final_features = [np.array(features)]
             prediction = model.predict(final_features)
             output = round(prediction[0], 4)
