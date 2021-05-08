@@ -9,25 +9,12 @@
   <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <!-- user_id != visitor_id -->
-{% if back_img %}
-<div
-  style="margin-top: 30px;background-image: url({{ back_img.filepath }});height: 300px;width: 100%;background-size: cover;opacity: 0.6;position:relative;">
+<div style="margin-top: 30px;background-image: url(../static/img/banner.jpg);height: 300px;width: 100%;background-size: cover;opacity: 0.6;position:relative;">
 </div>
-{% else %}
-<div
-  style="margin-top: 30px;background-image: url(../static/img/banner.jpg);height: 300px;width: 100%;background-size: cover;opacity: 0.6;position:relative;">
-</div>
-{% endif %}
 <div style="position:absolute; width:100%; height:200px;top:60px;text-align: center;">
   <table style="width: 100%;margin-top: 35px;" align="center">
-
     <tr>
       {% if user.id == visitor.id %}
-      <form action="" method="post" enctype="multipart/form-data" novalidate>
-        {{ form.hidden_tag() }}
-        <p>{{ form.img() }}</p>
-        <p>{{ form.submit() }}</p>
-      </form>
         {% if profile %}
           <td align="center"><img src="{{ profile.filepath }}" alt="{{ profile.filepath }}" class="img-circle" style="width: 150px;height: 150px;"></td>
         {% else %}
@@ -41,25 +28,36 @@
           {% endif %}
       {% endif %}
     </tr>
-
     <tr>
       <td align="center">
         <h1> {{ user.username }}</h1>
       </td>
     </tr>
-    {% if user.id == visitor.id %}
     <tr>
-      <!-- <td align="right" style="padding-right: 20px;">
+      <td><form action="" method="post" enctype="multipart/form-data" novalidate>
+        {{ form.hidden_tag() }}
+        <table align="right" style="margin-right: 10px;">
+          <tr>
+            <td>{{ form.img(class="btn btn-xs") }}</td>
+            <td>{{ form.submit(class="btn btn-info btn-xs") }}</td>
+          </tr>
+        </table>
+      </td>
+      </form>
+    </tr>
+    {% if user.id == visitor.id %}
+    <!-- <tr>
+      <td align="right" style="padding-right: 20px;">
         <button class="btn btn-link btn-xs"><span class="glyphicon glyphicon-picture"></span>&nbsp;Edit
           background</button>
-      </td> -->
+      </td>
 
         <form action="" method="post" enctype="multipart/form-data" novalidate>
           {{ form1.hidden_tag() }}
           <td><p>{{ form1.img() }}</p></td>
           <td><p>{{ form1.submit() }}</p></td>
         </form>
-    </tr>
+    </tr> -->
     {% endif %}
   </table>
 </div>

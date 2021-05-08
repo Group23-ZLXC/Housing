@@ -677,6 +677,10 @@ def predict():
         return render_template('predict.html', title='Predict', user=user_in_db, form=form)
     return render_template('predict.html', title='Predict', form=form)
 
+@app.route('/visualization')
+def visualization():
+    return render_template('visualization.html', title='Visualization')
+
 @app.route('/map')
 def map():
     return render_template('map.html', title='Lng and Lat')
