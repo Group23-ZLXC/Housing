@@ -160,9 +160,9 @@ def details():
     for h in pop_houses:
         count.append(0)
     j = 0
-    for house in pop_houses:
+    for h in pop_houses:
         for i in stored_images:
-            if i.house_id == house.id:
+            if i.house_id == h.id:
                 if count[j] < 1:
                     imgs.append(i)
                     count[j] += 1
@@ -177,9 +177,9 @@ def details():
     for h in re_houses:
         count_re.append(0)
     n = 0
-    for house in re_houses:
+    for h in re_houses:
         for i in stored_images:
-            if i.house_id == house.id:
+            if i.house_id == h.id:
                 if count_re[n] < 1:
                     imgs_re.append(i)
                     count_re[n] += 1
@@ -235,6 +235,7 @@ def details():
             money_calculate[2] = money.month*12*money_calculate[1]-house.total_price*(money.price_percentage*0.1)
             money_calculate[3] = money_calculate[1]*money.month*12 + house.total_price*(money.price_percentage*0.1)
             money_calculate[4] = money_calculate[1]*money.month*12
+            return redirect(url_for('details', house_id=house.id))
         else:
             money = Money(user_id=user_in_db.id,house_id=house.id,price_percentage=1,month=5,money_type=1,house_number=1)
             loan = 0.049/12
@@ -243,6 +244,7 @@ def details():
             money_calculate[2] = money.month*12*money_calculate[1]-house.total_price*(money.price_percentage*0.1)
             money_calculate[3] = money_calculate[1]*money.month*12 + house.total_price*(money.price_percentage*0.1)
             money_calculate[4] = money_calculate[1]*money.month*12
+           
         if not reply is None:
             if form3.validate_on_submit():
                 answer = Answer(body=form3.comment.data,question_id=comment_id, user_id=user_in_db.id)
@@ -260,7 +262,7 @@ def details():
                 db.session.add(comment)
                 db.session.commit()
                 return redirect(url_for('details', house_id=house.id))
-
+           
         if stored_recomm:
             if form2.validate_on_submit():
                 stored_recomm.reason = form2.reason.data
@@ -363,11 +365,13 @@ def buy():
     houses_recent = House.query.filter(House.status == 2).order_by(House.id.desc()).limit(4)
     stored_images = Image.query.all()
     imgs = []
-    count = [0,0,0,0,0,0,0,0,0,0,0]
+    count = []
+    for h in houses:
+        count.append(0)
     j = 0
-    for house in houses:
+    for h in houses:
         for i in stored_images:
-            if i.house_id == house.id:
+            if i.house_id == h.id:
                 if count[j] < 1:
                     imgs.append(i)
                     count[j] += 1
