@@ -190,11 +190,36 @@
         {% endif %}
     </form>
 </div>
+<hr>
+<div id="distribution" style="margin-left: 100px;margin-right:100px;;opacity: 0.9;padding: 10px 0 10px 0;border-radius: 20px;box-shadow: 5px 5px 5px rgb(172, 172, 172);">
+<h3 align="center">The Distribution of Total Housing Prices in the Dataset</h3>
+<br><br>
+<table>
+    <tr>
+      <td><a href="#" data-toggle="tooltip" data-placement="bottom" title="Table"><img src="../static/img/distribution_table.png" alt="features" width="80%" height="300px"/></a></td>
+
+        <td>
+          <p>The following is the data distribution of the total house price in the data set selected for our forecasting model.<p>
+          <p>As you can see from the chart, most of the data is concentrated <b>below ¥6.500,000</b><br>
+            Therefore, the prediction for this range is the most accurate.</p>
+          <p>For homes with a total price <b>greater than ¥12,100,000</b>, the forecast price is for reference only.</p>
+        </td>
+    </tr>
+    <tr>
+      <td><a href="#" data-toggle="tooltip" data-placement="bottom" title="Bar Chart"><img src="../static/img/distribution_bar.png" alt="features" width="100%" height="300px"/></a></td>
+      <td><a href="#" data-toggle="tooltip" data-placement="bottom" title="Pie Chart"><img src="../static/img/distribution_pie.png" alt="features" width="100%" height="400px"/></a></td>
+    </tr>
+</table>
+</div>
+
 <style>
     body {
         background-repeat: no-repeat;
         background-image: url("../static/img/predict.png");
         background-size: 100% 100%;
+    }
+    #distribution{
+      background-color: white;
     }
 
 </style>
