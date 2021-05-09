@@ -718,7 +718,8 @@ def edit_house():
                 image = Image(filename = filename, filepath=stored_path, house_id=house_in_db.id)
                 db.session.add(image)
             db.session.commit()
-            return redirect(url_for('details', house_id=house_in_db.id, stored_recomm=recommendation, user=user_in_db, stored_images=stored_images))
+            # return redirect(url_for('details', house_id=house_in_db.id, stored_recomm=recommendation, user=user_in_db, stored_images=stored_images))
+            return redirect(url_for('edit_house', house_id=house_in_db.id, house=house_in_db, user=user_in_db, stored_images=stored_images, stored_recomm=recommendation))
         else:
             form.price.data = house_in_db.total_price
             form.reason.data = recommendation.reason
@@ -736,7 +737,9 @@ def edit_house():
                 image = Image(filename = filename, filepath=stored_path, house_id=house_in_db.id)
                 db.session.add(image)
             db.session.commit()
-            return redirect(url_for('details', house_id=house_in_db.id, stored_recomm=recommendation, user=user_in_db, stored_images=stored_images))
+            # return redirect(url_for('details', house_id=house_in_db.id, stored_recomm=recommendation, user=user_in_db, stored_images=stored_images))
+            return redirect(url_for('edit_house', house_id=house_in_db.id, house=house_in_db, user=user_in_db, stored_images=stored_images, stored_recomm=recommendation))
+
         else:
             form.price.data = house_in_db.total_price
     return render_template('edit_house.html', title='Edit', form=form, house=house_in_db, user=user_in_db, stored_images=stored_images)

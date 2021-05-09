@@ -10,7 +10,8 @@
 <div style="margin-top: 60px; margin-left: 300px;margin-right:300px;margin-bottom: 60px; background-color: rgb(255, 255, 255);opacity: 0.9;padding: 10px 0 10px 0;border-radius: 20px;box-shadow: 5px 5px 5px rgb(172, 172, 172);" align="center">
     <h2><span class="glyphicon glyphicon-leaf"></span>&nbsp;&nbsp;<b>Predict Your House Price</b>&nbsp;&nbsp;<span
             class="glyphicon glyphicon-leaf"></span></h2>
-    <a href="{{ url_for('visualization') }}">visualization</a>
+    <span style="margin-left: 400px">Have some questions? ➡️<a href="{{ url_for('visualization') }}">Explaination</a>⬅️</span>
+
 
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}

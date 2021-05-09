@@ -15,16 +15,16 @@
       <table style="width: 100%;">
           <tr>
             <td style="width: 50%;padding-right: 15px;"><img src="../static/img/ml/SHAP.jpg" alt="features" width="100%" height="100px"/></td>
-            <td style="width: 50%;padding-left: 15px;color: #4d4d4d;font-style: italic;"><span class="glyphicon glyphicon-tags" style="color: #fdc151;"></span>&nbsp;&nbsp;This figure shows the different influences of different features on the predicted results of the model. 
-                <br><span class="glyphicon glyphicon-tags" style="color: #fdc151;"></span>&nbsp;&nbsp;Red indicates a positive contribution of a given feature to the prediction, and blue indicates a negative contribution. 
-                <br><span class="glyphicon glyphicon-tags" style="color: #fdc151;"></span>&nbsp;&nbsp;Base value is the base price. The longer the price deviates from the Base value, the greater the influence of this feature on the predicted price. 
+            <td style="width: 50%;padding-left: 15px;color: #4d4d4d;font-style: italic;"><span class="glyphicon glyphicon-tags" style="color: #fdc151;"></span>&nbsp;&nbsp;This figure shows the different influences of different features on the predicted results of the model.
+                <br><span class="glyphicon glyphicon-tags" style="color: #fdc151;"></span>&nbsp;&nbsp;Red indicates a positive contribution of a given feature to the prediction, and blue indicates a negative contribution.
+                <br><span class="glyphicon glyphicon-tags" style="color: #fdc151;"></span>&nbsp;&nbsp;Base value is the base price. The longer the price deviates from the Base value, the greater the influence of this feature on the predicted price.
                 <br><span class="glyphicon glyphicon-tags" style="color: #fdc151;"></span>&nbsp;&nbsp;In this example, the feature square has the greatest positive effect on the predicted price, while longitude (Lng) has the greatest negative effect on the predicted price.</td>
           </tr>
       </table>
       <hr style="background-color: #cccccc; height: 1px;">
       <table style="width: 100%;">
         <tr>
-            <td style="width: 50%;padding-right: 15px;color: #4d4d4d;font-style: italic;"><span class="glyphicon glyphicon-tags" style="color: #fdc151;"></span>&nbsp;&nbsp;This chart shows the influence of each feature on the predicted result (target) through the average of SHAP VALUE. 
+            <td style="width: 50%;padding-right: 15px;color: #4d4d4d;font-style: italic;"><span class="glyphicon glyphicon-tags" style="color: #fdc151;"></span>&nbsp;&nbsp;This chart shows the influence of each feature on the predicted result (target) through the average of SHAP VALUE.
                 <br><br><br><br><br><span class="glyphicon glyphicon-tags" style="color: #fdc151;"></span>&nbsp;&nbsp;From this figure, we can see that among the features selected, the square of the house has the greatest influence on predicting the housing price, while the number of kitchens and Drawing rooms has very little influence on predicting the housing price.</td>
             <td style="width: 50%;padding-left: 15px;"><img src="../static/img/ml/force_plot.jpg" alt="features" width="100%" height="350px"/></td>
         </tr>
@@ -33,17 +33,17 @@
       <table style="width: 100%;">
         <tr>
           <td style="width: 50%;padding-right: 15px;"><img src="../static/img/ml/summary_plot_bar.jpg" alt="features" width="100%" height="350px"/></td>
-          <td style="width: 50%;padding-left: 15px;color: #4d4d4d;font-style: italic;"><span class="glyphicon glyphicon-tags" style="color: #fdc151;"></span>&nbsp;&nbsp;This graph shows the effect of the value of each feature on the predicted result. 
-            <br><br><br><span class="glyphicon glyphicon-tags" style="color: #fdc151;"></span>&nbsp;&nbsp;The blue points in the figure indicate that the value of the eigenvalue is small, while the red points indicate that the point of the eigenvalue is large. 
-            <br><br><br><span class="glyphicon glyphicon-tags" style="color: #fdc151;"></span>&nbsp;&nbsp;We find that for the feature of square, the red dots are mainly distributed in areas with SHAP value greater than 0, while the blue dots are mainly distributed in areas with SHAP value less than 0. This indicates that the larger the housing area is, the greater the positive impact on the predicted price, while the smaller the area is, the greater the negative impact on the predicted price. 
+          <td style="width: 50%;padding-left: 15px;color: #4d4d4d;font-style: italic;"><span class="glyphicon glyphicon-tags" style="color: #fdc151;"></span>&nbsp;&nbsp;This graph shows the effect of the value of each feature on the predicted result.
+            <br><br><br><span class="glyphicon glyphicon-tags" style="color: #fdc151;"></span>&nbsp;&nbsp;The blue points in the figure indicate that the value of the eigenvalue is small, while the red points indicate that the point of the eigenvalue is large.
+            <br><br><br><span class="glyphicon glyphicon-tags" style="color: #fdc151;"></span>&nbsp;&nbsp;We find that for the feature of square, the red dots are mainly distributed in areas with SHAP value greater than 0, while the blue dots are mainly distributed in areas with SHAP value less than 0. This indicates that the larger the housing area is, the greater the positive impact on the predicted price, while the smaller the area is, the greater the negative impact on the predicted price.
             <br><br><br><span class="glyphicon glyphicon-tags" style="color: #fdc151;"></span>&nbsp;&nbsp;As for the Floor feature, the blue points are mainly distributed in the area where the SHAP value is greater than 0. This means that in our model, the smaller the Floor of a house, the greater the positive impact on the house price.</td>
         </tr>
       </table>
       <hr style="background-color: #cccccc; height: 1px;">
       <table style="width: 100%;">
        <tr>
-        <td style="width: 50%;padding-right: 15px;color: #4d4d4d;font-style: italic;"><span class="glyphicon glyphicon-tags" style="color: #fdc151;"></span>&nbsp;&nbsp;This figure shows the influence of the interaction between different features on the predicted results. 
-            <br><br><br><span class="glyphicon glyphicon-tags" style="color: #fdc151;"></span>&nbsp;&nbsp;In the case of multiple features interacting, red dots represent large eigenvalues and blue dots represent small eigenvalues. 
+        <td style="width: 50%;padding-right: 15px;color: #4d4d4d;font-style: italic;"><span class="glyphicon glyphicon-tags" style="color: #fdc151;"></span>&nbsp;&nbsp;This figure shows the influence of the interaction between different features on the predicted results.
+            <br><br><br><span class="glyphicon glyphicon-tags" style="color: #fdc151;"></span>&nbsp;&nbsp;In the case of multiple features interacting, red dots represent large eigenvalues and blue dots represent small eigenvalues.
             <br><br><br><span class="glyphicon glyphicon-tags" style="color: #fdc151;"></span>&nbsp;&nbsp;The positive and negative distribution of SHAP value respectively represents the positive and negative influences on the predicted results.</td>
         <td style="width: 50%;padding-left: 15px;"><img src="../static/img/ml/summary_plot_point.jpg" alt="features" width="100%" height="350px"/></td>
        </tr>
@@ -60,8 +60,8 @@
                     </tr>
                     <tr>
                         <td><a href="#" data-toggle="tooltip" data-placement="bottom" title="Bathroom"><img src="../static/img/ml/plot4.jpg" alt="features" width="100%" height="150px"/></a></td>
-                        <td><a href="#" data-toggle="tooltip" data-placement="bottom" title="District"><img src="../static/img/ml/plot5.jpg" alt="features" width="100%" height="150px"/></a></td>
-                        <td><a href="#" data-toggle="tooltip" data-placement="bottom" title="Subway"><img src="../static/img/ml/plot6.jpg" alt="features" width="100%" height="150px"/></a></td>
+                        <td><a href="#" data-toggle="tooltip" data-placement="bottom" title="Subway"><img src="../static/img/ml/plot5.jpg" alt="features" width="100%" height="150px"/></a></td>
+                        <td><a href="#" data-toggle="tooltip" data-placement="bottom" title="District"><img src="../static/img/ml/plot6.jpg" alt="features" width="100%" height="150px"/></a></td>
                     </tr>
                     <tr>
                         <td><a href="#" data-toggle="tooltip" data-placement="bottom" title="Lat"><img src="../static/img/ml/plot7.jpg" alt="features" width="100%" height="150px"/></a></td>
@@ -70,10 +70,10 @@
                     </tr>
                 </table>
               </td>
-              <td style="width: 50%;padding-left: 15px;color: #4d4d4d;font-style: italic;"><span class="glyphicon glyphicon-tags" style="color: #fdc151;"></span>&nbsp;&nbsp;These images show the SHAP values of each feature in different value intervals. 
-                <br><br><br><br><span class="glyphicon glyphicon-tags" style="color: #fdc151;"></span>&nbsp;&nbsp;Data in the positive range of SHAP value will have a positive impact on the predicted result, while data in the negative range of SHAP value will have a negative impact on the predicted value. 
+              <td style="width: 50%;padding-left: 15px;color: #4d4d4d;font-style: italic;"><span class="glyphicon glyphicon-tags" style="color: #fdc151;"></span>&nbsp;&nbsp;These images show the SHAP values of each feature in different value intervals.
+                <br><br><br><br><span class="glyphicon glyphicon-tags" style="color: #fdc151;"></span>&nbsp;&nbsp;Data in the positive range of SHAP value will have a positive impact on the predicted result, while data in the negative range of SHAP value will have a negative impact on the predicted value.
                 <br><br><br><br><span class="glyphicon glyphicon-tags" style="color: #fdc151;"></span>&nbsp;&nbsp;From these figures, we can see the influence of each feature on the predicted results in different data intervals.
-                <br><br><br><br><p style="font-size: 7px;color: gray;">* Move the mouse over the picture to see the name of each feature.</p>  
+                <br><br><br><br><p style="font-size: 7px;color: gray;">* Move the mouse over the picture to see the name of each feature.</p>
             </td>
           </tr>
       </table>

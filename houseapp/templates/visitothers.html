@@ -33,6 +33,7 @@
         <h1> {{ user.username }}</h1>
       </td>
     </tr>
+    {% if user.id == visitor.id %}
     <tr>
       <td><form action="" method="post" enctype="multipart/form-data" novalidate>
         {{ form.hidden_tag() }}
@@ -43,8 +44,8 @@
           </tr>
         </table>
       </td>
-      </form>
     </tr>
+    {% endif %}
     {% if user.id == visitor.id %}
     <!-- <tr>
       <td align="right" style="padding-right: 20px;">

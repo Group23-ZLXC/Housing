@@ -6,7 +6,7 @@ import pickle
 app = Flask(__name__)
 app.config.from_object(Config)
 db = SQLAlchemy(app)
-# model = pickle.load(open('houseapp/static/ml/model.pkl', 'rb'))
-model = pickle.load(open('', ''))
+model = pickle.load(open('houseapp/static/ml/model.pkl', 'rb'))
+# model = pickle.load(open('', ''))
 
 from houseapp import routes, models

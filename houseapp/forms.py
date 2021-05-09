@@ -76,11 +76,11 @@ class EditHouseForm(FlaskForm):
     submit = SubmitField('Save')
 
 class ImgForm(FlaskForm):
-    img = FileField('Image')
+    img = FileField(u'Browse')
     submit = SubmitField('Save')
 
 class ImgForm1(FlaskForm):
-    img = FileField('Image')
+    img = FileField(u'Browse')
     submit = SubmitField('Save')
 
 class MoneyForm(FlaskForm):
